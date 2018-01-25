@@ -1,7 +1,7 @@
 {
   "name": "express_router_lecture_angular",
   "version": "1.0.0",
-  "description": "",
+  "description": "One Paragraph of project description goes here. Link to the live version of the app if it's hosted on Heroku.",
   "main": "index.js",
   "scripts": {
     "test": "nodemon server/server.js",
@@ -28,5 +28,13 @@
     "passport-local": "^1.0.0",
     "path": "^0.11.14",
     "pg": "^7.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Create-Your-Hustle/Hustle.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Create-Your-Hustle/Hustle/issues"
+  },
+  "homepage": "https://github.com/Create-Your-Hustle/Hustle#readme"
 }
