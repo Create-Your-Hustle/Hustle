@@ -2,4 +2,7 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     console.log('ProjectProfileController created');
     const self = this;
 
+    self.ProjectService = ProjectService;
+
+    ProjectService.getProjects();
 });
