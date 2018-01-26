@@ -75,7 +75,11 @@ Add additional notes about how to deploy this on a live system
 
 ## Authors
 
-* Name of author(s)
+Andrew Geiger
+Guillermo Olivos
+Danika Raghnild
+Paige Scheunemann
+Tyler Steffenhagen
 
 
 ## Acknowledgments

@@ -1,8 +1,10 @@
 body, html {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'shrikhand', 'open sans', sans-serif;
   font-size: 14px;
+  background-color: #ff634f;
+  color: #5A6279;
 }
 
 .instructions .container h1 {
