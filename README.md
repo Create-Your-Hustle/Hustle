@@ -1,10 +1,28 @@
 # Name of Project
 
-One Paragraph of project description goes here. Link to the live version of the app if it's hosted on Heroku.
+Hustle is a full-stack web application that connects individuals managing projects with potential collaborators on a social media dashboard. It provides the users with opportunities to view:
+
+a)	Other users' skill sets, project histories, and availability for work
+b)	Outstanding projects requiring users with a given skill set and availability.
+
+The primary purpose of the platform is to facilitate initial touchpoints between project managers and potential collaborators. 
+
 
 ## Built With
 
-List technologies and frameworks here
+●	Node.js
+●	Express.js
+●	JavaScript
+●	AngularJS
+●	AngularJS Material
+●	PostgreSQL
+●	Nodemailer
+●	Filestack
+●	Facebook SDK
+●	Google Oauth 2.0
+●	Google Places API
+●	Post GIS
+
 
 ## Getting Started
 
@@ -57,7 +75,11 @@ Add additional notes about how to deploy this on a live system
 
 ## Authors
 
-* Name of author(s)
+Andrew Geiger
+Guillermo Olivos
+Danika Raghnild
+Paige Scheunemann
+Tyler Steffenhagen
 
 
 ## Acknowledgments

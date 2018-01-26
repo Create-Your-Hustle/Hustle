@@ -97,7 +97,8 @@ passport.use('local', new localStrategy({
 // },
 // function(accessToken, refreshToken, profile, done) {
 //   User.findOrCreate( {facebookId: profile.id}, function(err, user) {
-//     if (err) { return done(err); }
+//     if (err) { return done(err); 
+//     }
 //     done(null, user);
 //   });
 // }
