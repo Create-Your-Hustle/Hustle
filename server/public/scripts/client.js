@@ -31,6 +31,24 @@ myApp.config(function($routeProvider, $locationProvider) {
         }
       }
     })
+    .when('/collaborators', {
+      templateUrl: '/views/templates/collaborators.html',
+      controller: 'CollaboratorSearchController',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
+    .when('/projects', {
+      templateUrl: '/views/templates/projects.html',
+      controller: 'ProjectSearchController',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
     .otherwise({
       redirectTo: 'home'
     });
