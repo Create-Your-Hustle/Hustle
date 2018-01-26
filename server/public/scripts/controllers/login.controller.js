@@ -7,7 +7,21 @@ myApp.controller('LoginController', function($http, $location, UserService) {
     };
     vm.message = '';
 
-    
+    vm.showLogin = function(ev) {
+      $mdDialog.show({
+        controller: 'LoginController as vm',
+        templateUrl: './views/modals/loginregister.dialog.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        fullscreen: self.customFullscreen 
+      })
+      .then(function() {
+        console.log(submitted)
+      }, function() {
+        console.log(cancelled)
+      });
+    };    
 
     vm.login = function() {
       console.log('LoginController -- login');
