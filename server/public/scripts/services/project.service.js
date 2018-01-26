@@ -1,4 +1,4 @@
-app.service('ProjectService', function ($http, $location) {
+myApp.service('ProjectService', function ($http, $location) {
     console.log('ProjectService Loaded');
     const self = this;
 
@@ -6,7 +6,7 @@ app.service('ProjectService', function ($http, $location) {
 
     //Get all projects
     self.getProjects = function () {
-      $http:({
+      $http({
         method:'GET',
         url:'/project'
       }).then(function (response) {
