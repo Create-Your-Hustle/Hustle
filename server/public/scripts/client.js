@@ -33,7 +33,7 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/collaborators', {
       templateUrl: '/views/templates/collaborators.html',
-      controller: 'InfoController',
+      controller: 'CollaboratorSearchController',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
@@ -42,7 +42,7 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/projects', {
       templateUrl: '/views/templates/projects.html',
-      controller: 'InfoController',
+      controller: 'ProjectSearchController',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
