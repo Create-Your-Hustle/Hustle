@@ -46,14 +46,14 @@ myApp.controller('LoginController', function($http, $location, UserService) {
         });
       }
     }
+    vm.facebookLogin = function () {
+      console.log('in facebookLogin')
+      $http ({
+        method: 'GET',
+        url: '/user/facebook'
+      }).then(function(response){
+        console.log('facebook', response)
+      })
+    }
 });
 
-vm.facebookLogin = function () {
-  console.log('in facebookLogin')
-  $http ({
-    method: 'GET',
-    url: '/user/facebook'
-  }).then(function(response){
-    console.log('facebook', response)
-  })
-}

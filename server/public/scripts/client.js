@@ -24,7 +24,7 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/info', {
       templateUrl: '/views/templates/info.html',
-      controller: 'InfoController',
+      controller: 'InfoController as vm',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
@@ -33,7 +33,7 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/collaborators', {
       templateUrl: '/views/templates/collaborators.html',
-      controller: 'CollaboratorSearchController',
+      controller: 'CollaboratorSearchController as vm',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
@@ -42,7 +42,7 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/projects', {
       templateUrl: '/views/templates/projects.html',
-      controller: 'ProjectSearchController',
+      controller: 'ProjectSearchController as vm',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
