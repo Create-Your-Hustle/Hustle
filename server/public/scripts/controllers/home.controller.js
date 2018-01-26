@@ -9,7 +9,7 @@ myApp.controller('HomeController', function($http, $location, UserService, $mdDi
           templateUrl: '../views/modals/loginregister.dialog.html',
           parent: angular.element(document.body),
           targetEvent: ev,
-          clickOutsideToClose:false,
+          clickOutsideToClose:true,
           fullscreen: self.customFullscreen 
         })
         .then(function() {
