@@ -49,6 +49,15 @@ myApp.config(function($routeProvider, $locationProvider) {
         }
       }
     })
+    .when('/collaborator-search', {
+      templateUrl: '/views/templates/collaborator-search.html',
+      controller: 'CollaboratorSearchController as vm',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
     .otherwise({
       redirectTo: 'home'
     });
