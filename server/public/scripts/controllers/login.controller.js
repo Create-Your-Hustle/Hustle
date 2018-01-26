@@ -1,4 +1,4 @@
-myApp.controller('LoginController', function($http, $location, UserService) {
+myApp.controller('LoginController', function($http, $location, $mdDialog, UserService) {
     console.log('LoginController created');
     var vm = this;
     vm.user = {
@@ -6,8 +6,6 @@ myApp.controller('LoginController', function($http, $location, UserService) {
       password: ''
     };
     vm.message = '';
-
-    
 
     vm.login = function() {
       console.log('LoginController -- login');
