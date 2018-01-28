@@ -4,5 +4,7 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
 
     self.ProjectService = ProjectService;
 
+
+    self.projectArray = ProjectService.projectArray
     ProjectService.getProjects();
 });

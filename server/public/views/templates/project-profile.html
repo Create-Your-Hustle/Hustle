@@ -1,6 +1,39 @@
 <div ng-include="'views/partials/nav.html'"></div>
 
 <md-content>
-    <h1>MY PROJECTS</h1>
+    <div layout="row">
+        <div layout="column" flex="30" layout-align="center center">
+            <img md-force-height="'400px'" src={{vm.projectArray.list[0].project_picture}}>
+            <h3>Collaborators</h3>
+        </div>
+        <div layout="column" flex="70">
+            <div layout="row">
+                <div flex="70">
+                    <h1>{{vm.projectArray.list[0].project_name}}</h1>
+                </div>
+                <div flex="30">
+                    <md-button class="md-accent md-raised" ng-click="vm.contactProjectOwner()">Contact Project Owner</md-button>
+                </div>
+            </div>
+            <p>{{vm.projectArray.list[0].project_description}}</p>
+            <div layout="row">
+                <div flex="50">
+                    <h3>Looking For...</h3>
+                </div>
+                <div flex="50">
+                    <h3>Preferences</h3>
+                    <p>Project City: {{vm.projectArray.list[0].project_city}}, {{vm.projectArray.list[0].project_state}}</p>
+                    <div ng-hide="vm.projectArray.list[0].project_remote">
+                            Not Accepting Remote Collaboration
+                    </div>
+                    <div ng-show="vm.projectArray.list[0].project_remote">
+                            Accepting Remote Collaboration
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+
+    {{vm.projectArray.list[0]}}
 </md-content>
