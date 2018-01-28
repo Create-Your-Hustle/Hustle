@@ -1,5 +1,5 @@
 <div ng-include="'views/partials/nav.html'"></div>
-<div layout="row" layout-sm="column">
+<md-content layout="row" layout-xs="column">
     <div flex="30" flex-sm>
         Search Bar
     </div>
@@ -7,22 +7,17 @@
         <div flex>
             <h1>People</h1>
         </div>
-        <div flex layout="row" layout-align="center">
-            <div flex="20">
-                Picture
-            </div>
-            <div flex layout="column" layout-align="center">
-                <div flex>
-                    <span>Name</span>
+        <md-list flex>
+            <md-list-item class="md-2-line"> <!-- ng-repeat="" -->
+                <!-- <img ng-src="" class="md-avatar" alt="" /> //profile pic-->
+                <div class="md-list-item-text" layout="column">
+                    <h3>Name</h3>
+                    <p>Skills</p>
                 </div>
-                <div flex>
-                    <span>Skills</span>
-                </div>
-            </div>
-            <div flex="25" layout-align="center">
-                <button>Message</button>
-            </div>
-        </div>
+                <!-- <img ng-src="" alt="" /> //stars -->
+                <md-button aria-label="message">Message</md-button> <!-- ng-click="" -->
+            </md-list-item>
+        </md-list>
     </div>
-</div>
+</md-content>
 <!-- footer here -->
