@@ -11,8 +11,8 @@
                 <div flex="70">
                     <h1>{{vm.projectArray.list[0].project_name}}</h1>
                 </div>
-                <div flex="30">
-                    <md-button class="md-accent md-raised" ng-click="vm.contactProjectOwner()">Contact Project Owner</md-button>
+                <div flex="30" class="dialog-demo-content">
+                    <md-button class="md-accent md-raised" ng-click="vm.showPrompt($event)">Contact Project Owner</md-button>
                 </div>
             </div>
             <p>{{vm.projectArray.list[0].project_description}}</p>

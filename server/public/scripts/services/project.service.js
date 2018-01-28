@@ -4,6 +4,20 @@ myApp.service('ProjectService', function ($http, $location) {
 
     self.projectArray = { list: [] };
 
+
+    // self.contactProjectOwner = function(ev) {
+    //   console.log('button Clicked');
+    //   $mdDialog.show({
+    //     controller: 'LoginController as lc',
+    //     templateUrl: '../views/modals/loginregister.dialog.html',
+    //     parent: angular.element(document.body),
+    //     targetEvent: ev,
+    //     clickOutsideToClose:true,
+    //     fullscreen: self.customFullscreen 
+    //   })
+      
+    // }
+
     //Get all projects
     self.getProjects = function () {
       $http({
@@ -14,6 +28,9 @@ myApp.service('ProjectService', function ($http, $location) {
         self.projectArray.list = response.data;
       })
     }
+
+
+
 
 
 
