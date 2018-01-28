@@ -20,4 +20,4 @@ myApp.controller('HomeController', function($http, $location, UserService, $mdDi
       };    
   
 
-});
+}); 
