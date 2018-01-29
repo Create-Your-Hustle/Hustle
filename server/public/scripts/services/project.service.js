@@ -10,7 +10,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog) {
       console.log('button Clicked');
       $mdDialog.show({
         controller: 'ProjectProfileController as vm',
-        templateUrl: '../views/modals/contactprojectowner.dialog.html',
+        templateUrl: '../views/modals/contact-project-owner.dialog.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,
