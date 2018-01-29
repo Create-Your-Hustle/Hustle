@@ -1,10 +1,11 @@
-myApp.service('ProjectService', function ($http, $location, $mdDialog) {
+myApp.service('ProjectService', function ($http, $location, $mdDialog, $routeParams) {
     console.log('ProjectService Loaded');
     const self = this;
 
     self.projectArray = { list: [] };
     self.skillArray = { list: [] };
     self.projectSkillArray = { list:[] };
+    self.projectProfile = { list:[] };
     self.imageUrl = {};
 
     //Modal for sending a message to project owners
@@ -31,6 +32,17 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog) {
       })
     };
 
+    //gets project info for project profile view
+    self.getProjectProfile = function(id) {
+      $http({
+        method:'GET',
+        url:'/project/profile/' + id
+      }).then(function (response) {
+        console.log('ROUTE PARAMS RESPONSE', response);
+        self.projectProfile.list = response.data;
+      })
+    }
+
     self.findRating = function(rating) {
       if (rating == 1) {
         return "../views/images/skill-one.jpg"
@@ -43,10 +55,11 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog) {
     }
 
         //Get all projects
-        self.getProjectSkills = function () {
+        self.getProjectSkills = function (id) {
+          self.projectSkillArray.list = [];
           $http({
             method:'GET',
-            url:'/project/skills'
+            url:'/project/skills/' + id
           }).then(function (response) {
             console.log('response', response);
             console.log('project skills ', self.projectSkillArray);
@@ -101,7 +114,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog) {
     self.getSkills = function() {
       $http({
         method: 'GET',
-        url: '/project/skills',
+        url: '/project/skillList',
       }).then(function(response){
         console.log(response.data);
         self.skillArray.list = response.data;
