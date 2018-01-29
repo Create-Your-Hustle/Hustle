@@ -3,6 +3,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog) {
     const self = this;
 
     self.projectArray = { list: [] };
+    self.skillArray = { list: [] };
     self.projectSkillArray = { list:[] };
     self.imageUrl = {};
 
@@ -28,7 +29,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog) {
         console.log('response', response);
         self.projectArray.list = response.data;
       })
-    }
+    };
 
     self.findRating = function(rating) {
       if (rating == 1) {
@@ -85,6 +86,27 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog) {
 
 
 
+    self.getProjectSearchResult = function (searchParamsObject) {
+      $http({
+        method:'GET',
+        url:'/project/search',
+        data: searchParamsObject,
+      }).then(function (response) {
+        console.log('response', response);
+        self.projectArray.list = response.data;
+      })
+    };
+
+    //get skill list for select
+    self.getSkills = function() {
+      $http({
+        method: 'GET',
+        url: '/project/skills',
+      }).then(function(response){
+        console.log(response.data);
+        self.skillArray.list = response.data;
+      })
+    }
 
   });
   
