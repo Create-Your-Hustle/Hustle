@@ -4,6 +4,7 @@
     <div layout="row">
         <div layout="column" flex="30" layout-align="center center">
             <img md-force-height="'400px'" src={{vm.projectArray.list[0].project_picture}}>
+            <button class="md-accent md-raised" ng-click="vm.uploadProjectPicture(vm.projectArray.list[0], projectImage.imageUrl)">Upload Project Image</button>
             <h3>Collaborators</h3>
         </div>
         <div layout="column" flex="70">
