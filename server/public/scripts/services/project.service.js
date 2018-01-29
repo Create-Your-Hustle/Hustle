@@ -101,7 +101,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog) {
     self.getSkills = function() {
       $http({
         method: 'GET',
-        url: '/project/skills',
+        url: '/project/skillList',
       }).then(function(response){
         console.log(response.data);
         self.skillArray.list = response.data;

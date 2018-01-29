@@ -34,6 +34,7 @@
                 <md-checkbox class="md-primary">For Trade</md-checkbox>
             </div>
         </md-input-container>
+        <md-button class="md-raised md-primary">Search</md-button>
         <div flex="5" layout="column"></div>
     </div>
 
@@ -48,11 +49,11 @@
                     </md-card-title-text>
                     <md-card-title-media>
                         <div class="md-media-sm card-media"></div>
+                        <img src="{{project.project_picture}}" alt="">
                     </md-card-title-media>
                 </md-card-title>
                 <md-card-actions layout="row" layout-align="end center">
                     <md-button><a href="#/myproject/{{project.project_id}}">View Project</a></md-button>
-                    <a href="#/myproject/{{project.project_id}}"></a>
                     <md-button>Message</md-button>
                 </md-card-actions>
             </md-card>
