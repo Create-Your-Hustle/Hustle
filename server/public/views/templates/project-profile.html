@@ -1,6 +1,49 @@
 <div ng-include="'views/partials/nav.html'"></div>
 
 <md-content>
-    <h1>MY PROJECTS</h1>
+    <div layout="row">
+        <div layout="column" flex="30" layout-align="center center">
+            <img ng-src="{{vm.projectArray.list[0].project_picture}}" class="md-avatar" />
+            <button class="md-accent md-raised" ng-click="vm.uploadProjectPicture(vm.projectArray.list[0], projectImage.imageUrl)">Upload Project Image</button>
+            <h3>Collaborators</h3>
+        </div>
+        <div layout="column" flex="70">
+            <div layout="row">
+                <div flex="70">
+                    <h1>{{vm.projectArray.list[0].project_name}}</h1>
+                </div>
+                <div flex="30" class="dialog-demo-content">
+                    <md-button class="md-accent md-raised" ng-click="vm.contactProjectOwner($event)">Contact Project Owner</md-button>
+                </div>
+            </div>
+            <p>{{vm.projectArray.list[0].project_description}}</p>
+            <div layout="row">
+                <div flex="50">
+                    <h3>Looking For...</h3>
+                    <md-list class="md-dense">
+                        <md-list-item ng-repeat="skill in vm.projectSkillArray.list">
+                            <md-content layout="row">
+                                    <p>{{skill.skill_name}} - <img class="skill-rating" ng-src="{{skill.required_rating}}" />
+                                    </p>
+                               
+                            </md-content>
+                        </md-list-item>
+                    </md-list>
+                </div>
+                <div flex="50">
+                    <h3>Preferences</h3>
+                    <p>Project City: {{vm.projectArray.list[0].project_city}}, {{vm.projectArray.list[0].project_state}}</p>
+                    <div ng-hide="vm.projectArray.list[0].project_remote">
+                        Not Accepting Remote Collaboration
+                    </div>
+                    <div ng-show="vm.projectArray.list[0].project_remote">
+                        Accepting Remote Collaboration
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+
+    {{vm.projectArray.list[0]}}
 </md-content>

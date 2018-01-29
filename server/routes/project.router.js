@@ -23,6 +23,7 @@ router.get('/', function (req, res) {
         }
     });
 });
+
 //Main project post
 router.post('/', function (req, res) {
 
@@ -87,10 +88,6 @@ router.delete('/', function (req, res) {
     });
 });
 
-
-
-
-
 //Project Search Get
 router.get('/search', function (req, res) {
     pool.connect(function (errorConnectingToDatabase, client, done) {
@@ -110,4 +107,51 @@ router.get('/search', function (req, res) {
         }
     });
 });
+
+//Project Skill Requirement Get
+router.get('/skills', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`SELECT * FROM projects_skills
+                            JOIN skills ON projects_skills.skill_id = skills.skill_id
+                            WHERE project_id = 1;`, function (errorMakingDatabaseQuery, result) {
+                done();
+                if (errorMakingDatabaseQuery) {
+                    console.log('error', errorMakingDatabaseQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                }
+            });
+        }
+    });
+});
+
+//Assign project URL's to projects profilePicture
+router.put('/projectPicture', function (req, res) {
+    console.log('REQ.BODY', req.body);
+    
+  
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`UPDATE projects SET project_picture=$1  WHERE project_id=$2;`, [req.body.project_picture, req.body.project_id],
+                function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                })
+        }
+    })
+  });
+
+
 module.exports = router;
