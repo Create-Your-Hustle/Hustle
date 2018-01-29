@@ -1,2 +1,62 @@
 <div ng-include="'views/partials/nav.html'"></div>
-<h1>PROJECTS</h1>
+<md-content layout="row" layout-xs="column" layout-padding>
+    <div flex="5" layout="column"></div>
+    <div flex="20" layout="column">
+        Search Projects
+        <md-input-container>
+            <input type="text" placeholder="Name">
+        </md-input-container>
+        <md-input-container flex="20" layout="column">
+                <label>Skills</label>
+                <md-select ng-model="selectedSkills"
+                           md-on-close="clearSearchTerm()"
+                           data-md-container-class="selectdemoSelectHeader"
+                           multiple>
+                           <md-select-header class="demo-select-header">
+                                <input ng-model="searchTerm"
+                                       type="search"
+                                       placeholder="Search for a skill.."
+                                       class="demo-header-searchbox md-text">
+                              </md-select-header>
+                              <md-optgroup label="skills">
+                                    <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillArray.list |
+                                      filter:searchTerm">{{skill.skill_name}}</md-option>
+                                  </md-optgroup>
+                <!-- <md-option ng-repeat="skill in vm.skillArray.list" ng-value="skill.skill_id">{{skill.skill_name}}</md-option> -->
+            </md-select>
+        </md-input-container>
+        <md-input-container layout-padding>
+            <input type="text" placeholder="Location">
+            <md-checkbox class="md-primary">Remote Opportunity</md-checkbox>
+            <md-subhead>Compensation</md-subhead>
+            <div>
+                <md-checkbox class="md-primary">For Pay</md-checkbox>
+                <md-checkbox class="md-primary">For Trade</md-checkbox>
+            </div>
+        </md-input-container>
+        <div flex="5" layout="column"></div>
+    </div>
+
+    <!-- Project Search Result Cards -->
+    <div flex="75" layout="column" ng-repeat="project in vm.projectSearchArray.list">
+        <div>
+            <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch layout="column">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{project.project_name}}</span>
+                        <span class="md-subhead">{{project.project_description}}</span>
+                    </md-card-title-text>
+                    <md-card-title-media>
+                        <div class="md-media-sm card-media"></div>
+                    </md-card-title-media>
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button><a href="#/myproject/{{project.project_id}}">View Project</a></md-button>
+                    <a href="#/myproject/{{project.project_id}}"></a>
+                    <md-button>Message</md-button>
+                </md-card-actions>
+            </md-card>
+        </div>
+    </div>
+
+</md-content>
