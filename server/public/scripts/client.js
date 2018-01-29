@@ -49,7 +49,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
-    .when('/myproject', {
+    .when('/myproject/:id', {
       templateUrl: '/views/templates/project-profile.html',
       controller: 'ProjectProfileController as vm',
       resolve: {
