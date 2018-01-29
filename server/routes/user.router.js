@@ -6,7 +6,7 @@ router.get('/facebook',
   passport.authenticate('facebook'));
 
 router.get('/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/home', successRedirect: '/#/user' })
+  passport.authenticate('facebook', { failureRedirect: '/home', successRedirect: 'http://localhost:5000/#/user' })
   );
 
 // Handles Ajax request for user information if user is authenticated

@@ -67,9 +67,8 @@ passport.use('facebook', new FacebookStrategy({
 },
   function (token, refreshToken, profile, done) {
 
-    // asynchronous
-    process.nextTick(function () {
-      pool.connect(function (err, client, done) {
+
+      pool.connect(function (err, client, release) {
 
         if (err) {
           console.log('Error connecting to database', err)
@@ -90,6 +89,7 @@ passport.use('facebook', new FacebookStrategy({
                returning *)
               SELECT * FROM existing_user UNION ALL
             SELECT * FROM new_user;`, [profile.id], function (error, result) {
+              release()
               if (error) {
                 console.log('Error making query', error)
                 done(null, false);
@@ -131,7 +131,7 @@ passport.use('facebook', new FacebookStrategy({
       //     }
 
       // });
-    });
+    
 
   }));
 ;
