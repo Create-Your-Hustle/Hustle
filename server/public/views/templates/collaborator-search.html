@@ -5,16 +5,16 @@
     </div>
     <div flex layout="column">
         <div flex>
-            <h1>People</h1>
+            <h1>Collaborators</h1>
         </div>
         <md-list flex>
-            <md-list-item class="md-2-line"> <!-- ng-repeat="" -->
-                <!-- <img ng-src="" class="md-avatar" alt="" /> //profile pic-->
+            <md-list-item ng-repeat="collaborator in vm.collaborators.list" class="md-2-line">
+                <img ng-src="{{collaborator.user_picture}}" class="md-avatar" alt="profile picture" />
                 <div class="md-list-item-text" layout="column">
-                    <h3>Name</h3>
-                    <p>Skills</p>
+                    <h3>{{collaborator.username}}</h3>
+                    <p>{{collaborator.skill_name}}</p>
                 </div>
-                <!-- <img ng-src="" alt="" /> //stars -->
+                <img alt="stars" /> <!-- ng-src="" -->
                 <md-button aria-label="message">Message</md-button> <!-- ng-click="" -->
             </md-list-item>
         </md-list>
