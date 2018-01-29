@@ -68,7 +68,6 @@ router.put('/', function (req, res) {
 
 //Main project delete
 router.delete('/', function (req, res) {
-
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
@@ -108,7 +107,6 @@ router.get('/search', function (req, res) {
     });
 });
 
-//Project Skill Requirement Get
 router.get('/skills', function (req, res) {
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
@@ -130,11 +128,30 @@ router.get('/skills', function (req, res) {
     });
 });
 
+router.get('/skillList', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`SELECT * 
+                            FROM skills`, function (errorMakingDatabaseQuery, result) {
+                done();
+                if (errorMakingDatabaseQuery) {
+                    console.log('error', errorMakingDatabaseQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                }
+            });
+        }
+    });
+});
+
+
 //Assign project URL's to projects profilePicture
 router.put('/projectPicture', function (req, res) {
     console.log('REQ.BODY', req.body);
-    
-  
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
@@ -152,6 +169,7 @@ router.put('/projectPicture', function (req, res) {
         }
     })
   });
+
 
 
 module.exports = router;

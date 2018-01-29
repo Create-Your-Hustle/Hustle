@@ -1,8 +1,10 @@
-myApp.controller('ProjectProfileController', function(UserService, ProjectService, $mdDialog){
+myApp.controller('ProjectProfileController', function(UserService, ProjectService, $mdDialog, $routeParams){
     console.log('ProjectProfileController created');
     const self = this;
 
     self.ProjectService = ProjectService;
+
+    self.selectedProject = $routeParams.id
 
     ProjectService.getProjects();
     ProjectService.getProjectSkills();
@@ -15,7 +17,6 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
 
       self.sendMessage = function(message){
           console.log('message: ', message);
-          
       }
 
 
