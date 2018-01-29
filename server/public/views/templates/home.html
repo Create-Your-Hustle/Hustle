@@ -1,14 +1,43 @@
-<div>
+<div ng-include="'views/partials/header.html'"></div>
 
-    <div layout="column" id="home1">
 
-        <div>
 
-            <div layout="row" layout-align="center" id="hustleTitle">HUSTLE</div>
-            <div layout="row" layout-align="center" >Where people and ideas meet.</div>
-            <div layout="row" layout-align="center" >Get started.</div>
+<div layout="column" id="home1">
 
+    <div>
+
+        <div layout="row" layout-align="center" id="hustleTitle">HUSTLE</div>
+        <div layout="row" layout-align="center" class="secondFont">
+            <H2>Where people and ideas meet.</H2>
         </div>
+        <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
+            <md-button md-no-ink class="md-primary md-raised" ng-click="hc.showLogin($event)" class="secondFont">
+                Get Started
+            </md-button>
+        </div>
+    </div>
+</div>
+
+
+<div layout="row" layout-align="left" class="secondFont">
+    <div flex="50">
+        <H1>Hustle is a collaborative platform that enables anyone with a side hustle or passion project to find the talented
+            people they need to bring their ideas to life.
+        </H1>
+        <H2>The best innovation and creativity comes from a diversity of thought and experiences. Hustle brings those disparate
+            skills together in one place.</H2>
+    </div>
+    <div flex="50" layout-align="right">
+        <H2>SIDE HUSTLE.</H2>
+        <H2>/sīd ˈhəsəl/. </H2>
+        <H2>noun.</H2>
+        <H3>
+            <ol>
+                <li>Your nights and weekends passion project</li>
+                <li>Your creative outlet</li>
+                <li>Your supplemental income</li>
+            </ol>
+        </H3>
     </div>
 </div>
 
@@ -18,13 +47,10 @@
     </p>
 
     <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
-        <md-button class="md-primary md-raised" ng-click="hc.showLogin($event)">
+        <md-button class="md-primary md-raised btn1" ng-click="hc.showLogin($event)">
             Hustle
         </md-button>
     </div>
 
 </div>
-
-</body>
-
-</html>
+<div></div>
