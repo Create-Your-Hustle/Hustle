@@ -81,6 +81,13 @@ li a:hover {
   color: #eee;
 }
 
+.skill-rating {
+  width: 125px;
+  height: 25px;
+  position: relative;
+
+}
+
 
 /* Styles I Pulled Directly from the Modal Tutorial */
 .dialogdemoBasicUsage #popupContainer {

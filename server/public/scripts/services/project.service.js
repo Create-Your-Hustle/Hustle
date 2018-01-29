@@ -3,6 +3,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog) {
     const self = this;
 
     self.projectArray = { list: [] };
+    self.projectSkillArray = { list:[] };
     self.imageUrl = {};
 
     //Modal for sending a message to project owners
@@ -17,7 +18,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog) {
         fullscreen: self.customFullscreen 
       })     
     };
-
+    
     //Get all projects
     self.getProjects = function () {
       $http({
@@ -29,6 +30,33 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog) {
       })
     }
 
+    self.findRating = function(rating) {
+      if (rating == 1) {
+        return "../views/images/skill-one.jpg"
+      } else if ( rating == 2 ) {
+        return "../views/images/skill-two.jpg"
+      } else if ( rating == 3 ) {
+        return "../views/images/skill-three.jpg"
+      }
+
+    }
+
+        //Get all projects
+        self.getProjectSkills = function () {
+          $http({
+            method:'GET',
+            url:'/project/skills'
+          }).then(function (response) {
+            console.log('response', response);
+            console.log('project skills ', self.projectSkillArray);
+            for (let i = 0; i < response.data.length; i++) {
+              self.projectSkillArray.list.push({
+                skill_name: response.data[i].skill_name,
+                required_rating: self.findRating(response.data[i].required_rating)
+              })
+            }
+          })
+        }
     self.uploadProjectPicture = function (project) {
       console.log('uploadProjectPicture')
       var fsClient = filestack.init('AR2OVvMAHTTiTRo7bG05Vz');

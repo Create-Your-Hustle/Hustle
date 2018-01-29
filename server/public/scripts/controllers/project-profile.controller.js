@@ -5,7 +5,9 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     self.ProjectService = ProjectService;
 
     ProjectService.getProjects();
+    ProjectService.getProjectSkills();
 
+    self.projectSkillArray = ProjectService.projectSkillArray
     self.projectArray = ProjectService.projectArray
 
     self.contactProjectOwner = ProjectService.contactProjectOwner
