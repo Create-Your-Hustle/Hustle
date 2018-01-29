@@ -4,13 +4,14 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
 
     self.ProjectService = ProjectService;
 
-    self.selectedProject = $routeParams.id
 
     ProjectService.getProjects();
-    ProjectService.getProjectSkills();
+    ProjectService.getProjectProfile($routeParams.id);
+    ProjectService.getProjectSkills($routeParams.id);
 
     self.projectSkillArray = ProjectService.projectSkillArray
     self.projectArray = ProjectService.projectArray
+    self.projectProfile = ProjectService.projectProfile
 
     self.contactProjectOwner = ProjectService.contactProjectOwner
     self.uploadProjectPicture = ProjectService.uploadProjectPicture

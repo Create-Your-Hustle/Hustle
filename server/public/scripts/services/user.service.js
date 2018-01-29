@@ -2,6 +2,10 @@ myApp.service('UserService', function($http, $location){
   console.log('UserService Loaded');
   var self = this;
   self.userObject = {};
+  self.user = {
+    username: '',
+    password: ''
+  };
 
   self.getuser = function(){
     console.log('UserService -- getuser');
