@@ -67,6 +67,7 @@ passport.use('facebook', new FacebookStrategy({
 },
   function (token, refreshToken, profile, done) {
 
+    console.log(profile)
 
       pool.connect(function (err, client, release) {
 
@@ -80,15 +81,15 @@ passport.use('facebook', new FacebookStrategy({
             FROM users 
             WHERE facebook_id = $1),
             new_user AS (
-            INSERT INTO users (facebook_id)
-            SELECT $1
+            INSERT INTO users (facebook_id, username)
+            SELECT $1, $2
             WHERE NOT EXISTS (
                 SELECT facebook_id
                 FROM users
                 WHERE facebook_id = $1)
                returning *)
               SELECT * FROM existing_user UNION ALL
-            SELECT * FROM new_user;`, [profile.id], function (error, result) {
+            SELECT * FROM new_user;`, [profile.id, profile.displayName], function (error, result) {
               release()
               if (error) {
                 console.log('Error making query', error)
