@@ -9,7 +9,7 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     self.projectArray = ProjectService.projectArray
 
     self.contactProjectOwner = ProjectService.contactProjectOwner
-
+    self.uploadProjectPicture = ProjectService.uploadProjectPicture
 
       self.sendMessage = function(message){
           console.log('message: ', message);
