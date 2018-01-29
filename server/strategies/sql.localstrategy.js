@@ -1,49 +1,19 @@
+require('dotenv').config()
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 var encryptLib = require('../modules/encryption');
 var pool = require('../modules/pool.js');
 var FacebookStrategy = require('passport-facebook').Strategy
 
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
+passport.serializeUser( function( user, done ) {
+  //nothing to do here as we use the username as it is
+  done( null, user );
+} );
 
-passport.deserializeUser(function(id, done) {
-  console.log('called deserializeUser - pg');
-
-  pool.connect(function (err, client, release) {
-    if(err) {
-      console.log('connection err ', err);
-      release();
-      done(err);
-    }
-
-    var user = {};
-
-    client.query("SELECT * FROM users WHERE id = $1", [id], function(err, result) {
-
-      // Handle Errors
-      if(err) {
-        console.log('query err ', err);
-        done(err);
-        release();
-      }
-
-      user = result.rows[0];
-      release();
-
-      if(!user) {
-          // user not found
-          return done(null, false, {message: 'Incorrect credentials.'});
-      } else {
-        // user found
-        console.log('User row ', user);
-        done(null, user);
-      }
-
-    });
-  });
-});
+passport.deserializeUser( function( obj, done ) {
+  //again, we just pass the username forward
+  done( null, obj );
+} );
 
 // Does actual work of logging in
 passport.use('local', new localStrategy({
@@ -90,19 +60,69 @@ passport.use('local', new localStrategy({
     }
 ));
 
-// passport.use('facebook', new FacebookStrategy({
-//   clientID: process.env.FACEBOOK_APP_ID,
-//   clientSecret: process.env.FACEBOOK_APP_SECRET,
-//   callbackURL: process.env.FACEBOOK_APP_URL
-// },
-// function(accessToken, refreshToken, profile, done) {
-//   User.findOrCreate( {facebookId: profile.id}, function(err, user) {
-//     if (err) { return done(err); 
-//     }
-//     done(null, user);
-//   });
-// }
-// ));
+passport.use('facebook', new FacebookStrategy({
+  clientID: process.env.FACEBOOK_APP_ID,
+  clientSecret: process.env.FACEBOOK_APP_SECRET,
+  callbackURL: process.env.FACEBOOK_APP_URL
+},
+function(token, refreshToken, profile, done) {
+
+  // asynchronous
+  process.nextTick(function() {
+    pool.connect(function (err, client, done){
+      if (err) {
+        console.log('Error connecting to database', err)
+        // Does this need to be here?  Can it even do anything?
+        res.sendStatus(500);
+      } else {
+        client.query(`SELECT * FROM users WHERE users.facebook_id = $1`, [profile.id], function (error, result) {
+          done();
+          if (error) {
+            console.log('Error making query', error) 
+          } else if (result.rows[0]){
+            return done(null, result.rows[0])
+          } else {
+            //create user
+          }
+        })
+      }
+    })
+      // find the user in the database based on their facebook id
+      // User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
+
+      //     // if there is an error, stop everything and return that
+      //     // ie an error connecting to the database
+      //     if (err)
+      //         return done(err);
+
+      //     // if the user is found, then log them in
+      //     if (user) {
+      //         return done(null, user); // user found, return that user
+      //     } else {
+      //         // if there is no user found with that facebook id, create them
+      //         var newUser            = new User();
+
+      //         // set all of the facebook information in our user model
+      //         newUser.facebook.id    = profile.id; // set the users facebook id                   
+      //         newUser.facebook.token = token; // we will save the token that facebook provides to the user                    
+      //         newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
+      //         newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
+
+      //         // save our user to the database
+      //         newUser.save(function(err) {
+      //             if (err)
+      //                 throw err;
+
+      //             // if successful, return the new user
+      //             return done(null, newUser);
+      //         });
+      //     }
+
+      // });
+  });
+
+}));
+;
 
 
 
