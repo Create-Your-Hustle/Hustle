@@ -1,7 +1,5 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div class="container">
-
-    <h1 id="welcome" class="lead">Welcome, {{vm.userObject.userName}}!</h1>
     <button class="btn btn-default" ng-click="vm.userService.logout()">Log Out</button>
 </div>
 
@@ -19,7 +17,7 @@
 
 
     </div>
-    <div flex layout="row">
+    <div flex layout-xs="column" layout="row">
         <div flex>
             <h3>Skills</h3>
 
@@ -32,6 +30,17 @@
         </div>
         <div flex>
             <h3>Preferences</h3>
+            <p>
+                Location: {{vm.selectedUser.list[0].user_city}}, {{vm.selectedUser.list[0].user_state}},
+                <span ng-show=vm.selectedUser.list[0].user_remote>Willing to work remotely</span>
+                <span ng-hide=vm.selectedUser.list[0].user_remote>Local only</span>
+            </p>
+            <p>
+                Compensation: 
+                <span ng-show=vm.selectedUser.list[0].user_for_pay>Pay</span> 
+                <span ng-show=vm.selectedUser.list[0].user_for_trade>Trade</span>
+            </p>
+
         </div>
     </div>
     <div>
