@@ -121,5 +121,25 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       })
     }
 
+    //send message to project owner
+    self.sendMessage = function(message, project){
+      console.log('message: ', message);
+      console.log('project: ', project);
+      info = {
+        message: message.message,
+        project_id: project.project_id,
+        project_name: project.project_name
+      }
+      console.log('info: ', info);
+      
+      $http({
+        method: 'PUT',
+        url: '/project/message',
+        data: info
+      }).then(function (response) {
+        console.log('response', response);
+      })
+  }
+
   });
   
