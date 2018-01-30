@@ -1,4 +1,4 @@
-myApp.controller('ProjectSearchController', function(UserService, ProjectService){
+myApp.controller('ProjectSearchController', function(UserService, ProjectService, skillFilter){
     console.log('ProjectSearchController created');
     const self = this;
 
@@ -9,6 +9,13 @@ myApp.controller('ProjectSearchController', function(UserService, ProjectService
     ProjectService.getSkills();
     ProjectService.getProjects();
 
-    self.query = {};
+    //filter logic
+    self.filteredProjects = [];
+    self.parametersChanged = function (skills) {
+        console.log(skills);
+        self.filteredProjects = skillFilter(self.projectSearchArray.list, skills)
+        console.log('EVENTS', self.filteredProjects);
+    }
+
 
 });
