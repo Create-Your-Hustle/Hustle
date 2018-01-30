@@ -17,7 +17,7 @@
                 <h2 class="lead">Send a message to the project owner</h2>
                 <h1 class="lead alert alert-danger" role="alert" ng-if="vm.message != ''">
                     </h2>
-                    <form ng-submit="vm.sendMessage(vm.message)" id="userMessage">
+                    <form ng-submit="vm.sendMessage(vm.message, vm.projectProfile.list[0])" id="userMessage">
                         <div>
                             <label for="username">Message:</label>
                             <textarea rows="5" cols="60" ng-model="vm.message.message" form="userMessage"></textarea>
