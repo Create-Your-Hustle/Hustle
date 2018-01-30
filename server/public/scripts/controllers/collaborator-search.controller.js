@@ -3,4 +3,7 @@ myApp.controller('CollaboratorSearchController', function(UserService, Collabora
     const self = this;
 
     self.collaborators = CollaboratorService.collaborators;
+    self.getCollaborators = CollaboratorService.getCollaborators;
+
+    self.getAllCollaboratorsForSearch();
 });
