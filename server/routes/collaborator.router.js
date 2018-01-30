@@ -51,7 +51,7 @@ router.get('/search/all', function (req, res) {
             }); // end query
         }
     });
-}); // end collaborator/search/all getaster
+}); // end collaborator/search/all get
 
 // Main collaborator post
 router.post('/', function (req, res) {
