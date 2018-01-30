@@ -23,6 +23,11 @@ body:nth-child {
   width: 300px;
   height: 300px;
 }
+
+.profilePhoto {
+  width: 300px;
+}
+
 .instructions {
   background-color: #222222;
   color: rgb(255, 253, 253);

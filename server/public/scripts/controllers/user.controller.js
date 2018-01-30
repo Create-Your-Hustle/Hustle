@@ -3,4 +3,9 @@ myApp.controller('UserController', function(UserService) {
   var vm = this;
   vm.userService = UserService;
   vm.userObject = UserService.userObject;
+  vm.getUser = UserService.getUser
+  vm.selectedUser = UserService.selectedUser
+
+  vm.getUser()
+
 });
