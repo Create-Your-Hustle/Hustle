@@ -12,9 +12,11 @@ router.get('/search/all', function (req, res) {
             res.sendStatus(500);
         } else {
             // this query needs to be changed to include concatonated skills
-            client.query(`SELECT * FROM users
-                        LEFT JOIN users_skills ON users.id=users_skills.user_id
-                        LEFT JOIN skills ON users_skills.skill_id=skills.skill_id;`, function (errorMakingDatabaseQuery, result) {
+            client.query(`SELECT string_agg(s.skill_name, ', ') AS user_skills, u.*
+                        FROM users u
+                        LEFT JOIN users_skills us ON u.id = us.user_id
+                        LEFT JOIN skills s ON s.skill_id = us.skill_id
+                        GROUP BY u.id;`, function (errorMakingDatabaseQuery, result) {
                 done();
                 if (errorMakingDatabaseQuery) {
                     console.log('error', errorMakingDatabaseQuery);
