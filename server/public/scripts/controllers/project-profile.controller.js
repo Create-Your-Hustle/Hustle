@@ -15,10 +15,8 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
 
     self.contactProjectOwner = ProjectService.contactProjectOwner
     self.uploadProjectPicture = ProjectService.uploadProjectPicture
+    self.sendMessage = ProjectService.sendMessage
 
-      self.sendMessage = function(message){
-          console.log('message: ', message);
-      }
 
 
 });
