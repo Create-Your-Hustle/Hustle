@@ -1,8 +1,25 @@
+require('dotenv').config()
+
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const pool = require('../modules/pool.js');
 const path = require('path');
+const nodemailer = require('nodemailer');
+
+
+
+var transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+              type: 'OAuth2',
+              clientId: '360485416428-s79cfmrp2mgkkphdih1uc1oumc9j4su8.apps.googleusercontent.com',
+              clientSecret: 'JFjG6jMjHRmP-CtPNrPWfo5c'
+          
+    }
+  });
 
 //Main project get
 router.get('/', function (req, res) {
@@ -192,6 +209,52 @@ router.get('/profile/:id', function (req, res) {
         }
     });
 });
+
+//Message project creator
+router.put('/message', function (req, res) {
+    console.log('REQ.BODY', req.body);
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`SELECT * FROM users_projects
+            JOIN users ON users_projects.user_id = users.id
+            WHERE project_id = $1 AND can_edit = true;`, [req.body.project_id], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        console.log('results: ', result.rows);
+                        
+                        //send message via nodemailer
+                        var mailOptions = {
+                            from: `Hustle <startyourhustle@gmail.com>`,
+                            to: `${result.rows[0].email}`,
+                            subject: `HUSTLE: Collaborator message for ${req.body.project_name}`,
+                            text: `${req.body.message}`,
+                          
+                            auth: {
+                                  user: 'startyourhustle@gmail.com',
+                                  refreshToken: process.env.NODEMAILER_REFRESHTOKEN,
+                                  accessToken: process.env.NODEMAILER_ACCESSTOKEN
+                            }
+                          };
+                          
+                          transporter.sendMail(mailOptions, function(error, info){
+                            if (error) {
+                              console.log('This is your error: ', error);
+                            } else {
+                              console.log('Email sent: ' + info.response);
+                            }
+                          });
+                        res.sendStatus(201);
+                    }
+                })
+        }
+    })
+  });
+
 
 
 module.exports = router;
