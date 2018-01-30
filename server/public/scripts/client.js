@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute', 'ngMaterial']);
+var myApp = angular.module('myApp', ['ngRoute', 'ngMaterial', 'jkAngularCarousel']);
 
 /// Routes ///
 myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
@@ -15,7 +15,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
     })
     .when('/user', {
       templateUrl: '/views/templates/user.html',
-      controller: 'UserController as uc',
+      controller: 'UserController as vm',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();

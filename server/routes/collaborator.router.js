@@ -4,6 +4,31 @@ const passport = require('passport');
 const pool = require('../modules/pool.js');
 const path = require('path');
 
+// Main collaborator get
+router.get('/select', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            // this query needs to be changed to include concatonated skills
+            client.query(`SELECT users.username, users.user_picture, skills.skill_name, users_skills.skill_rating, users.user_city, users.user_state, users.user_remote,
+                users.user_for_pay, users.user_for_trade, users.user_bio, users.user_weekly_min, users.user_weekly_max FROM users
+                LEFT JOIN users_skills ON users.id=users_skills.user_id
+                LEFT JOIN skills ON users_skills.skill_id=skills.skill_id
+                WHERE users.username = $1;`,[req.query.name], function (errorMakingDatabaseQuery, result) {
+                done();
+                if (errorMakingDatabaseQuery) {
+                    console.log('error', errorMakingDatabaseQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                }
+            });
+        }
+    });
+}); // end collaborator get
+
 // Get all info for collaborator search page
 router.get('/search/all', function (req, res) {
     pool.connect(function (errorConnectingToDatabase, client, done) {
@@ -26,7 +51,7 @@ router.get('/search/all', function (req, res) {
             }); // end query
         }
     });
-}); // end collaborator/search/all get
+}); // end collaborator/search/all getaster
 
 // Main collaborator post
 router.post('/', function (req, res) {
