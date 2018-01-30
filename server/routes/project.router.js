@@ -23,6 +23,7 @@ router.get('/', function (req, res) {
         }
     });
 });
+
 //Main project post
 router.post('/', function (req, res) {
 
@@ -67,7 +68,6 @@ router.put('/', function (req, res) {
 
 //Main project delete
 router.delete('/', function (req, res) {
-
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
@@ -86,6 +86,8 @@ router.delete('/', function (req, res) {
         }
     });
 });
+
+
 
 //Project Search Get
 router.get('/search', function (req, res) {
@@ -107,11 +109,51 @@ router.get('/search', function (req, res) {
     });
 });
 
+router.get('/skills/:id', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error CDB', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`SELECT * FROM projects_skills
+                            JOIN skills ON projects_skills.skill_id = skills.skill_id
+                            WHERE project_id = $1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
+                done();
+                if (errorMakingDatabaseQuery) {
+                    console.log('error MDB', errorMakingDatabaseQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                }
+            });
+        }
+    });
+});
+
+router.get('/skillList', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`SELECT * 
+                            FROM skills`, function (errorMakingDatabaseQuery, result) {
+                done();
+                if (errorMakingDatabaseQuery) {
+                    console.log('error', errorMakingDatabaseQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                }
+            });
+        }
+    });
+});
+
+
 //Assign project URL's to projects profilePicture
 router.put('/projectPicture', function (req, res) {
     console.log('REQ.BODY', req.body);
-    
-  
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
@@ -129,4 +171,27 @@ router.put('/projectPicture', function (req, res) {
         }
     })
   });
+
+//Project Profile Get
+router.get('/profile/:id', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`SELECT * FROM projects
+            WHERE project_id = $1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
+                done();
+                if (errorMakingDatabaseQuery) {
+                    console.log('error', errorMakingDatabaseQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                }
+            });
+        }
+    });
+});
+
+
 module.exports = router;
