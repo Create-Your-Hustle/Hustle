@@ -5,13 +5,16 @@ const pool = require('../modules/pool.js');
 const path = require('path');
 
 // Main collaborator get
-router.get('/', function (req, res) {
+router.get('/search/all', function (req, res) {
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`PUT SQL HERE`, function (errorMakingDatabaseQuery, result) {
+            // this query needs to be changed to include concatonated skills
+            client.query(`SELECT * FROM users
+                        LEFT JOIN users_skills ON users.id=users_skills.user_id
+                        LEFT JOIN skills ON users_skills.skill_id=skills.skill_id;`, function (errorMakingDatabaseQuery, result) {
                 done();
                 if (errorMakingDatabaseQuery) {
                     console.log('error', errorMakingDatabaseQuery);
