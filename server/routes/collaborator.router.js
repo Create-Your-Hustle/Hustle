@@ -4,7 +4,6 @@ const passport = require('passport');
 const pool = require('../modules/pool.js');
 const path = require('path');
 
-router.deleteme
 
 // Main collaborator get
 router.get('/select', function (req, res) {

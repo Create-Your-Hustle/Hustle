@@ -7,5 +7,5 @@ myApp.controller('UserController', function(UserService) {
   vm.selectedUser = UserService.selectedUser
 
   vm.getUser()
-  vm.deleteME()
+
 });
