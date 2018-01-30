@@ -9,4 +9,6 @@ myApp.controller('ProjectSearchController', function(UserService, ProjectService
     ProjectService.getSkills();
     ProjectService.getProjects();
 
+    self.query = {};
+
 });
