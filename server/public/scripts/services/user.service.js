@@ -1,4 +1,5 @@
 myApp.service('UserService', function($http, $location){
+  vm.deleteme()
   console.log('UserService Loaded');
   var self = this;
   self.userObject = {};
