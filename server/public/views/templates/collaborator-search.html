@@ -1,28 +1,23 @@
 <div ng-include="'views/partials/nav.html'"></div>
-<div layout="row" layout-sm="column">
+<md-content layout="row" layout-xs="column">
     <div flex="30" flex-sm>
         Search Bar
     </div>
     <div flex layout="column">
         <div flex>
-            <h1>People</h1>
+            <h1>Collaborators</h1>
         </div>
-        <div flex layout="row" layout-align="center">
-            <div flex="20">
-                Picture
-            </div>
-            <div flex layout="column" layout-align="center">
-                <div flex>
-                    <span>Name</span>
+        <md-list flex>
+            <md-list-item ng-repeat="collaborator in vm.collaborators.list" class="md-2-line">
+                <img ng-src="{{collaborator.user_picture}}" class="md-avatar" alt="profile picture" />
+                <div class="md-list-item-text" layout="column">
+                    <h3>{{collaborator.username}}</h3>
+                    <p>{{collaborator.skill_name}}</p>
                 </div>
-                <div flex>
-                    <span>Skills</span>
-                </div>
-            </div>
-            <div flex="25" layout-align="center">
-                <button>Message</button>
-            </div>
-        </div>
+                <img alt="stars" /> <!-- ng-src="" -->
+                <md-button aria-label="message">Message</md-button> <!-- ng-click="" -->
+            </md-list-item>
+        </md-list>
     </div>
-</div>
+</md-content>
 <!-- footer here -->
