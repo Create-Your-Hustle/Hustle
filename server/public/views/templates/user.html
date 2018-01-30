@@ -1,6 +1,40 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div class="container">
 
-    <h1 id="welcome" class="lead">Welcome, {{uc.userObject.userName}}!</h1>
-    <button class="btn btn-default" ng-click="uc.userService.logout()">Log Out</button>
+    <h1 id="welcome" class="lead">Welcome, {{vm.userObject.userName}}!</h1>
+    <button class="btn btn-default" ng-click="vm.userService.logout()">Log Out</button>
+</div>
+
+<div layout="column">
+    <div flex layout-xs="column" layout="row">
+        <div flex>
+            <img class="profilePhoto" ng-src="{{vm.selectedUser.list[0].user_picture}}">
+        </div>
+        <div flex>
+            <h2>
+                {{vm.selectedUser.list[0].username}}
+            </h2>
+            <p>{{vm.selectedUser.list[0].user_bio}}</p>
+        </div>
+
+
+    </div>
+    <div flex layout="row">
+        <div flex>
+            <h3>Skills</h3>
+
+            <table>
+                <tr ng-repeat="skills in vm.selectedUser.list ">
+                    <td>{{skills.skill_name}}</td>
+                    <td>{{skills.skill_rating}}</td>
+                </tr>
+            </table>
+        </div>
+        <div flex>
+            <h3>Preferences</h3>
+        </div>
+    </div>
+    <div>
+        <h2>Projects</h2>
+    </div>
 </div>

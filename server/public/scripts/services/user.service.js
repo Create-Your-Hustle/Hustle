@@ -2,9 +2,24 @@ myApp.service('UserService', function($http, $location){
   console.log('UserService Loaded');
   var self = this;
   self.userObject = {};
+  self.selectedUser = {list: []}
   self.user = {
     username: '',
     password: ''
+  };
+
+  self.getUser = function (username) {
+    if(!username) {
+      username = self.userObject.userName
+    }
+    $http({
+      method:'GET',
+      url:'/collaborator/select',
+      params: {name: username},
+    }).then(function (response) {
+      console.log('response', response);
+      self.selectedUser.list = response.data;
+    })
   };
 
   self.getuser = function(){

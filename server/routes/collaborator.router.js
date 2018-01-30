@@ -5,6 +5,29 @@ const pool = require('../modules/pool.js');
 const path = require('path');
 
 // Main collaborator get
+router.get('/select', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            // this query needs to be changed to include concatonated skills
+            client.query(`SELECT users.username, users.user_picture, skills.skill_name, users_skills.skill_rating FROM users
+                LEFT JOIN users_skills ON users.id=users_skills.user_id
+                LEFT JOIN skills ON users_skills.skill_id=skills.skill_id
+                WHERE users.username = $1;`,[req.query.name], function (errorMakingDatabaseQuery, result) {
+                done();
+                if (errorMakingDatabaseQuery) {
+                    console.log('error', errorMakingDatabaseQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                }
+            });
+        }
+    });
+}); // end collaborator get
+
 router.get('/search/all', function (req, res) {
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
@@ -25,7 +48,7 @@ router.get('/search/all', function (req, res) {
             });
         }
     });
-}); // end collaborator get
+});
 
 // Main collaborator post
 router.post('/', function (req, res) {
