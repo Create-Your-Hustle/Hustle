@@ -32,6 +32,16 @@ myApp.service('UserService', function($http, $location){
     })
   }
 
+  self.editUserPreferences = function (pref) {
+    $http({
+      method: 'PUT',
+      url: 'collaborator/preferences',
+      data: pref,
+    }).then(function (response) {
+      self.getUser(self.userObject.userName)
+    })
+  }
+
   self.getuser = function(){
     console.log('UserService -- getuser');
     $http.get('/user').then(function(response) {

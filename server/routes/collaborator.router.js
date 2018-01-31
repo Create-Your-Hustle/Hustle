@@ -102,7 +102,10 @@ router.put('/preferences', function (req, res) {
                 console.log('error', errorConnectingToDatabase);
                 res.sendStatus(500);
             } else {
-                client.query(`UPDATE users SET username = $1, user_bio = $2 WHERE id = $3`, [req.body.username,req.body.user_bio, req.user.id], function (errorMakingDatabaseQuery, result) {
+                client.query(`UPDATE users SET user_city = $1, user_state = $2, user_remote = $3, user_for_pay = $4, user_for_trade = $5, 
+                                user_weekly_min = $6, user_weekly_max = $7 WHERE id = $8`,  
+                                [req.body.user_city, req.body.user_state, req.body.user_remote, req.body.user_for_pay, req.body.user_for_trade, 
+                                    req.body.user_weekly_min, req.body.user_weekly_max, req.user.id], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         res.sendStatus(500);
