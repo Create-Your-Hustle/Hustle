@@ -10,6 +10,10 @@ body:nth-child {
   padding: 20px;
 }
 
+.header{
+  flex: 0 0 auto;
+}
+
 .navbar {
   font-family: 'open sans', sans-serif;
 }
@@ -74,9 +78,10 @@ ul {
 
 li {
   text-align: right;
+  color: black;
 }
 
-li a {
+a {
   display: block;
   color: white;
   text-align: center;
@@ -104,7 +109,16 @@ md-card {
 }
 
 #home1 {
-  background: url("../assets/squarespace/header-background.png") no-repeat center center fixed;
+  background-image: url("../assets/squarespace/header-background.png");   
+    background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-position: center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+        min-height: 725px;
+
 }
 
 
