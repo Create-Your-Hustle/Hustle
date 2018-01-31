@@ -31,8 +31,24 @@
         <div flex="5" layout="column"></div>
     </div>
 
-    <!-- Project Search Result Cards -->
-    <div flex="75" layout="column" ng-repeat="project in vm.projectSearchArray.list | filter:query | filter:skillFilter">
+    <!-- Project Search Result Cards TO DO - changed fixed width so this will adjust w/modal-->
+
+  <div class='md-padding' layout="row" layout-wrap>
+        <md-card style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
+          <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
+          <md-card-content>
+            <h2>{{project.project_name}}</h2>
+            <p>{{project.project_description}}</p>
+          </md-card-content>
+          <div class="md-actions" layout="row" layout-align="end center">
+            <md-button><a href="#/myproject/{{project.project_id}}">View Project</a></md-button>
+            <md-button>Message</md-button>
+          </div>
+        </md-card>
+      </div>
+    </div>
+  </div>
+    <!-- <div flex="75" layout="column" ng-repeat="project in vm.projectSearchArray.list | filter:query | filter:skillFilter">
                     {{query}}
         <div layout-xs="column" layout="row" flex layout-wrap>
             <md-card layout="column">
@@ -54,7 +70,7 @@
                 </md-card-actions>
             </md-card>
         </div>
-    </div>
+    </div> -->
     <div flex="5" layout="column"></div>
 
 </md-content>

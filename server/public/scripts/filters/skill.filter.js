@@ -14,6 +14,7 @@ myApp.filter('skill', function(){
             }
         }
 
+        
         // angular.forEach(array, function (value, key) {
         //     console.log(value.skill_list)
         //     let check = value.skill_list;
