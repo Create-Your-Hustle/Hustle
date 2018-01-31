@@ -29,10 +29,19 @@
                                 </div>
                                 <div>
                                     <input class="btn btn-default" type="submit" name="submit" value="Log In" />
-                                    <div> <a href="/user/facebook">Login with Facebook</a></div>
+                                    <div>
+                                        <a href="/user/facebook">Login with Facebook</a>
+                                    </div>
                                 </div>
                             </form>
+                            <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
+                                <md-button md-no-ink class="md-primary md-raised secondFont" ng-click="lc.passwordReset($event)">
+                                    Forgot Password
+                                </md-button>
+                            </div>
                     </div>
+
+
                 </md-content>
             </md-tab>
             <md-tab label="two">
@@ -51,7 +60,9 @@
                                     <input type="password" ng-model="lc.newUser.password" />
                                 </div>
                                 <input class="btn btn-default" type="submit" name="submit" value="Register" />
-                                <div> <a href="/user/facebook">Login with Facebook</a></div>
+                                <div>
+                                    <a href="/user/facebook">Login with Facebook</a>
+                                </div>
                                 <a href="#home">Cancel</a>
                             </form>
                     </div>
