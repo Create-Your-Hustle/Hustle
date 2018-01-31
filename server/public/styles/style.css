@@ -16,6 +16,7 @@ body:nth-child {
 
 .navbar {
   font-family: 'open sans', sans-serif;
+  height: flex;
 }
 
 .instructions .container h1 {
@@ -36,7 +37,6 @@ body:nth-child {
   background-color: #222222;
   color: rgb(255, 253, 253);
   line-height: 0.1em;
-  position: absolute;
 }
 
 #entryForm {
