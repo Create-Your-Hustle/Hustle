@@ -1,6 +1,6 @@
 myApp.service('UserService', function($http, $location){
   console.log('UserService Loaded');
-  var self = this;
+  let self = this;
   self.userObject = {};
   self.selectedUser = {list: []}
   self.user = {

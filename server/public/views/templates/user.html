@@ -4,7 +4,7 @@
     <md-content layout="column">
 
 
-<<<<<<< HEAD
+
 <div class="main" layout="column">
     <div flex layout-xs="column" layout="row">
         <div flex>
@@ -14,19 +14,19 @@
             <h2>
                 <span ng-hide="vm.isEditing.username">{{vm.selectedUser.list[0].username}}</span>
                 <span ng-show="vm.isEditing.username">
-                    <input ng-model="vm.selectedUser[0].username">
+                    <input ng-model="vm.selectedUser.list[0].username">
                 </span>
                 <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-hide="vm.isEditing.username">
                     <button ng-click="vm.isEditing.username = true">edit</button>
                 </span>
-                <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-show="vm.isEditing.username">
+                <span ng-if="vm.userObject.id === vm.selectedUser.list[0].id" ng-show="vm.isEditing.username">
                     <button ng-click="vm.editUsername(vm.selectedUser.list[0])">done</button>
                 </span>
             </h2>
             <p>
                 <span ng-hide="vm.isEditing.username">{{vm.selectedUser.list[0].user_bio}}</span>
                 <span ng-show="vm.isEditing.username">
-                    <input ng-model="vm.selectedUser.user_bio">
+                    <input ng-model="vm.selectedUser.list[0].user_bio">
                 </span>
             </p>
         </div>
