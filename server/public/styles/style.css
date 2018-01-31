@@ -1,10 +1,13 @@
 body, html {
-  margin: 0;
-  padding: 0;
   font-family: 'shrikhand', 'open sans', sans-serif;
   font-size: 14px;
   background-color: #ff634f;
   color: #5A6279;
+}
+
+body:nth-child {
+
+  padding: 20px;
 }
 
 .navbar {
@@ -20,10 +23,16 @@ body, html {
   width: 300px;
   height: 300px;
 }
+
+.profilePhoto {
+  width: 300px;
+}
+
 .instructions {
   background-color: #222222;
   color: rgb(255, 253, 253);
-  padding: 15px;
+  line-height: 0.1em;
+  position: absolute;
 }
 
 #entryForm {
@@ -64,7 +73,7 @@ ul {
 }
 
 li {
-  float: left;
+  text-align: right;
 }
 
 li a {
@@ -82,14 +91,52 @@ li a {
   font-family: 'shrikhand'
 }
 
-#home1 {
-  background-image: url("../assets/squarespace/header-background.jpeg");
+.homeContent{
+  padding-left: 10em;
+  padding-right: 10em;
 }
 
+md-card {
+  margin: auto;
+  left: 0;
+  right: 0;
+  margin-bottom: 20px;
+}
+
+#home1 {
+  background: url("../assets/squarespace/header-background.png") no-repeat center center fixed;
+}
+
+
 #hustleTitle{
+  margin-top: 100px;
   font-size: 72px;
   letter-spacing: 0.01389999em;
   color: #ff634f;
+}
+
+.secondFont{
+  font-family: 'open sans';
+}
+
+.btn1{
+  text-transform: uppercase;
+  font-family: sans-serif;
+}
+
+#mission{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#howItWorks{
+  background: url("../assets/squarespace/howitworksbackground.jpeg") no-repeat center center fixed;
+}
+
+.orangeDiv{
+  background-color: #ff634f;
+  color: white;
+
 }
 
 /* Change the link color to #111 (black) on hover */
@@ -123,7 +170,7 @@ li a:hover {
   width: 200px; }
 
 .dialogdemoBasicUsage div#status {
-  color: #c60008; }
+  color: #ff634f; }
 
 .dialogdemoBasicUsage .dialog-demo-prerendered md-checkbox {
   margin-bottom: 0; }

@@ -1,28 +1,57 @@
 <div ng-include="'views/partials/nav.html'"></div>
-<div layout="row" layout-sm="column">
-    <div flex="30" flex-sm>
-        Search Bar
+<md-content layout-padding layout="row" layout-xs="column">
+    <div flex="5" layout="column"></div>
+    <div flex="20" layout="column">
+        <div>
+            <span>Search Collaborators</span>
+        </div>
+        <md-input-container>
+            <input type="text" placeholder="Name">
+        </md-input-container>
+        <md-input-container flex="20" layout="column">
+            <label>Skills</label>
+            <md-select ng-model="selectedSkills" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" multiple>
+                <md-select-header class="demo-select-header">
+                    <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
+                </md-select-header>
+                <md-optgroup label="skills">
+                    <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillArray.list |
+                                      filter:searchTerm">{{skill.skill_name}}</md-option>
+                </md-optgroup>
+                <!-- <md-option ng-repeat="skill in vm.skillArray.list" ng-value="skill.skill_id">{{skill.skill_name}}</md-option> -->
+            </md-select>
+        </md-input-container>
+        <md-input-container layout-padding>
+            <input type="text" placeholder="Location">
+            <md-checkbox class="md-primary">Remote Opportunity</md-checkbox>
+            <md-subhead>Compensation</md-subhead>
+            <div>
+                <md-checkbox class="md-primary">For Pay</md-checkbox>
+                <md-checkbox class="md-primary">For Trade</md-checkbox>
+            </div>
+        </md-input-container>
+        <div flex="5" layout="column"></div>
     </div>
     <div flex layout="column">
         <div flex>
-            <h1>People</h1>
+            <h1>Collaborators</h1>
         </div>
-        <div flex layout="row" layout-align="center">
-            <div flex="20">
-                Picture
-            </div>
-            <div flex layout="column" layout-align="center">
-                <div flex>
-                    <span>Name</span>
+        <md-list flex>
+            <md-list-item ng-repeat="collaborator in vm.collaborators.list" class="md-2-line">
+                <img ng-src="{{collaborator.user_picture}}" class="md-avatar" alt="profile picture" />
+                <div class="md-list-item-text" layout="column">
+                    <h3>{{collaborator.username}}</h3>
+                    <span>{{collaborator.user_skills}}</span>
                 </div>
-                <div flex>
-                    <span>Skills</span>
-                </div>
-            </div>
-            <div flex="25" layout-align="center">
-                <button>Message</button>
-            </div>
-        </div>
+                <img alt="stars" />
+                <!-- ng-src="" -->
+                <md-button aria-label="message">Message</md-button>
+                <!-- ng-click="" -->
+            </md-list-item>
+        </md-list>
     </div>
+
 </div>
 <!-- footer here -->
+<div ng-include="'views/partials/footer.html'"></div>
+</md-content>

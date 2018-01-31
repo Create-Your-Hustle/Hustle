@@ -2,15 +2,16 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport')
 
+router.get('/select', function(req,res){
+
+})
+
 router.get('/facebook',
   passport.authenticate('facebook'));
 
 router.get('/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/home' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/user');
-  });
+  passport.authenticate('facebook', { failureRedirect: '/home', successRedirect: 'http://localhost:5000/#/user' })
+  );
 
 // Handles Ajax request for user information if user is authenticated
 router.get('/', function(req, res) {
