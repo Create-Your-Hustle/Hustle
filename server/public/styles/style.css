@@ -174,3 +174,7 @@ li a:hover {
 
 .dialogdemoBasicUsage .dialog-demo-prerendered md-checkbox {
   margin-bottom: 0; }
+
+.main {
+  margin: 20px;
+}

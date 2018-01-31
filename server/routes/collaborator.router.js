@@ -17,15 +17,15 @@ router.get('/select', function (req, res) {
                 users.user_for_pay, users.user_for_trade, users.user_bio, users.user_weekly_min, users.user_weekly_max FROM users
                 LEFT JOIN users_skills ON users.id=users_skills.user_id
                 LEFT JOIN skills ON users_skills.skill_id=skills.skill_id
-                WHERE users.username = $1;`,[req.query.name], function (errorMakingDatabaseQuery, result) {
-                done();
-                if (errorMakingDatabaseQuery) {
-                    console.log('error', errorMakingDatabaseQuery);
-                    res.sendStatus(500);
-                } else {
-                    res.send(result.rows);
-                }
-            });
+                WHERE users.username = $1;`, [req.query.name], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
         }
     });
 }); // end collaborator get
@@ -40,14 +40,14 @@ router.get('/search/all', function (req, res) {
             client.query(`SELECT * FROM users
                         LEFT JOIN users_skills ON users.id=users_skills.user_id
                         LEFT JOIN skills ON users_skills.skill_id=skills.skill_id;`, function (errorMakingDatabaseQuery, result) {
-                done();
-                if (errorMakingDatabaseQuery) {
-                    console.log('error', errorMakingDatabaseQuery);
-                    res.sendStatus(500);
-                } else {
-                    res.send(result.rows);
-                }
-            });
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
         }
     });
 });
@@ -73,24 +73,47 @@ router.post('/', function (req, res) {
 }); // end collaborator post
 
 // Main collaborator put
-router.put('/', function (req, res) {
+router.put('/username', function (req, res) {
+    if (req.isAuthenticated()) {
 
-    pool.connect(function (errorConnectingToDatabase, client, done) {
-        if (errorConnectingToDatabase) {
-            console.log('error', errorConnectingToDatabase);
-            res.sendStatus(500);
-        } else {
-            client.query(`PUT SQL HERE`, [], function (errorMakingDatabaseQuery, result) {
-                done();
-                if (errorMakingDatabaseQuery) {
-                    res.sendStatus(500);
-                } else {
-                    res.sendStatus(201);
-                }
-            });
-        }
-    });
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            if (errorConnectingToDatabase) {
+                console.log('error', errorConnectingToDatabase);
+                res.sendStatus(500);
+            } else {
+                client.query(`UPDATE users SET username = $1, user_bio = $2 WHERE id = $3`, [req.body.username,req.body.user_bio, req.user.id], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                });
+            }
+        });
+    }
 }); // end collaborator put
+
+router.put('/preferences', function (req, res) {
+    if (req.isAuthenticated()) {
+
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            if (errorConnectingToDatabase) {
+                console.log('error', errorConnectingToDatabase);
+                res.sendStatus(500);
+            } else {
+                client.query(`UPDATE users SET username = $1, user_bio = $2 WHERE id = $3`, [req.body.username,req.body.user_bio, req.user.id], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                });
+            }
+        });
+    }
+});
 
 // Main collaborator delete
 router.delete('/', function (req, res) {

@@ -1,11 +1,21 @@
 myApp.controller('UserController', function(UserService) {
   console.log('UserController created');
-  var vm = this;
-  vm.userService = UserService;
-  vm.userObject = UserService.userObject;
-  vm.getUser = UserService.getUser
-  vm.selectedUser = UserService.selectedUser
+  var self = this;
+  self.userService = UserService;
+  self.userObject = UserService.userObject;
+  self.selectedUser = UserService.selectedUser
+  self.isEditing = {}
 
-  vm.getUser()
+  self.getUser = UserService.getUser
+  self.editUser = UserService.editUser
+
+  self.editUsername = function (value) {
+    self.isEditing.username = false;
+    self.userObject.userName = value.username;
+    self.editUser(value);
+  }
+
+  self.getUser()
+
 
 });

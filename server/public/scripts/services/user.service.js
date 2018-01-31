@@ -22,6 +22,16 @@ myApp.service('UserService', function($http, $location){
     })
   };
 
+  self.editUser = function (change) {
+    $http({
+      method: 'PUT',
+      url: '/collaborator/username',
+      data: change,
+    }).then(function (response){
+      self.getUser(self.userObject.userName)
+    })
+  }
+
   self.getuser = function(){
     console.log('UserService -- getuser');
     $http.get('/user').then(function(response) {
