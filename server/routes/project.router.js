@@ -28,7 +28,7 @@ router.get('/', function (req, res) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`SELECT * FROM projects;`, function (errorMakingDatabaseQuery, result) {
+            client.query(`SELECT array_agg(s.skill_name) AS skill_list, p.* FROM projects p LEFT JOIN projects_skills ps ON p.project_id = ps.project_id LEFT JOIN skills s ON s.skill_id = ps.skill_id GROUP BY p.project_id;`, function (errorMakingDatabaseQuery, result) {
                 done();
                 if (errorMakingDatabaseQuery) {
                     console.log('error', errorMakingDatabaseQuery);
