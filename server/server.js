@@ -14,10 +14,10 @@ var collaboratorRouter = require('./routes/collaborator.router');
 
 var port = process.env.PORT || 5000;
 
-app.all('/*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    next();
-});
+// app.all('/*', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     next();
+// });
 
 // Body parser middleware
 app.use(bodyParser.json());

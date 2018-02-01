@@ -41,6 +41,27 @@
                 <tr ng-repeat="skills in vm.selectedUser.list ">
                     <td>{{skills.skill_name}}</td>
                     <td>{{skills.skill_rating}}</td>
+                    <td ng-if="vm.userObject.userName === vm.selectedUser.list[0].username"><button ng-click="vm.deleteSkill(skills)">delete</button></td>
+                </tr>
+                <tr ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
+                    <td>
+                            <md-select ng-model="vm.newSkill.skill_id">
+                                    <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillslist.list">
+                                        {{skill.skill_name}}
+                                    </md-option>
+                                </md-select>
+                    </td>
+                    <td>
+                        <md-select ng-model="vm.newSkill.skill_rating">
+                            <md-option ng-value= "1">Apprentice</md-option>
+                            <md-option ng-value= "2">Journeyman</md-option>
+                            <md-option ng-value= "3">Master</md-option>
+                        </md-select>
+                    </td>
+                    <td>
+                        <button ng-click="vm.addSkill(vm.newSkill)">add</button>
+                    </td>
+
                 </tr>
             </table>
         </div>
