@@ -14,12 +14,12 @@ var transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-              type: 'OAuth2',
-              clientId: '360485416428-s79cfmrp2mgkkphdih1uc1oumc9j4su8.apps.googleusercontent.com',
-              clientSecret: 'JFjG6jMjHRmP-CtPNrPWfo5c'
-          
+        type: 'OAuth2',
+        clientId: '360485416428-s79cfmrp2mgkkphdih1uc1oumc9j4su8.apps.googleusercontent.com',
+        clientSecret: 'JFjG6jMjHRmP-CtPNrPWfo5c'
+
     }
-  });
+});
 
 //Main project get
 router.get('/', function (req, res) {
@@ -135,14 +135,14 @@ router.get('/skills/:id', function (req, res) {
             client.query(`SELECT * FROM projects_skills
                             JOIN skills ON projects_skills.skill_id = skills.skill_id
                             WHERE project_id = $1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
-                done();
-                if (errorMakingDatabaseQuery) {
-                    console.log('error MDB', errorMakingDatabaseQuery);
-                    res.sendStatus(500);
-                } else {
-                    res.send(result.rows);
-                }
-            });
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error MDB', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
         }
     });
 });
@@ -155,14 +155,14 @@ router.get('/skillList', function (req, res) {
         } else {
             client.query(`SELECT * 
                             FROM skills`, function (errorMakingDatabaseQuery, result) {
-                done();
-                if (errorMakingDatabaseQuery) {
-                    console.log('error', errorMakingDatabaseQuery);
-                    res.sendStatus(500);
-                } else {
-                    res.send(result.rows);
-                }
-            });
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
         }
     });
 });
@@ -187,7 +187,7 @@ router.put('/projectPicture', function (req, res) {
                 })
         }
     })
-  });
+});
 
 //Project Profile Get
 router.get('/profile/:id', function (req, res) {
@@ -198,14 +198,14 @@ router.get('/profile/:id', function (req, res) {
         } else {
             client.query(`SELECT * FROM projects
             WHERE project_id = $1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
-                done();
-                if (errorMakingDatabaseQuery) {
-                    console.log('error', errorMakingDatabaseQuery);
-                    res.sendStatus(500);
-                } else {
-                    res.send(result.rows);
-                }
-            });
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
         }
     });
 });
@@ -226,34 +226,34 @@ router.put('/message', function (req, res) {
                         res.sendStatus(500);
                     } else {
                         console.log('results: ', result.rows);
-                        
+
                         //send message via nodemailer
                         var mailOptions = {
                             from: `Hustle <startyourhustle@gmail.com>`,
                             to: `${result.rows[0].email}`,
                             subject: `HUSTLE: Collaborator message for ${req.body.project_name}`,
                             text: `${req.body.message}`,
-                          
+
                             auth: {
-                                  user: 'startyourhustle@gmail.com',
-                                  refreshToken: process.env.NODEMAILER_REFRESHTOKEN,
-                                  accessToken: process.env.NODEMAILER_ACCESSTOKEN
+                                user: 'startyourhustle@gmail.com',
+                                refreshToken: process.env.NODEMAILER_REFRESHTOKEN,
+                                accessToken: process.env.NODEMAILER_ACCESSTOKEN
                             }
-                          };
-                          
-                          transporter.sendMail(mailOptions, function(error, info){
+                        };
+
+                        transporter.sendMail(mailOptions, function (error, info) {
                             if (error) {
-                              console.log('This is your error: ', error);
+                                console.log('This is your error: ', error);
                             } else {
-                              console.log('Email sent: ' + info.response);
+                                console.log('Email sent: ' + info.response);
                             }
-                          });
+                        });
                         res.sendStatus(201);
                     }
                 })
         }
     })
-  });
+});
 
 
 
