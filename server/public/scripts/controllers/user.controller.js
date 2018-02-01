@@ -5,11 +5,15 @@ myApp.controller('UserController', function(UserService) {
   self.userObject = UserService.userObject;
   self.selectedUser = UserService.selectedUser
   self.isEditing = {}
+  self.skillslist = UserService.skillslist
 
 
   self.getUser = UserService.getUser
   self.editUser = UserService.editUser
   self.editUserPreferences = UserService.editUserPreferences
+  self.deleteSkill = UserService.deleteSkill
+  self.getSkills = UserService.getSkills
+  self.addSkill = UserService.addSkill
 
   self.editUsername = function (value) {
     console.log(value)
@@ -24,6 +28,9 @@ myApp.controller('UserController', function(UserService) {
   }
 
   self.getUser()
+  self.getSkills()
+
+
 
 
 });
