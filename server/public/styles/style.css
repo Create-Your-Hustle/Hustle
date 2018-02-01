@@ -89,6 +89,10 @@ a {
   text-decoration: none;
 }
 
+.smaller{
+  width: 30%;
+}
+
 .lead {
   color: white;
   size: 20;
@@ -171,6 +175,9 @@ li a:hover {
 .dialogdemoBasicUsage #popupContainer {
   position: relative; }
 
+.loginRegister{
+    color: black;
+  }
 .dialogdemoBasicUsage .footer {
   width: 100%;
   text-align: center;
