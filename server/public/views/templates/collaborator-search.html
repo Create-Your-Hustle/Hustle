@@ -1,38 +1,60 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <md-content layout-padding layout="row" layout-xs="column">
-    <div flex="5" layout="column"></div>
-    <div flex="20" layout="column">
-        <div>
-            <span>Search Collaborators</span>
-        </div>
-        <md-input-container>
-            <input type="text" placeholder="Name">
-        </md-input-container>
-        <md-input-container flex="20" layout="column">
-            <label>Skills</label>
-            <md-select ng-model="selectedSkills" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" multiple>
-                <md-select-header class="demo-select-header">
-                    <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
-                </md-select-header>
-                <md-optgroup label="skills">
-                    <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillArray.list |
-                                      filter:searchTerm">{{skill.skill_name}}</md-option>
-                </md-optgroup>
-                <!-- <md-option ng-repeat="skill in vm.skillArray.list" ng-value="skill.skill_id">{{skill.skill_name}}</md-option> -->
-            </md-select>
-        </md-input-container>
-        <md-input-container layout-padding>
-            <input type="text" placeholder="Location">
-            <md-checkbox class="md-primary">Remote Opportunity</md-checkbox>
-            <md-subhead>Compensation</md-subhead>
-            <div>
-                <md-checkbox class="md-primary">For Pay</md-checkbox>
-                <md-checkbox class="md-primary">For Trade</md-checkbox>
+
+    <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
+        <md-toolbar>
+            <h1 class="md-toolbar-tools">Search</h1>
+        </md-toolbar>
+        <md-content layout-padding ng-controller="LeftCtrl">
+
+            <!-- <md-button ng-click="close()" class="md-primary" hide-gt-md>
+                Close Sidenav Left
+            </md-button>
+            <p hide show-gt-md>
+                This sidenav is locked open on your device. To go back to the default behavior, narrow your display.
+            </p> -->
+
+            <div layout="column">
+                <div>
+                    <span>Search Collaborators</span>
+                </div>
+                <md-input-container>
+                    <input type="text" placeholder="Name">
+                </md-input-container>
+                <md-input-container flex="20" layout="column">
+                    <label>Skills</label>
+                    <md-select ng-model="selectedSkills" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" multiple>
+                        <md-select-header class="demo-select-header">
+                            <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
+                        </md-select-header>
+                        <md-optgroup label="skills">
+                            <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillArray.list |
+                                                  filter:searchTerm">{{skill.skill_name}}</md-option>
+                        </md-optgroup>
+                        <!-- <md-option ng-repeat="skill in vm.skillArray.list" ng-value="skill.skill_id">{{skill.skill_name}}</md-option> -->
+                    </md-select>
+                </md-input-container>
+                <md-input-container layout-padding>
+                    <input type="text" placeholder="Location">
+                    <md-checkbox class="md-primary">Remote Opportunity</md-checkbox>
+                    <md-subhead>Compensation</md-subhead>
+                    <div>
+                        <md-checkbox class="md-primary">For Pay</md-checkbox>
+                        <md-checkbox class="md-primary">For Trade</md-checkbox>
+                    </div>
+                </md-input-container>
+                <div flex="5" layout="column"></div>
             </div>
-        </md-input-container>
-        <div flex="5" layout="column"></div>
-    </div>
+        </md-content>
+    </md-sidenav>
+
+    <div flex="5" layout="column"></div>
     <div flex layout="column">
+        <div flex>
+            <md-button ng-click="toggleLeft()" class="md-primary" hide-gt-md>
+                Search Bar
+            </md-button>
+        </div>
         <div flex>
             <h1>Collaborators</h1>
         </div>
@@ -51,7 +73,7 @@
         </md-list>
     </div>
 
-</div>
-<!-- footer here -->
-<div ng-include="'views/partials/footer.html'"></div>
+    </div>
+    <!-- footer here -->
+    <div ng-include="'views/partials/footer.html'"></div>
 </md-content>
