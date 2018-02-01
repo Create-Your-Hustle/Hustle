@@ -1,6 +1,6 @@
 myApp.service('UserService', function($http, $location){
   console.log('UserService Loaded');
-  var self = this;
+  let self = this;
   self.userObject = {};
   self.selectedUser = {list: []}
   self.user = {
@@ -21,6 +21,26 @@ myApp.service('UserService', function($http, $location){
       self.selectedUser.list = response.data;
     })
   };
+
+  self.editUser = function (change) {
+    $http({
+      method: 'PUT',
+      url: '/collaborator/username',
+      data: change,
+    }).then(function (response){
+      self.getUser(self.userObject.userName)
+    })
+  }
+
+  self.editUserPreferences = function (pref) {
+    $http({
+      method: 'PUT',
+      url: 'collaborator/preferences',
+      data: pref,
+    }).then(function (response) {
+      self.getUser(self.userObject.userName)
+    })
+  }
 
   self.getuser = function(){
     console.log('UserService -- getuser');
