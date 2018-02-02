@@ -5,6 +5,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
     self.projectArray = { list: [] };
     self.skillArray = { list: [] };
     self.projectSkillArray = { list:[] };
+    self.projectCollaboratorArray = { list:[] };
     self.projectProfile = { list:[] };
     self.imageUrl = {};
 
@@ -61,8 +62,6 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
             method:'GET',
             url:'/project/skills/' + id
           }).then(function (response) {
-            console.log('response', response);
-            console.log('project skills ', self.projectSkillArray);
             for (let i = 0; i < response.data.length; i++) {
               self.projectSkillArray.list.push({
                 skill_name: response.data[i].skill_name,
@@ -74,19 +73,19 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
         //Get Project Collaborators
         self.getProjectCollaborators = function (id) {
-          self.projectSkillArray.list = [];
+          self.projectCollaboratorArray.list = [];
           $http({
             method:'GET',
-            url:'/project/skills/' + id
+            url:'/project/project-collaborators/' + id
           }).then(function (response) {
             console.log('response', response);
-            console.log('project skills ', self.projectSkillArray);
             for (let i = 0; i < response.data.length; i++) {
-              self.projectSkillArray.list.push({
-                skill_name: response.data[i].skill_name,
-                required_rating: self.findRating(response.data[i].required_rating)
+              self.projectCollaboratorArray.list.push({
+                username: response.data[i].username,
+                user_project_role: response.data[i].user_project_role
               })
             }
+            console.log('project collaborators ', self.projectCollaboratorArray);
           })
         }
 

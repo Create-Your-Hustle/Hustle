@@ -8,6 +8,7 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     ProjectService.getProjects();
     ProjectService.getProjectProfile($routeParams.id);
     ProjectService.getProjectSkills($routeParams.id);
+    ProjectService.getProjectCollaborators($routeParams.id)
 
     self.projectSkillArray = ProjectService.projectSkillArray
     self.projectArray = ProjectService.projectArray
