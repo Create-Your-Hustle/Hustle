@@ -54,7 +54,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
     }
 
-        //Get all projects
+        //Get all projects Skills
         self.getProjectSkills = function (id) {
           self.projectSkillArray.list = [];
           $http({
@@ -71,6 +71,25 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
             }
           })
         }
+
+        //Get Project Collaborators
+        self.getProjectCollaborators = function (id) {
+          self.projectSkillArray.list = [];
+          $http({
+            method:'GET',
+            url:'/project/skills/' + id
+          }).then(function (response) {
+            console.log('response', response);
+            console.log('project skills ', self.projectSkillArray);
+            for (let i = 0; i < response.data.length; i++) {
+              self.projectSkillArray.list.push({
+                skill_name: response.data[i].skill_name,
+                required_rating: self.findRating(response.data[i].required_rating)
+              })
+            }
+          })
+        }
+
     self.uploadProjectPicture = function (project) {
       console.log('uploadProjectPicture')
       var fsClient = filestack.init('AR2OVvMAHTTiTRo7bG05Vz');

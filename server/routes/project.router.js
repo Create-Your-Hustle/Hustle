@@ -210,6 +210,28 @@ router.get('/profile/:id', function (req, res) {
     });
 });
 
+//Get project Collaborators 
+router.get('/project-collaborators/:id', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`SELECT users_projects.user_project_role, users.username FROM users_projects
+                        JOIN users ON users_projects.user_id = users.id
+                        WHERE project_id = $1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
+        }
+    });
+});
+
 //Message project creator
 router.put('/message', function (req, res) {
     console.log('REQ.BODY', req.body);
