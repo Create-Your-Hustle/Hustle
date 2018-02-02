@@ -6,7 +6,8 @@ const passport = require('passport');
 const pool = require('../modules/pool.js');
 const path = require('path');
 const nodemailer = require('nodemailer');
-const Chance = require('chance')
+const Chance = require('chance');
+const encryptLib = require('../modules/encryption');
 chance = new Chance();
 
 var transporter = nodemailer.createTransport({
@@ -25,7 +26,6 @@ var transporter = nodemailer.createTransport({
 
 router.put('/', function (req, res) {
     console.log('REQ.BODY: ', req.body);
-
 
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
@@ -86,14 +86,15 @@ router.put('/', function (req, res) {
 router.put('/password', function (req, res) {
     console.log('Query', req.query);
     console.log('Body', req.body);
-    
-    
+
+    var password = encryptLib.encryptPassword(req.body.password);
+
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`PUT SQL HERE`, [],
+            client.query(`UPDATE users SET password=$1 WHERE code=$2 AND code IS NOT NULL`, [password, req.query.code],
                 function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
