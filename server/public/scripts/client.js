@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute', 'ngMaterial', 'jkAngularCarousel']);
+var myApp = angular.module('myApp', ['ngRoute', 'ngMaterial', 'jkAngularCarousel', 'ngMessages']);
 
 /// Routes ///
 myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
@@ -57,6 +57,10 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
           return UserService.getuser();
         }
       }
+    })
+    .when('/reset/password/:code?', {
+      templateUrl: '/views/templates/password-reset.html',
+      controller: 'ResetController as vm',
     })
     .otherwise({
       redirectTo: 'home'
