@@ -43,6 +43,11 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
+                                <md-button md-no-ink class="md-primary md-raised secondFont" ng-click="lc.passwordReset($event)">
+                                    Forgot Password
+                                </md-button>
+                            </div>
                         </form>
                     </div>
 
@@ -64,9 +69,9 @@
                                 <input type="password" ng-model="lc.user.password" />
                             </div>
                             <div layout-align="center">
-                                    <label for="password">Retype Password:</label>
-                                    <input type="password" ng-model="lc.user.checkPassword" />
-                                </div>
+                                <label for="password">Retype Password:</label>
+                                <input type="password" ng-model="lc.user.checkPassword" />
+                            </div>
                             <div layout-align="center">
                                 <md-input-container>
                                     <input class="md-button md-primary md-raised secondFont" type="submit" name="submit" value="Register" />
