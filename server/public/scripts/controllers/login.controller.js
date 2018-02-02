@@ -60,5 +60,21 @@ myApp.controller('LoginController', function($http, $location, $mdDialog, UserSe
         console.log('facebook', response)
       })
     }
+    //function for opening password reset modal
+    vm.passwordReset = function (ev) {
+      console.log('clicked reset')
+      $mdDialog.show({
+        controller: 'ResetController as vm',
+        templateUrl: '../views/modals/password-reset.dialog.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: true,
+        fullscreen: self.customFullscreen
+      })
+        .then(function () {
+          console.log("yay")
+        }, function () {
+          console.log("nay")
+        });
+    };
 });
-
