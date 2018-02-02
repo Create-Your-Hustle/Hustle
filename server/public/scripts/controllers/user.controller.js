@@ -1,11 +1,36 @@
 myApp.controller('UserController', function(UserService) {
   console.log('UserController created');
-  var vm = this;
-  vm.userService = UserService;
-  vm.userObject = UserService.userObject;
-  vm.getUser = UserService.getUser
-  vm.selectedUser = UserService.selectedUser
+  let self = this;
+  self.userService = UserService;
+  self.userObject = UserService.userObject;
+  self.selectedUser = UserService.selectedUser
+  self.isEditing = {}
+  self.skillslist = UserService.skillslist
 
-  vm.getUser()
+
+  self.getUser = UserService.getUser
+  self.editUser = UserService.editUser
+  self.editUserPreferences = UserService.editUserPreferences
+  self.deleteSkill = UserService.deleteSkill
+  self.getSkills = UserService.getSkills
+  self.addSkill = UserService.addSkill
+
+  self.editUsername = function (value) {
+    console.log(value)
+    self.isEditing.username = false;
+    self.userObject.userName = value.username;
+    self.editUser(value);
+  }
+
+  self.editPreferences = function (pref) {
+    self.isEditing.preferences = false
+    self.editUserPreferences(pref)
+  }
+
+  self.getUser()
+  self.getSkills()
+
+
+
 
 });

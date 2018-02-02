@@ -3,23 +3,23 @@
     <!-- <form> -->
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h2>Login</h2>
+            <h2>HUSTLE</h2>
             <span flex></span>
-            <md-button class="md-icon-button" ng-click="cancel()">
-                <md-icon md-svg-src="../assets/closebutton.png" aria-label="Close dialog"></md-icon>
+            <md-button class="md-icon-button" ng-click="hc.cancel()">
+                <img ng-src="../assets/closebutton.png" style="max-width:20px;max-height:20px; " aria-label="Close dialog"></img>
             </md-button>
         </div>
     </md-toolbar>
-    <md-dialog-content style="max-width:800px;max-height:810px; ">
+    <md-dialog-content style="max-width:800px;max-height:810px; " class="loginRegister">
         <md-tabs md-dynamic-height md-border-bottom>
-            <md-tab label="one">
+            <md-tab label="Login">
                 <md-content class="md-padding">
-                    <h1 class="md-display-2">Existing User Log-In</h1>
+                    <h1 class="md-display-2">Existing User Login</h1>
                     <div class="container">
-                        <h1 class="lead">Login</h1>
-                        <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h2>
-                            <form ng-submit="lc.login()">
-                                <div>
+                        <h4 class="subheading-1 secondFont">{{lc.loginMessage}}</h4>
+                        <form ng-submit="lc.login()">
+                            <div layout="column">
+                                <div style-align="center">
                                     <label for="username">Username:</label>
                                     <input type="text" ng-model="lc.user.username" />
                                 </div>
@@ -28,43 +28,60 @@
                                     <input type="password" ng-model="lc.user.password" />
                                 </div>
                                 <div>
-                                    <input class="btn btn-default" type="submit" name="submit" value="Log In" />
-                                    <div>
-                                        <a href="/user/facebook">Login with Facebook</a>
+                                    <md-input-container>
+                                        <input class="md-button md-primary md-raised secondFont" type="submit" name="submit" value="Log In" />
+                                    </md-input-container>
+                                    <div class="img-responsive">
+                                        <a href="/user/facebook">
+                                            <img ng-src="../assets/login-facebook.png"></img>
+                                        </a>
+                                    </div>
+                                    <div class="img-responsive">
+                                        <a href="/user/google">
+                                            <img ng-src="../assets/login-google.png"></img>
+                                        </a>
                                     </div>
                                 </div>
-                            </form>
-                            <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
-                                <md-button md-no-ink class="md-primary md-raised secondFont" ng-click="lc.passwordReset($event)">
-                                    Forgot Password
-                                </md-button>
                             </div>
+                        </form>
                     </div>
 
 
                 </md-content>
             </md-tab>
-            <md-tab label="two">
+            <md-tab label="Register">
                 <md-content class="md-padding">
                     <h1 class="md-display-2">Register New User</h1>
                     <div class="container">
-                        <h1 class="lead">Register User</h1>
-                        <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h2>
-                            <form ng-submit="lc.registerUser()">
-                                <div>
-                                    <label for="username">Username:</label>
-                                    <input type="text" ng-model="lc.newUser.username" />
+                        <h4 class="subheading-1 secondFont">{{lc.registerMessage}}</h4>
+                        <form ng-submit="lc.registerUser()">
+                            <div layout-align="center">
+                                <label for="username">Username:</label>
+                                <input type="text" ng-model="lc.user.username" />
+                            </div>
+                            <div layout-align="center">
+                                <label for="password">Password:</label>
+                                <input type="password" ng-model="lc.user.password" />
+                            </div>
+                            <div layout-align="center">
+                                    <label for="password">Retype Password:</label>
+                                    <input type="password" ng-model="lc.user.checkPassword" />
                                 </div>
-                                <div>
-                                    <label for="password">Password:</label>
-                                    <input type="password" ng-model="lc.newUser.password" />
-                                </div>
-                                <input class="btn btn-default" type="submit" name="submit" value="Register" />
-                                <div>
-                                    <a href="/user/facebook">Login with Facebook</a>
+                            <div layout-align="center">
+                                <md-input-container>
+                                    <input class="md-button md-primary md-raised secondFont" type="submit" name="submit" value="Register" />
+                                </md-input-container>
+                                <div class="img-responsive">
+                                    <a href="/user/facebook">
+                                        <img ng-src="../assets/login-facebook.png"></img>
+                                    </a>
+                                    <a href="/user/google">
+                                        <img ng-src="../assets/login-google.png"></img>
+                                    </a>
                                 </div>
                                 <a href="#home">Cancel</a>
-                            </form>
+                            </div>
+                        </form>
                     </div>
                 </md-content>
             </md-tab>

@@ -3,6 +3,8 @@ myApp.controller('LoginController', function($http, $location, $mdDialog, UserSe
     var vm = this;
     vm.user = UserService.user;
     vm.message = '';
+    vm.loginMessage = 'Please login using your e-mail address';
+    vm.registerMessage= 'Welcome! Please register using your e-mail address to get started!';
 
     vm.login = function() {
       console.log('LoginController -- login');
@@ -29,11 +31,19 @@ myApp.controller('LoginController', function($http, $location, $mdDialog, UserSe
     vm.registerUser = function() {
       console.log('LoginController -- registerUser');
       if(vm.user.username === '' || vm.user.password === '') {
-        vm.message = "Choose a username and password!";
-      } else {
+        // vm.message = "Choose a username and password!";
+        alert("Choose a username and password!");
+      } else if (vm.user.password !== vm.user.checkPassword) {
+        alert("Passwords do not match! Please try again.")
+      }
+        else if (vm.user.password.length < 6){
+        alert("Password needs to be at least  6 characters long.")
+        }
+        else {
         console.log('LoginController -- registerUser -- sending to server...', vm.user);
         $http.post('/register', vm.user).then(function(response) {
           console.log('LoginController -- registerUser -- success');
+          alert ("You have been registered! Please log-in with your new credentials.")
           $location.path('/home');
         }).catch(function(response) {
           console.log('LoginController -- registerUser -- error');
