@@ -1,40 +1,47 @@
-<!-- <div class="navbar">
-  <div class="container">
-    <ul>
-      <li><a href="#/collaborator-search">PEOPLE</a></li>
-      <li><a href="#/projects">PROJECTS</a></li>
-      <li><a href="#/myproject">MY PROJECT</a></li>
-      <li><a href="#/user">PROFILE</a></li>
-      <li><a href="#/info">Info Page</a></li>
-    </ul>
-  </div>
-</div> -->
-
-<div layout="column" layout-fill>
-  <md-toolbar>
-    <div class="instructions md-toolbar-tools md-tall navbar" layout="column" layout-fill>
-      <div layout="row">
-        <div flex class="navbar hide-xs" layout="row" layout-align="space-around center">
+<header>
+  <div ng-controller="NavBarController as nc">
+    <md-toolbar>
+      <div class="instructions" layout="column" layout-fill>
+        <div md-sticky>
           <h1 class="lead show-xs" layout="row" layout-align="center">HUSTLE</h1>
-        </div>
-        <div flex class="navbar hide-xs" layout="row" layout-align="space-around space-around">
-          <h3 class="md-subhead">
-            <a href="#/collaborator-search">PEOPLE</a>
-          </h3>
-          <h3 class="md-subhead">
-            <a href="#/projects">PROJECTS</a>
-          </h3>
-          <h3 class="md-subhead">
-            <a href="#/myproject">MY PROJECT</a>
-          </h3>
-          <h3 class="md-subhead">
-            <a href="#/user">PROFILE</a>
-          </h3>
-          <h3 class="md-subhead">
-            <a href="#/info">INFO</a>
-          </h3>
+          <div layout="row">
+            <div flex class="navbar hide-xs" layout="row" layout-align="start">
+              <h3 class="md-subhead instructions">
+                <a href="#/collaborator-search">FIND COLLABORATORS</a>
+              </h3>
+            </div>
+            <div flex class="navbar hide-xs" layout="row" layout-align="center">
+              <h3 class="md-subhead instructions">
+                <a href="#/projects">FIND PROJECTS</a>
+              </h3>
+            </div>
+            <div flex class="navbar hide-xs" layout="row" layout-align="end">
+              <md-menu>
+                <md-button ng-mouseenter="nc.openMenu($mdMenu, $event)">
+                  <img ng-src="../images/profile-default.jpg" style="max-width:20px;max-height:20px; " aria-label="Open Menu"></img>
+                </md-button>
+                <md-menu-content class="instructions" width="4">
+                  <md-menu-item>
+                    <md-subheader class="instructions">
+                      <a href="#/user">MY PROFILE</a>
+                    </md-subheader>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-subheader class="instructions">
+                      <a href="#/myproject">MY PROJECTS</a>
+                    </md-subheader>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-subheader class="instructions">
+                      <a href="#/logout">LOGOUT</a>
+                    </md-subheader>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </md-toolbar>
-</div>
+    </md-toolbar>
+  </div>
+</header>
