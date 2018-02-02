@@ -58,7 +58,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
-    .when('/reset/:id', {
+    .when('/reset/password/:code?', {
       templateUrl: '/views/templates/password-reset.html',
       controller: 'ResetController as vm',
     })

@@ -15,8 +15,8 @@ var transporter = nodemailer.createTransport({
     secure: true,
     auth: {
         type: 'OAuth2',
-        clientId: '360485416428-s79cfmrp2mgkkphdih1uc1oumc9j4su8.apps.googleusercontent.com',
-        clientSecret: 'JFjG6jMjHRmP-CtPNrPWfo5c'
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET
 
     }
 });
@@ -57,7 +57,7 @@ router.put('/', function (req, res) {
                                 to: req.body.email,
                                 subject: `HUSTLE: Password Reset`,
                                 html: `<h1>Hello!!</h1><h3>Use the following link to reset your password:</h3>
-                                <ul><a href="http://localhost:5000/#/reset/${code}">Click Here</a></ul>
+                                <ul><a href="http://localhost:5000/#/reset/password?code=${code}">Click Here</a></ul>
                                     <p>Thank you</p>`,
                                 auth: {
                                     user: 'startyourhustle@gmail.com',
@@ -83,5 +83,27 @@ router.put('/', function (req, res) {
     });
 });
 
+router.put('/password', function (req, res) {
+    console.log('Query', req.query);
+    console.log('Body', req.body);
+    
+    
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`PUT SQL HERE`, [],
+                function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                })
+        }
+    })
+});
 
 module.exports = router;
