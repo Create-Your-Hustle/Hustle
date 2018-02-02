@@ -108,20 +108,55 @@ router.delete('/', function (req, res) {
 
 //Project Search Get
 router.get('/search', function (req, res) {
+    console.log(req.query);
+    let project_name = req.query.project_name;
+    if (project_name !== '') {
+        project_name = `%` + req.query.project_name + `%`
+    };
+    let skill_params = req.query.skills;
+    let sql_params = ''
+    for (let i = 0; i < skill_params.length; i++) {
+        const element = skill_params[i];
+        sql_params += ('$' + (i + 2));
+        if(i < skill_params.length - 1){
+            sql_params += ', '
+        };
+    };
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`PUT SQL HERE`, function (errorMakingDatabaseQuery, result) {
-                done();
-                if (errorMakingDatabaseQuery) {
-                    console.log('error', errorMakingDatabaseQuery);
-                    res.sendStatus(500);
-                } else {
-                    res.send(result.rows);
-                }
-            });
+            client.query(`WITH name_search AS (
+                                SELECT array_agg(s.skill_name) AS skill_list, p.*, 1 AS order_priority
+                                    FROM projects p
+                                    LEFT JOIN projects_skills ps ON p.project_id = ps.project_id
+                                    LEFT JOIN skills s ON s.skill_id = ps.skill_id
+                                WHERE p.project_name ILIKE $1
+                                GROUP BY p.project_id
+                                ),
+                                skill_search AS (
+                                SELECT array_agg(s.skill_name) AS skill_list, p.*, 2 AS order_priority
+                                    FROM projects p
+                                    LEFT JOIN projects_skills ps ON p.project_id = ps.project_id
+                                    LEFT JOIN skills s ON s.skill_id = ps.skill_id
+                                WHERE s.skill_name IN (${sql_params})
+                                GROUP BY p.project_id
+                                )
+                            SELECT *
+                            FROM name_search
+                            UNION
+                            SELECT *
+                            FROM skill_search
+                            ORDER BY order_priority;`, [project_name, ...skill_params], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
         }
     });
 });

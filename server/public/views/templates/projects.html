@@ -2,80 +2,62 @@
 
 <md-content layout="row" layout-xs="column" layout-padding>
     <div flex="5" layout="column"></div>
-    <div flex="20" layout="column">
-        Search Projects
-        <md-input-container>
-            <input type="text" placeholder="Name" ng-model="query.project_name">
-        </md-input-container>
-        <md-input-container flex="20" layout="column">
-            <label>Skills</label>
-            <md-select ng-change="vm.parametersChanged(searchTerms)"  ng-model="searchTerms" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" multiple>
-                <md-select-header class="demo-select-header">
-                    <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
-                </md-select-header>
-                <md-optgroup label="skills">
-                    <md-option ng-model="query.project_skills" ng-value="skill.skill_name" ng-repeat="skill in vm.skillArray.list |
-                                      filter:searchTerm">{{skill.skill_name}}</md-option>
-                </md-optgroup>
-            </md-select>
-        </md-input-container>
-        <md-input-container layout-padding>
-            <input type="text" placeholder="Location" ng-model="query.project_city">
-            <md-checkbox class="md-primary" ng-model="query.project_remote">Remote Opportunity</md-checkbox>
-            <md-subhead>Compensation</md-subhead>
-            <div>
-                <md-checkbox class="md-primary" ng-model="query.project_for_pay">For Pay</md-checkbox>
-                <md-checkbox class="md-primary" ng-model="query.project_for_trade">For Trade</md-checkbox>
-            </div>
-        </md-input-container>
-        <div flex="5" layout="column"></div>
     </div>
 
-    <!-- <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
+    <md-sidenav style="width: 304px;" class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
         <md-toolbar>
             <h1 class="md-toolbar-tools">Search</h1>
         </md-toolbar>
-        <md-content layout-padding ng-controller="LeftCtrl"> -->
+        <md-content layout-padding>
+            <p>Search Projects</p>
+            <md-input-container>
+                <input ng-model="vm.searchParameters.project_name" type="text" placeholder="Name">
+            </md-input-container>
+            <md-input-container>
+                <label>Skills</label>
+                <md-select ng-model="vm.searchParameters.skills" ng-model="searchTerms" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader"
+                    multiple>
+                    <md-select-header class="demo-select-header">
+                        <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
+                    </md-select-header>
+                    <md-optgroup label="skills">
+                        <md-option ng-value="skill.skill_name" ng-repeat="skill in vm.skillArray.list | filter:searchTerm">{{skill.skill_name}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+            <md-button ng-click="vm.getProjectSearchResult(vm.searchParameters)" class="md-raised md-primary">Search</md-button>
+            <p>Filter Results</p>
+            <md-input-container layout-padding>
+                <input type="text" placeholder="Location" ng-model="query.project_city">
+                <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_remote">Remote Opportunity</md-checkbox>
+                <md-subhead>Compensation</md-subhead>
+                <div>
+                    <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_pay">For Pay</md-checkbox>
+                    <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_trade">For Trade</md-checkbox>
+                </div>
+            </md-input-container>
+        </md-content>
+    </md-sidenav>
     <!-- Project Search Result Cards TO DO - changed fixed width so this will adjust w/modal-->
-
-  <div class='md-padding' layout="row" layout-wrap>
-        <md-card style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
-          <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
-          <md-card-content>
-            <h2>{{project.project_name}}</h2>
-            <p>{{project.project_description}}</p>
-          </md-card-content>
-          <div class="md-actions" layout="row" layout-align="end center">
-            <md-button><a href="#/myproject/{{project.project_id}}">View Project</a></md-button>
-            <md-button>Message</md-button>
-          </div>
-        </md-card>
-      </div>
-    </div>
-  </div>
-    <!-- <div flex="75" layout="column" ng-repeat="project in vm.projectSearchArray.list | filter:query | filter:skillFilter">
-                    {{query}}
-        <div layout-xs="column" layout="row" flex layout-wrap>
-            <md-card layout="column">
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">{{project.project_name}}</span>
-                        <span class="md-subhead">{{project.project_description}}</span>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                        <div class="md-media-sm card-media"></div>
-                        <img src="{{project.project_picture}}" alt="">
-                    </md-card-title-media>
-                </md-card-title>
-                <md-card-actions layout="row" layout-align="end center">
+    <div layout="column">
+        <div class='md-padding' layout="row" layout-wrap>
+            <md-card style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
+                <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
+                <md-card-content>
+                    <h2>{{project.project_name}}</h2>
+                    <p>{{project.project_description}}</p>
+                </md-card-content>
+                <div class="md-actions" layout="row" layout-align="end center">
                     <md-button>
                         <a href="#/myproject/{{project.project_id}}">View Project</a>
                     </md-button>
                     <md-button>Message</md-button>
-                </md-card-actions>
+                </div>
             </md-card>
         </div>
-    </div> -->
+    </div>
+    </div>
+    </div>
     <div flex="5" layout="column"></div>
 
 </md-content>
