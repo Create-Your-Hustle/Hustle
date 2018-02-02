@@ -107,9 +107,10 @@ passport.use('facebook', new FacebookStrategy({
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: process.env.GOOGLE_APP_URL
+  callbackURL: process.env.GOOGLE_CALLBACK_URL
 },
   function (accessToken, refreshToken, profile, done) {
+    console.log(profile.emails)
     pool.connect(function (err, client, release) {
 
       if (err) {
@@ -130,7 +131,7 @@ passport.use(new GoogleStrategy({
           WHERE google_id = $1)
          returning *)
         SELECT * FROM existing_user UNION ALL
-      SELECT * FROM new_user;`, [profile.id, profile.email], function (error, result) {
+      SELECT * FROM new_user;`, [profile.id, profile.emails[0].value], function (error, result) {
             release()
             if (error) {
               console.log('Error making query', error)

@@ -13,10 +13,10 @@ router.get('/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: 'http://localhost:5000/#/home', successRedirect: 'http://localhost:5000/#/user' })
   );
 
-  app.get('/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', profile, email] }));
+  router.get('/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'profile', 'email'] }));
 
-  app.get('/google/callback', 
+  router.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: 'http://localhost:5000/#/login', successRedirect: 'http://localhost:5000/#/user' })
 );
 
