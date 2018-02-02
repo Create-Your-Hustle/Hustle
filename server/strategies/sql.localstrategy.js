@@ -4,6 +4,7 @@ var localStrategy = require('passport-local').Strategy;
 var encryptLib = require('../modules/encryption');
 var pool = require('../modules/pool.js');
 var FacebookStrategy = require('passport-facebook').Strategy
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 passport.serializeUser(function (user, done) {
   //nothing to do here as we use the username as it is
@@ -69,14 +70,14 @@ passport.use('facebook', new FacebookStrategy({
 
     console.log(profile)
 
-      pool.connect(function (err, client, release) {
+    pool.connect(function (err, client, release) {
 
-        if (err) {
-          console.log('Error connecting to database', err)
-          // Does this need to be here?  Can it even do anything?
-          res.sendStatus(500);
-        } else {
-          client.query(`WITH existing_user AS (
+      if (err) {
+        console.log('Error connecting to database', err)
+        // Does this need to be here?  Can it even do anything?
+        res.sendStatus(500);
+      } else {
+        client.query(`WITH existing_user AS (
             SELECT *
             FROM users 
             WHERE facebook_id = $1),
@@ -90,19 +91,58 @@ passport.use('facebook', new FacebookStrategy({
                returning *)
               SELECT * FROM existing_user UNION ALL
             SELECT * FROM new_user;`, [profile.id, profile.displayName], function (error, result) {
-              release()
-              if (error) {
-                console.log('Error making query', error)
-                done(null, false);
-              } else  {
-                 done(null, result.rows[0])
-              } 
-            })
-        }
-      })
+            release()
+            if (error) {
+              console.log('Error making query', error)
+              done(null, false);
+            } else {
+              done(null, result.rows[0])
+            }
+          })
+      }
+    })
   }));
 ;
 
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.GOOGLE_APP_URL
+},
+  function (accessToken, refreshToken, profile, done) {
+    pool.connect(function (err, client, release) {
+
+      if (err) {
+        console.log('Error connecting to database', err)
+        // Does this need to be here?  Can it even do anything?
+        res.sendStatus(500);
+      } else {
+        client.query(`WITH existing_user AS (
+      SELECT *
+      FROM users 
+      WHERE google_id = $1),
+      new_user AS (
+      INSERT INTO users (google_id, username)
+      SELECT $1, $2
+      WHERE NOT EXISTS (
+          SELECT google_id
+          FROM users
+          WHERE google_id = $1)
+         returning *)
+        SELECT * FROM existing_user UNION ALL
+      SELECT * FROM new_user;`, [profile.id, profile.email], function (error, result) {
+            release()
+            if (error) {
+              console.log('Error making query', error)
+              done(null, false);
+            } else {
+              done(null, result.rows[0])
+            }
+          })
+      }
+    })
+  }
+));
 
 
 module.exports = passport;

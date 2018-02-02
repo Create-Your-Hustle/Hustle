@@ -10,8 +10,15 @@ router.get('/facebook',
   passport.authenticate('facebook'));
 
 router.get('/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/home', successRedirect: 'http://localhost:5000/#/user' })
+  passport.authenticate('facebook', { failureRedirect: 'http://localhost:5000/#/home', successRedirect: 'http://localhost:5000/#/user' })
   );
+
+  app.get('/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', profile, email] }));
+
+  app.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: 'http://localhost:5000/#/login', successRedirect: 'http://localhost:5000/#/user' })
+);
 
 // Handles Ajax request for user information if user is authenticated
 router.get('/', function(req, res) {
