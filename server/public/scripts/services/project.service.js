@@ -103,10 +103,12 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
 
     self.getProjectSearchResult = function (searchParamsObject) {
+      console.log('project search', searchParamsObject)
+      searchParamsObject.skills.push('');
       $http({
         method:'GET',
         url:'/project/search',
-        data: searchParamsObject,
+        params: searchParamsObject,
       }).then(function (response) {
         console.log('response', response);
         self.projectArray.list = response.data;
