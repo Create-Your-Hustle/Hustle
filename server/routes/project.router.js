@@ -113,12 +113,14 @@ router.get('/search', function (req, res) {
     if (project_name !== '') {
         project_name = `%` + req.query.project_name + `%`
     };
-    let skill_params = req.query.skills;
+
+    let skill_params = req.query.skills; 
+
     let sql_params = ''
     for (let i = 0; i < skill_params.length; i++) {
         const element = skill_params[i];
         sql_params += ('$' + (i + 2));
-        if(i < skill_params.length - 1){
+        if (i < skill_params.length - 1) {
             sql_params += ', '
         };
     };

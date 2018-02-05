@@ -98,13 +98,12 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         });
       }
       openPicker();
-    }
+    };
 
 
 
     self.getProjectSearchResult = function (searchParamsObject) {
       console.log('project search', searchParamsObject)
-      searchParamsObject.skills.push('');
       $http({
         method:'GET',
         url:'/project/search',
@@ -124,7 +123,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         console.log(response.data);
         self.skillArray.list = response.data;
       })
-    }
+    };
 
     //send message to project owner
     self.sendMessage = function(message, project){
