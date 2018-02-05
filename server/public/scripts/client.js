@@ -1,7 +1,7 @@
 var myApp = angular.module('myApp', ['ngRoute', 'ngMaterial', 'jkAngularCarousel', 'ngMessages']);
 
 /// Routes ///
-myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
+myApp.config(function ($routeProvider, $locationProvider, $mdThemingProvider) {
   $locationProvider.hashPrefix('');
   console.log('myApp -- config')
   $routeProvider
@@ -17,7 +17,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
       templateUrl: '/views/templates/user.html',
       controller: 'UserController as vm',
       resolve: {
-        getuser : function(UserService){
+        getuser: function (UserService) {
           return UserService.getuser();
         }
       }
@@ -26,7 +26,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
       templateUrl: '/views/templates/info.html',
       controller: 'InfoController as vm',
       resolve: {
-        getuser : function(UserService){
+        getuser: function (UserService) {
           return UserService.getuser();
         }
       }
@@ -35,7 +35,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
       templateUrl: '/views/templates/collaborator-search.html',
       controller: 'CollaboratorSearchController as vm',
       resolve: {
-        getuser : function(UserService){
+        getuser: function (UserService) {
           return UserService.getuser();
         }
       }
@@ -44,7 +44,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
       templateUrl: '/views/templates/projects.html',
       controller: 'ProjectSearchController as vm',
       resolve: {
-        getuser : function(UserService){
+        getuser: function (UserService) {
           return UserService.getuser();
         }
       }
@@ -53,7 +53,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
       templateUrl: '/views/templates/project-profile.html',
       controller: 'ProjectProfileController as vm',
       resolve: {
-        getuser : function(UserService){
+        getuser: function (UserService) {
           return UserService.getuser();
         }
       }
@@ -66,30 +66,76 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
       redirectTo: 'home'
     });
 
-    $mdThemingProvider.definePalette('primaryColorRorange', {
-      '50': 'ff634f',
-      '100': 'ff634f',
-      '200': 'ff634f',
-      '300': 'ff634f',
-      '400': 'ff634f',
-      '500': 'ff634f',
-      '600': 'ff634f',
-      '700': 'ff634f',
-      '800': 'ff634f',
-      '900': 'ff634f',
-      'A100': 'ff634f',
-      'A200': 'ff634f',
-      'A400': 'ff634f',
-      'A700': 'ff634f',
-      'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
-                                          // on this palette should be dark or light
+    
+
+  $mdThemingProvider.definePalette('primaryColorRorange', {
+    '50': 'ff634f',
+    '100': 'ff634f',
+    '200': 'ff634f',
+    '300': 'ff634f',
+    '400': 'ff634f',
+    '500': 'ff634f',
+    '600': 'ff634f',
+    '700': 'ff634f',
+    '800': 'ff634f',
+    '900': 'ff634f',
+    'A100': 'ff634f',
+    'A200': 'ff634f',
+    'A400': 'ff634f',
+    'A700': 'ff634f',
+    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+    // on this palette should be dark or light
+
+    // 'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+    //  '200', '300', '400', 'A100'],
+    // 'contrastLightColors': undefined    // could also specify this if default was 'dark'
+  });
+
+  $mdThemingProvider.theme('default')
+    .primaryPalette('primaryColorRorange')
+
+
+
+
+  });
+
+    //Star Directive
+    myApp.directive('starRating', function () {
+      return {
+        restrict: 'A',
+        template: '<ul class="rating">' +
+          '<li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)">' +
+          '\u2605' +
+          '</li>' +
+          '</ul>',
+        scope: {
+          ratingValue: '=',
+          max: '=',
+          onRatingSelected: '&'
+        },
+        link: function (scope, elem, attrs) {
   
-      // 'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
-      //  '200', '300', '400', 'A100'],
-      // 'contrastLightColors': undefined    // could also specify this if default was 'dark'
-    });
+          var updateStars = function () {
+            scope.stars = [];
+            for (var i = 0; i < scope.max; i++) {
+              scope.stars.push({
+                filled: i < scope.ratingValue
+              });
+            }
+          };
   
-    $mdThemingProvider.theme('default')
-      .primaryPalette('primaryColorRorange')
+          scope.toggle = function (index) {
+            scope.ratingValue = index + 1;
+            scope.onRatingSelected({
+              rating: index + 1
+            });
+          };
   
-});
+          scope.$watch('ratingValue', function (oldVal, newVal) {
+            if (newVal) {
+              updateStars();
+            }
+          });
+        }
+      }
+    })

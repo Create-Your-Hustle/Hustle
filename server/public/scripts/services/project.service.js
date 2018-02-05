@@ -9,18 +9,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
   self.projectProfile = { list: [] };
   self.imageUrl = {};
 
-  //Modal for sending a message to project owners
-  self.contactProjectOwner = function (ev) {
-    console.log('button Clicked');
-    $mdDialog.show({
-      controller: 'ProjectProfileController as vm',
-      templateUrl: '../views/modals/contact-project-owner.dialog.html',
-      parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose: true,
-      fullscreen: self.customFullscreen
-    })
-  };
+
 
   //Get all projects
   self.getProjects = function () {
@@ -147,20 +136,19 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
     })
   }
 
-  //rate project Collaborator
-  self.rateCollaborator = function (ev, collaborator) {
-    console.log('COLAB', collaborator);
-    
-    console.log('button Clicked');
-    $mdDialog.show({
-      controller: 'CollaboratorRatingController as vm',
-      templateUrl: '../views/modals/rate-collaborator.dialog.html',
-      parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose: true,
-      fullscreen: self.customFullscreen
-    })
-  }
+    //Modal for sending a message to project owners
+    self.contactProjectOwner = function (ev) {
+      console.log('button Clicked');
+      $mdDialog.show({
+        controller: 'ProjectProfileController as vm',
+        templateUrl: '../views/modals/contact-project-owner.dialog.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: true,
+        fullscreen: self.customFullscreen
+      })
+    };
+
 
 
   //send message to project owner
@@ -182,4 +170,28 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       console.log('response', response);
     })
   }
+
+    //rate project Collaborator modal
+    self.rateCollaborator = function (ev, collaborator) {
+    
+      console.log('button Clicked');
+      console.log(collaborator);
+      
+      $mdDialog.show({
+        locals:{dataToPass: collaborator},
+        controller: 'CollaboratorRatingController as vm',
+        templateUrl: '../views/modals/rate-collaborator.dialog.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: true,
+        fullscreen: self.customFullscreen
+      })
+    }
+  
+    //submits collaborator ratings
+    self.submitRatings = function(ratings, collaborator) {
+      console.log("ratings", ratings);
+      console.log("collaborator", collaborator);
+      
+    }
 });
