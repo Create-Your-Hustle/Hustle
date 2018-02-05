@@ -8,6 +8,43 @@ myApp.service('UserService', function($http, $location){
     password: ''
   };
 
+  self.validateEmail= function(email) {
+    var valEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return valEmail.test(email);
+  }
+   
+
+  self.skillslist = {list:[]}
+
+  self.deleteSkill = function (user) {
+    $http({
+      method: 'DELETE',
+      url: 'collaborator/skill',
+      params: user,
+    }).then(function (resposne) {
+      self.getUser();
+    })
+  };
+
+  self.getSkills = function () {
+    $http({
+      method: 'GET',
+      url: 'project/skillList',
+    }).then( function (response){
+      self.skillslist.list = response.data
+    })
+  }
+
+  self.addSkill = function (skill) {
+    $http({
+      method: 'POST',
+      url: 'collaborator/skill',
+      data: skill
+    }).then( function (response) {
+      self.getUser()
+    })
+  }
+
   self.getUser = function (username) {
     if(!username) {
       username = self.userObject.userName
@@ -17,7 +54,6 @@ myApp.service('UserService', function($http, $location){
       url:'/collaborator/select',
       params: {name: username},
     }).then(function (response) {
-      console.log('response', response);
       self.selectedUser.list = response.data;
     })
   };
@@ -43,27 +79,22 @@ myApp.service('UserService', function($http, $location){
   }
 
   self.getuser = function(){
-    console.log('UserService -- getuser');
+
     $http.get('/user').then(function(response) {
         if(response.data.username) {
             // user has a curret session on the server
             self.userObject.userName = response.data.username;
-            console.log('UserService -- getuser -- User Data: ', self.userObject.userName);
         } else {
-            console.log('UserService -- getuser -- failure');
             // user has no session, bounce them back to the login page
             $location.path("/home");
         }
     },function(response){
-      console.log('UserService -- getuser -- failure: ', response);
       $location.path("/home");
     });
   },
 
   self.logout = function() {
-    console.log('UserService -- logout');
     $http.get('/user/logout').then(function(response) {
-      console.log('UserService -- logout -- logged out');
       $location.path("/home");
     });
   }

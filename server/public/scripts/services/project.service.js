@@ -76,11 +76,14 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       var fsClient = filestack.init('AR2OVvMAHTTiTRo7bG05Vz');
       function openPicker() {
         fsClient.pick({
-          fromSources: ["local_file_system", "url", "imagesearch", "facebook", "instagram", "googledrive", "dropbox", "evernote", "flickr", "box", "github", "webcam", "video", "audio"],
+          fromSources: ["local_file_system", "url", "imagesearch", "facebook", "instagram", "googledrive", "dropbox", "evernote", "flickr", "webcam", "video", "audio"],
           maxSize: 102400000,
           maxFiles: 5,
           minFiles: 1,
-          imageDim: [400, 250]
+          imageDim: [400, 250],
+          transformations:{
+            crop:{      force:true,
+            aspectRatio:1}}
         }).then(function (response) {
           // declare this function to handle response
           project.project_picture = response.filesUploaded[0].url;
@@ -100,10 +103,12 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
 
     self.getProjectSearchResult = function (searchParamsObject) {
+      console.log('project search', searchParamsObject)
+      searchParamsObject.skills.push('');
       $http({
         method:'GET',
         url:'/project/search',
-        data: searchParamsObject,
+        params: searchParamsObject,
       }).then(function (response) {
         console.log('response', response);
         self.projectArray.list = response.data;

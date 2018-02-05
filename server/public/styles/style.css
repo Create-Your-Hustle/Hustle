@@ -16,7 +16,6 @@ body:nth-child {
 
 .navbar {
   font-family: 'open sans', sans-serif;
-  height: flex;
 }
 
 .instructions .container h1 {
@@ -87,6 +86,10 @@ a {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+}
+
+.smaller{
+  width: 30%;
 }
 
 .lead {
@@ -171,6 +174,9 @@ li a:hover {
 .dialogdemoBasicUsage #popupContainer {
   position: relative; }
 
+.loginRegister{
+    color: black;
+  }
 .dialogdemoBasicUsage .footer {
   width: 100%;
   text-align: center;
