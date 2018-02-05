@@ -16,7 +16,6 @@ body:nth-child {
 
 .navbar {
   font-family: 'open sans', sans-serif;
-  height: flex;
 }
 
 .instructions .container h1 {
