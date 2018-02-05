@@ -31,6 +31,22 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
+
+    .when('/faq', {
+      templateUrl: '/views/templates/faq.html',
+      controller: 'InfoController as vm'
+    })
+
+    .when('/about', {
+      templateUrl: '/views/templates/about.html',
+      controller: 'InfoController as vm'
+    })
+
+    .when('/contact', {
+      templateUrl: '/views/templates/contact.html',
+      controller: 'InfoController as vm'
+    })
+    
     .when('/collaborator-search', {
       templateUrl: '/views/templates/collaborator-search.html',
       controller: 'CollaboratorSearchController as vm',

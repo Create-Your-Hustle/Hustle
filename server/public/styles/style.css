@@ -92,6 +92,9 @@ a {
   width: 30%;
 }
 
+.orange{
+  color: #ff634f;
+}
 .lead {
   color: white;
   size: 20;
@@ -144,10 +147,12 @@ md-card {
 #mission{
   margin-top: 1em;
   margin-bottom: 1em;
+  padding-top: 1em;
+  padding-bottom: 1.5em;
 }
 
 #howItWorks{
-  background: url("../assets/squarespace/howitworksbackground.jpeg") no-repeat center center fixed;
+  background: url("../assets/squarespace/howitworksbackground.jpeg") no-repeat center center;
 }
 
 .orangeDiv{

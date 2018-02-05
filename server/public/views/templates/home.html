@@ -1,5 +1,5 @@
 <div layout="column" layout-fill>
-    <div class ="header" ng-include="'views/partials/header.html'"></div>
+    <div class="header" ng-include="'views/partials/header.html'"></div>
     <md-content layout="column">
         <div layout="column" id="home1">
 
@@ -18,7 +18,7 @@
         </div>
 
         <div class="homeContent">
-            <div layout-padding layout="row" layout-align="left center" class="secondFont">
+            <div layout-padding layout="row" layout-align="left start" class="secondFont">
                 <div flex="50" class="whiteDiv">
                     <a name="about"></a>
                     <H1>Hustle is a collaborative platform that enables anyone with a side hustle or passion project to find
@@ -27,9 +27,11 @@
                         disparate skills together in one place.</H2>
                 </div>
                 <div flex="50" layout="column" layout-align="end end ">
-                    <H2 class="md-display-2">SIDE HUSTLE.</H2>
-                    <H2 class="md-display-2"> /sīd ˈhəsəl/. </H2>
-                    <H2 class="md-display-2">noun.</H2>
+                    <H2>
+                        <div class="md-display-2">SIDE HUSTLE.</div>
+                        <div class="md-display-2"> /sīd ˈhəsəl/. </div>
+                        <div class="md-display-2">noun.</div>
+                    </H2>
                     <H3>
                         <ul>
                             <li>Your nights and weekends passion project</li>
@@ -39,8 +41,8 @@
                     </H3>
                 </div>
             </div>
-            <div layout-padding layout="row" layout-align="left" class="secondFont">
-                <div flex="50" class="orangeDiv">
+            <div layout-padding layout="row" layout-align="left start" class="secondFont orangeDiv">
+                <div flex="50">
                     <a name="community"></a>
                     <H1>For Creators.</H1>
                     <H2>Are you working on a side project?</H2>
@@ -51,7 +53,7 @@
                         Sign Me Up!
                     </md-button>
                 </div>
-                <div flex="50" class="orangeDiv">
+                <div flex="50">
                     <H1>For Collaborators. </H1>
                     <H2>Are you looking for a side project?</H2>
                     <H3>Whether you’re motivated by following your passion and finding inspiration, stretching yourself and learning
@@ -60,7 +62,9 @@
                     <md-button class="md-info md-raised btn1" ng-click="hc.showLogin($event)" style-align="center"> Sign Me Up! </md-button>
                 </div>
             </div>
-
+            <div>
+                </br>
+            </div>
             <div>
                 <md-card layout="column" layout-align="center center" style="padding-bottom: 10px">
                     <jk-carousel data="hc.carousel" item-template-url="'/views/templates/carousel-template.html'" max-width="1000" max-height="600">
@@ -77,13 +81,16 @@
 
             <div id="howItWorks">
                 <a name="works"></a>
-                <H1 class="md-display-1" layout-align="center center" text-align="center">How It Works </H1>
-                <ol class="md-display-2" layout-align="center left">
-                    <li>You tell us what you're looking for</li>
-                    <li>We find you matches</li>
-                    <li>We send an introduction</li>
-                    <li>You make something amazing!</li>
-                </ol>
+                <div layout-padding layout="column">
+                        <H1 class="orange md-display-3" layout-align="left start">How It Works </H1>
+                            </br>
+                            <H2 class="secondFont">1) You tell us what you're looking for</br>
+                            2) We find you matches</br>
+                            3) We send an introduction</br>
+                            4) You make something amazing!</H2>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </md-content>
