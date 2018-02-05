@@ -13,6 +13,8 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     self.projectSkillArray = ProjectService.projectSkillArray
     self.projectArray = ProjectService.projectArray
     self.projectProfile = ProjectService.projectProfile
+    self.projectCollaboratorArray = ProjectService.projectCollaboratorArray
+    self.rateCollaborator = ProjectService.rateCollaborator
 
     self.contactProjectOwner = ProjectService.contactProjectOwner
     self.uploadProjectPicture = ProjectService.uploadProjectPicture
