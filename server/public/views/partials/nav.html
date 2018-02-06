@@ -2,26 +2,26 @@
   <div ng-controller="NavBarController as nc">
     <md-toolbar>
       <div class="instructions" layout="column" layout-fill>
-        <div md-sticky>
+        <div md-sticky  class="orangeDiv">
           <h1 class="lead show-xs md-display-1" layout="row" layout-align="center">HUSTLE</h1>
           <div layout="row">
-            <div flex="50" layout="row" class="navbar hide-xs">
+            <div flex="50" layout="row" class="navbar hide-xs orangeDiv">
             </div>
-            <div flex="50" layout="row" class="navbar hide-xs" layout-align="start">
+            <div flex="50" layout="row" class="navbar hide-xs orangeDiv" layout-align="start">
               <div>
-                <h3 class="md-subhead instructions">
+                <h3 class="md-subhead instructions orangeDiv">
                   <a href="#/collaborator-search">FIND COLLABORATORS</a>
                 </h3>
               </div>
-              <div flex class="navbar hide-xs" layout="row" layout-align="center">
-                <h3 class="md-subhead instructions">
+              <div flex class="navbar hide-xs orangeDiv" layout="row" layout-align="center">
+                <h3 class="md-subhead instructions orangeDiv">
                   <a href="#/projects">FIND PROJECTS</a>
                 </h3>
               </div>
-              <div flex class="navbar hide-xs" layout="row" layout-align="top end">
+              <div flex class="navbar hide-xs orangeDiv" layout="row" layout-align="top end">
                 <md-menu>
                   <md-button ng-mouseenter="nc.openMenu($mdMenu, $event)">
-                    <img class="md-icon" ng-src="{{vm.selectedUser.list[0].user_picture}}" alt="profile picture" aria-label="Open Menu">
+                    <img class="md-icon" ng-src="{{nc.selectedUser.list[0].user_picture}}" alt="profile picture" aria-label="Open Menu">
                   </md-button>
                   <md-menu-content width="4" class="instructions">
                     <md-menu-item>
