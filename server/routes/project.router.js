@@ -247,6 +247,28 @@ router.get('/profile/:id', function (req, res) {
     });
 });
 
+//Get project Collaborators 
+router.get('/project-collaborators/:id', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`SELECT users_projects.user_project_role, users.username, users.id FROM users_projects
+                        JOIN users ON users_projects.user_id = users.id
+                        WHERE project_id = $1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
+        }
+    });
+});
+
 //Message project creator
 router.put('/message', function (req, res) {
     console.log('REQ.BODY', req.body);
@@ -292,6 +314,30 @@ router.put('/message', function (req, res) {
     })
 });
 
+
+//Puts collaborator ratings into DB
+router.put('/collaboratorRatings', function (req, res) {
+    console.log('REQ.BODY', req.body);
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+
+            for (let i = 0; i < req.body.rating.length; i++) {
+                client.query(`INSERT INTO ratings (reviewed_user_id, reviewer_id, rating, rating_type)
+                VALUES ($1, $2, $3, $4);`, 
+                [req.body.collaborator, req.user.id, req.body.rating[i].current, req.body.rating[i].rating_type]            ,
+                function(errorMakingQuery, result) {
+                    done();
+                    if (errorMakingQuery) {
+                        res.sendStatus(500)
+                    }
+                });
+            }
+        }
+    })
+});
 
 
 module.exports = router;
