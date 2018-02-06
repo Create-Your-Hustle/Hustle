@@ -7,6 +7,11 @@ myApp.controller('LoginController', function($http, $location, $mdDialog, UserSe
     vm.loginMessage = 'Please login using your e-mail address';
     vm.registerMessage= 'Welcome! Please register using your e-mail address to get started!';
 
+  //   vm.cancel = function(){
+  //     $modalInstance.close();
+  //  }
+  // Note to self: had $modalInstance as a controller function dependency on Line 1, trying
+  // to figure out how to make the modal close when you click the x.
 
     vm.login = function() {
       console.log('LoginController -- login');

@@ -1,4 +1,5 @@
-myApp.controller('NavBarController', function NavBarController($mdDialog, CollaboratorService) {
+myApp.controller('NavBarController', function NavBarController($mdDialog, UserService) {
+    self.selectedUser = UserService.selectedUser
     var originatorEv;
 
     this.openMenu = function ($mdMenu, ev) {
