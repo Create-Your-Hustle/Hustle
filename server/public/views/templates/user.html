@@ -12,9 +12,9 @@
         </div>
         <div flex>
             <h2>
-                <span ng-hide="vm.isEditing.username">{{vm.selectedUser.list[0].username}}</span>
+                <span ng-hide="vm.isEditing.username">{{vm.selectedUser.list[0].display_name}}</span>
                 <span ng-show="vm.isEditing.username">
-                    <input ng-model="vm.selectedUser.list[0].username">
+                    <input ng-model="vm.selectedUser.list[0].displayName">
                 </span>
                 <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-hide="vm.isEditing.username">
                     <button ng-click="vm.isEditing.username = true">edit</button>
