@@ -2,10 +2,11 @@ CREATE TABLE users (
 	id SERIAL PRIMARY KEY,
 	username VARCHAR(50),
 	password VARCHAR(100),
-	email VARCHAR(50) UNIQUE,
+	display_name VARCHAR(50) UNIQUE,
 	user_bio VARCHAR(1000),
 	user_rating DECIMAL,
-	user_picture VARCHAR(100),
+	user_picture VARCHAR(150),
+	-- Changed character count to 150, LinkedIn picture I tried to upload here failed because address was too long
 	user_place_id VARCHAR,
 	user_city VARCHAR(20),
 	user_state VARCHAR(20),
@@ -80,5 +81,4 @@ CREATE TABLE ratings (
 	reviewer_id INT REFERENCES users,
 	rating INT NOT NULL
 );
-
 

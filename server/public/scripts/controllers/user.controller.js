@@ -18,7 +18,6 @@ myApp.controller('UserController', function(UserService) {
   self.editUsername = function (value) {
     console.log(value)
     self.isEditing.username = false;
-    self.userObject.userName = value.username;
     self.editUser(value);
   }
 
