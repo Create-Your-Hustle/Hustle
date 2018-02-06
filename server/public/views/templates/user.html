@@ -12,7 +12,7 @@
         </div>
         <div flex>
             <h2>
-                <span ng-hide="vm.isEditing.displayName">{{vm.selectedUser.list[0].displayName}}</span>
+                <span ng-hide="vm.isEditing.username">{{vm.selectedUser.list[0].display_name}}</span>
                 <span ng-show="vm.isEditing.username">
                     <input ng-model="vm.selectedUser.list[0].displayName">
                 </span>

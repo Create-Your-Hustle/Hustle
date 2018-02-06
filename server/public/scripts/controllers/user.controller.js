@@ -15,9 +15,9 @@ myApp.controller('UserController', function(UserService) {
   self.getSkills = UserService.getSkills
   self.addSkill = UserService.addSkill
 
-  self.editDisplayname = function (value) {
+  self.editUsername = function (value) {
     console.log(value)
-    self.isEditing.displayName = false;
+    self.isEditing.username = false;
     self.userObject.displayName = value.displayName;
     self.editUser(value);
   }
