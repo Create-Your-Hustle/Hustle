@@ -14,5 +14,16 @@ myApp.service('CollaboratorService', function ($http, $location) {
         self.collaborators.list = response.data;
       });
     };
+
+    self.searchCollaborators = function (searchParameterObject) {
+      $http({
+        method:'GET',
+        url:'/collaborator/search',
+        params: searchParameterObject,
+      }).then(function (response) {
+        console.log('getAllCollaboratorsForSearch response', response);
+        self.collaborators.list = response.data;
+      });
+    };
   });
   

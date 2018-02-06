@@ -2,10 +2,10 @@
     <div class="header" ng-include="'views/partials/header.html'"></div>
     <md-content layout="column">
         <div layout="column" id="home1">
-
             <div>
-
-                <div layout="row" layout-align="center" id="hustleTitle">HUSTLE</div>
+                <H1>
+                    <div class="md-display-4" layout="row" layout-align="center" id="hustleTitle">HUSTLE</div>
+                </H1>
                 <div layout="row" layout-align="center" class="secondFont" style-color="white">
                     <H2>Where people and ideas meet.</H2>
                 </div>
@@ -21,16 +21,16 @@
             <div layout-padding layout="row" layout-align="left start" class="secondFont">
                 <div flex="50" class="whiteDiv">
                     <a name="about"></a>
-                    <H1>Hustle is a collaborative platform that enables anyone with a side hustle or passion project to find
+                    <H2 md->Hustle is a collaborative platform that enables anyone with a side hustle or passion project to find
                         the talented people they need to bring their ideas to life.</H1>
-                    <H2>The best innovation and creativity comes from a diversity of thought and experiences. Hustle brings those
-                        disparate skills together in one place.</H2>
+                        <H2>The best innovation and creativity comes from a diversity of thought and experiences. Hustle brings
+                            those disparate skills together in one place.</H2>
                 </div>
                 <div flex="50" layout="column" layout-align="end end ">
                     <H2>
-                        <div class="md-display-2">SIDE HUSTLE.</div>
-                        <div class="md-display-2"> /sīd ˈhəsəl/. </div>
-                        <div class="md-display-2">noun.</div>
+                        <div class="md-display-3">SIDE HUSTLE.</div>
+                        <div class="md-display-3"> /sīd ˈhəsəl/. </div>
+                        <div class="md-display-3">noun.</div>
                     </H2>
                     <H3>
                         <ul>
@@ -41,25 +41,25 @@
                     </H3>
                 </div>
             </div>
-            <div layout-padding layout="row" layout-align="left start" class="secondFont orangeDiv">
+            <div layout-padding layout="row" layout-align="left start" class="orangeDiv secondFont">
+                <a name="community"></a>
                 <div flex="50">
-                    <a name="community"></a>
-                    <H1>For Creators.</H1>
+                    <H1 class="md-headline">For Creators.</H1>
                     <H2>Are you working on a side project?</H2>
                     <H3>It’s a great big world out there, and the odds that you know someone with the exact skills, availability,
                         and passion you need in a collaborator are slim. You tell us what kind of people you’re looking for
                         tomake your project a success, and we’ll help you find those people.</H3>
-                    <md-button class="md-info md-raised btn1" ng-click="hc.showLogin($event)" style-align="center">
+                    <md-button md-no-ink class="md-primary md-raised secondFont" ng-click="hc.showLogin($event)">
                         Sign Me Up!
                     </md-button>
                 </div>
                 <div flex="50">
-                    <H1>For Collaborators. </H1>
+                    <H1 class="md-headline">For Collaborators.</H1>
                     <H2>Are you looking for a side project?</H2>
                     <H3>Whether you’re motivated by following your passion and finding inspiration, stretching yourself and learning
                         something new, or meeting cool people and making a little extra cash, Hustle’s here for you. We can
                         help you find the right project that fits your skills and meets your goals.</H3>
-                    <md-button class="md-info md-raised btn1" ng-click="hc.showLogin($event)" style-align="center"> Sign Me Up! </md-button>
+                    <md-button md-no-ink class="md-primary md-raised secondFont" ng-click="hc.showLogin($event)"> Sign Me Up! </md-button>
                 </div>
             </div>
             <div>
@@ -82,17 +82,17 @@
             <div id="howItWorks">
                 <a name="works"></a>
                 <div layout-padding layout="column">
-                        <H1 class="orange md-display-3" layout-align="left start">How It Works </H1>
-                            </br>
-                            <H2 class="secondFont">1) You tell us what you're looking for</br>
-                            2) We find you matches</br>
-                            3) We send an introduction</br>
-                            4) You make something amazing!</H2>
-                        </div>
-                    </div>
+                    <H1 class="orange md-display-3" layout-align="left start">How It Works </H1>
+                    </br>
+                    <H2 class="secondFont">1) You tell us what you're looking for</br>
+                        2) We find you matches</br>
+                        3) We send an introduction</br>
+                        4) You make something amazing!</H2>
                 </div>
             </div>
         </div>
-    </md-content>
-    <div ng-include="'views/partials/footer.html'"></div>
+</div>
+</div>
+</md-content>
+<div ng-include="'views/partials/footer.html'"></div>
 </div>

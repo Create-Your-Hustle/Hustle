@@ -154,23 +154,62 @@ router.delete('/skill', function (req, res) {
 
 // Collaborator search get
 router.get('/search', function (req, res) {
+    console.log(req.query);
+    let username = req.query.username;
+    if (username !== '') {
+        username = `%` + req.query.project_name + `%`
+    };
+
+    let skill_params = req.query.skills; 
+
+    let sql_params = ''
+    for (let i = 0; i < skill_params.length; i++) {
+        const element = skill_params[i];
+        sql_params += ('$' + (i + 2));
+        if (i < skill_params.length - 1) {
+            sql_params += ', '
+        };
+    };
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`PUT SQL HERE`, function (errorMakingDatabaseQuery, result) {
-                done();
-                if (errorMakingDatabaseQuery) {
-                    console.log('error', errorMakingDatabaseQuery);
-                    res.sendStatus(500);
-                } else {
-                    res.send(result.rows);
-                }
-            });
+            client.query(`WITH name_search AS (
+                            SELECT array_agg(s.skill_name) AS skill_list, u.*, 1 as order_priority
+                                FROM users u
+                                LEFT JOIN users_skills us ON u.id = us.user_id
+                                LEFT JOIN skills s ON s.skill_id = us.skill_id
+                            WHERE u.username ILIKE $1
+                            GROUP BY u.id
+                            ),
+                            skill_search AS (
+                            SELECT array_agg(s.skill_name) AS skill_list, u.*, 1 as order_priority
+                                FROM users u
+                                LEFT JOIN users_skills us ON u.id = us.user_id
+                                LEFT JOIN skills s ON s.skill_id = us.skill_id
+                            WHERE s.skill_name IN (${sql_params})
+                            GROUP BY u.id
+                            )
+                        SELECT *
+                        FROM name_search
+                        UNION
+                        SELECT *
+                        FROM skill_search
+                        ORDER BY order_priority;`, [username, ...skill_params], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
         }
     });
 }); // end collaborator search get
+
+
 
 
 module.exports = router;

@@ -1,12 +1,10 @@
-body, html {
-  font-family: 'shrikhand', 'open sans', sans-serif;
+h1 {
+  font-family: 'shrikhand', sans-serif;
   font-size: 14px;
-  background-color: #ff634f;
-  color: #5A6279;
 }
 
 body:nth-child {
-
+  font-family: 'open sans', sans-serif;
   padding: 20px;
 }
 
@@ -51,11 +49,11 @@ body:nth-child {
 }
 
 .message:nth-child(odd) {
-   background-color: #eeeeee;
+   /* background-color: #eeeeee; */
 }
 
-.message:nth-child(even) {
-  background-color: #f8f8f8;
+/* .message:nth-child(even) {
+  background-color: #f8f8f8; */
 }
 
 .btn-danger{
@@ -77,7 +75,7 @@ ul {
 
 li {
   text-align: right;
-  color: black;
+  /* color: black; */
 }
 
 a {
@@ -88,16 +86,19 @@ a {
   text-decoration: none;
 }
 
+.md-menu-item a {
+ color: #ff634f
+}
+
 .smaller{
   width: 30%;
 }
 
-.orange{
-  color: #ff634f;
-}
+/* .blackOverride{
+ background-color: black;
+ color: white;
+} */
 .lead {
-  color: white;
-  size: 20;
   letter-spacing: 0.1em;
   font-family: 'shrikhand'
 }
@@ -132,7 +133,7 @@ md-card {
   margin-top: 100px;
   font-size: 72px;
   letter-spacing: 0.01389999em;
-  color: #ff634f;
+  color: #ff7043;
 }
 
 .secondFont{
@@ -180,7 +181,7 @@ li a:hover {
   position: relative; }
 
 .loginRegister{
-    color: black;
+    /* color: black; */
   }
 .dialogdemoBasicUsage .footer {
   width: 100%;
@@ -195,7 +196,7 @@ li a:hover {
   width: 200px; }
 
 .dialogdemoBasicUsage div#status {
-  color: #ff634f; }
+  /* color: #ff634f; } */}
 
 .dialogdemoBasicUsage .dialog-demo-prerendered md-checkbox {
   margin-bottom: 0; }
@@ -203,3 +204,47 @@ li a:hover {
 .main {
   margin: 20px;
 }
+
+.rating {
+  color: #a9a9a9;
+  margin: 0;
+  padding: 0;
+}
+ul.rating {
+  display: inline-block;
+}
+.rating li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 1px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  font-size:20px;
+}
+.rating .filled {
+  color: orangered;
+}
+.clear{
+margin-top:20px;
+}
+.md-menu-content .md-menu-item {
+      color: rgba(0, 0, 0, .87) !important;
+}
+.md-menu-content .md-icon {
+          color: rgba(0, 0, 0, .54) !important;
+      }
+
+.md-menu-content .md-button {
+          color: rgba(0, 0, 0, .38) !important;
+}
+
+.md-menu-content .md-icon {
+  color: rgba(0, 0, 0, .12) !important;
+}
+
+.md-icon{
+  height: 60px;
+  width: 60px;
+}
+
