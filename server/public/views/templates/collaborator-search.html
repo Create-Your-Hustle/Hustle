@@ -50,10 +50,10 @@
             <md-list-item ng-repeat="collaborator in vm.collaborators.list | filter:query" class="md-2-line">
                 <img ng-src="{{collaborator.user_picture}}" class="md-avatar" alt="" />
                 <div class="md-list-item-text" layout="column">
+
                     <div layout-align="start left">
-                    <h3>{{collaborator.username}}</h3>
+                    <h3>{{collaborator.display_name}}</h3>
                 </div>
-                
                     <span>{{collaborator.user_skills}}</span>
                 </div>
                 <img alt="stars" />
