@@ -1,10 +1,34 @@
-<div layout="column" layout-fill>
-    <div class="header" ng-include="'views/partials/nav.html'">
-    </div>
+<div class="header" ng-include="'views/partials/nav.html'">
+</div>
+<div class="homeContent">
     <md-content layout="column">
 
-
-
+        <div flex="5" layout="column">
+            <div class="main" layout="column">
+                <div flex layout-xs="column" layout="row">
+                    <div flex>
+                        <img class="profilePhoto" ng-src="{{vm.selectedUser.list[0].user_picture}}">
+                    </div>
+                    <div flex>
+                        <h2>
+                            <span ng-hide="vm.isEditing.username">{{vm.selectedUser.list[0].username}}</span>
+                            <span ng-show="vm.isEditing.username">
+                                <input ng-model="vm.selectedUser.list[0].username">
+                            </span>
+                            <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-hide="vm.isEditing.username">
+                                <button ng-click="vm.isEditing.username = true">edit</button>
+                            </span>
+                            <span ng-if="vm.userObject.id === vm.selectedUser.list[0].id" ng-show="vm.isEditing.username">
+                                <button ng-click="vm.editUsername(vm.selectedUser.list[0])">done</button>
+                            </span>
+                        </h2>
+                        <p>
+                            <span ng-hide="vm.isEditing.username">{{vm.selectedUser.list[0].user_bio}}</span>
+                            <span ng-show="vm.isEditing.username">
+                                <input ng-model="vm.selectedUser.list[0].user_bio">
+                            </span>
+                        </p>
+                    </div>
 <div class="main" layout="column">
     <div flex layout-xs="column" layout="row">
         <div flex>
@@ -30,85 +54,90 @@
                 </span>
             </p>
         </div>
+                </div>
+                <div flex layout-xs="column" layout="row">
+                    <div flex>
+                        <h3>Skills</h3>
 
+                        <table>
+                            <tr ng-repeat="skills in vm.selectedUser.list ">
+                                <td>{{skills.skill_name}}</td>
+                                <td>{{skills.skill_rating}}</td>
+                                <td ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
+                                    <button ng-click="vm.deleteSkill(skills)">delete</button>
+                                </td>
+                            </tr>
+                            <tr ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
+                                <td>
+                                    <md-select ng-model="vm.newSkill.skill_id">
+                                        <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillslist.list">
+                                            {{skill.skill_name}}
+                                        </md-option>
+                                    </md-select>
+                                </td>
+                                <td>
+                                    <md-select ng-model="vm.newSkill.skill_rating">
+                                        <md-option ng-value="1">Apprentice</md-option>
+                                        <md-option ng-value="2">Journeyman</md-option>
+                                        <md-option ng-value="3">Master</md-option>
+                                    </md-select>
+                                </td>
+                                <td>
+                                    <button ng-click="vm.addSkill(vm.newSkill)">add</button>
+                                </td>
 
-    </div>
-    <div flex layout-xs="column" layout="row">
-        <div flex>
-            <h3>Skills</h3>
+                            </tr>
+                        </table>
+                    </div>
+                    <div flex>
+                        <h3>Preferences
+                            <button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-hide="vm.isEditing.preferences" ng-click="vm.isEditing.preferences = true">edit</button>
+                            <button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-show="vm.isEditing.preferences" ng-click="vm.editPreferences(vm.selectedUser.list[0])">done</button>
+                        </h3>
+                        <p>
+                            <span ng-hide="vm.isEditing.preferences">
+                                Location: {{vm.selectedUser.list[0].user_city}}, {{vm.selectedUser.list[0].user_state}},
+                                <span ng-show=vm.selectedUser.list[0].user_remote>Willing to work remotely</span>
+                                <span ng-hide=vm.selectedUser.list[0].user_remote>Local only</span>
+                            </span>
+                            <span ng-show="vm.isEditing.preferences">
+                                Location:
+                                <input ng-model="vm.selectedUser.list[0].user_city"> ,
+                                <input ng-model="vm.selectedUser.list[0].user_state">
+                                <md-checkbox ng-model="vm.selectedUser.list[0].user_remote">Willing to work remotely</md-checkbox>
+                            </span>
+                        </p>
+                        <p>
+                            <span ng-hide="vm.isEditing.preferences">
+                                Compensation:
+                                <span ng-show=vm.selectedUser.list[0].user_for_pay>Pay</span>
+                                <span ng-show=vm.selectedUser.list[0].user_for_trade>Trade</span>
+                            </span>
+                            <span ng-show="vm.isEditing.preferences">
+                                Compensation:
+                                <md-checkbox ng-model="vm.selectedUser.list[0].user_for_pay">For pay</md-checkbox>
+                                <md-checkbox ng-model="vm.selectedUser.list[0].user_for_trade">For trade</md-checkbox>
+                            </span>
+                        </p>
+                        <p>
+                            <span ng-hide="vm.isEditing.preferences">
+                                Weekly Commitment {{vm.selectedUser.list[0].user_weekly_min}}-{{vm.selectedUser.list[0].user_weekly_max}} hours
+                            </span>
+                            <span ng-show="vm.isEditing.preferences">
+                                Weekly Commitment
+                                <input ng-model="vm.selectedUser.list[0].user_weekly_min"> -
+                                <input ng-model="vm.selectedUser.list[0].user_weekly_max"> hours
+                            </span>
+                        </p>
 
-            <table>
-                <tr ng-repeat="skills in vm.selectedUser.list ">
-                    <td>{{skills.skill_name}}</td>
-                    <td>{{skills.skill_rating}}</td>
-                    <td ng-if="vm.userObject.userName === vm.selectedUser.list[0].username"><button ng-click="vm.deleteSkill(skills)">delete</button></td>
-                </tr>
-                <tr ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
-                    <td>
-                            <md-select ng-model="vm.newSkill.skill_id">
-                                    <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillslist.list">
-                                        {{skill.skill_name}}
-                                    </md-option>
-                                </md-select>
-                    </td>
-                    <td>
-                        <md-select ng-model="vm.newSkill.skill_rating">
-                            <md-option ng-value= "1">Apprentice</md-option>
-                            <md-option ng-value= "2">Journeyman</md-option>
-                            <md-option ng-value= "3">Master</md-option>
-                        </md-select>
-                    </td>
-                    <td>
-                        <button ng-click="vm.addSkill(vm.newSkill)">add</button>
-                    </td>
-
-                </tr>
-            </table>
+                    </div>
+                </div>
+                <div>
+                    <h2>Projects</h2>
+                </div>
+            </div>
         </div>
-        <div flex>
-            <h3>Preferences
-                <button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-hide="vm.isEditing.preferences" ng-click="vm.isEditing.preferences = true">edit</button>
-                <button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-show="vm.isEditing.preferences" ng-click="vm.editPreferences(vm.selectedUser.list[0])">done</button>
-            </h3>
-            <p>
-                <span ng-hide="vm.isEditing.preferences">
-                    Location: {{vm.selectedUser.list[0].user_city}}, {{vm.selectedUser.list[0].user_state}},
-                    <span ng-show=vm.selectedUser.list[0].user_remote>Willing to work remotely</span>
-                    <span ng-hide=vm.selectedUser.list[0].user_remote>Local only</span>
-                </span>
-                <span ng-show="vm.isEditing.preferences">
-                    Location:
-                    <input ng-model="vm.selectedUser.list[0].user_city"> ,
-                    <input ng-model="vm.selectedUser.list[0].user_state">
-                    <md-checkbox ng-model="vm.selectedUser.list[0].user_remote">Willing to work remotely</md-checkbox>
-                </span>
-            </p>
-            <p>
-                <span ng-hide="vm.isEditing.preferences">
-                    Compensation:
-                    <span ng-show=vm.selectedUser.list[0].user_for_pay>Pay</span>
-                    <span ng-show=vm.selectedUser.list[0].user_for_trade>Trade</span>
-                </span>
-                <span ng-show="vm.isEditing.preferences">
-                    Compensation:
-                    <md-checkbox ng-model="vm.selectedUser.list[0].user_for_pay">For pay</md-checkbox>
-                    <md-checkbox ng-model="vm.selectedUser.list[0].user_for_trade">For trade</md-checkbox>
-                </span>
-            </p>
-            <p>
-                <span ng-hide="vm.isEditing.preferences">
-                    Weekly Commitment {{vm.selectedUser.list[0].user_weekly_min}}-{{vm.selectedUser.list[0].user_weekly_max}} hours
-                </span>
-                <span ng-show="vm.isEditing.preferences">
-                    Weekly Commitment <input ng-model="vm.selectedUser.list[0].user_weekly_min"> - <input ng-model="vm.selectedUser.list[0].user_weekly_max"> hours
-                </span>
-            </p>
 
-        </div>
-    </div>
-    <div>
-        <h2>Projects</h2>
-    </div>
+    </md-content>
 </div>
-
 <div ng-include="'views/partials/footer.html'"></div>

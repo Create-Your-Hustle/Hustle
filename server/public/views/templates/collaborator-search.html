@@ -1,6 +1,6 @@
 <div ng-include="'views/partials/nav.html'"></div>
-<md-content layout-padding layout="row" layout-xs="column">
-
+<div class="homeContent">
+    <md-content layout-padding layout="row" layout-xs="column">
     <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
         <md-toolbar>
             <h1 class="md-toolbar-tools">Search</h1>
@@ -37,12 +37,53 @@
                         <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_for_pay" class="md-primary">For Pay</md-checkbox>
                         <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_for_trade" class="md-primary">For Trade</md-checkbox>
                     </div>
-                </md-input-container>
-                <div flex="5" layout="column"></div>
-            </div>
-        </md-content>
-    </md-sidenav>
+                    <md-input-container>
+                        <input type="text" placeholder="Name">
+                    </md-input-container>
+                    <md-input-container flex="20" layout="column">
+                        <label>Skills</label>
+                        <md-select ng-model="selectedSkills" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" multiple>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
+                            </md-select-header>
+                            <md-optgroup label="skills">
+                                <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillArray.list |
+                                                  filter:searchTerm">{{skill.skill_name}}</md-option>
+                            </md-optgroup>
+                            <!-- <md-option ng-repeat="skill in vm.skillArray.list" ng-value="skill.skill_id">{{skill.skill_name}}</md-option> -->
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container layout-padding>
+                        <input type="text" placeholder="Location">
+                        <md-checkbox class="md-primary">Remote Opportunity</md-checkbox>
+                        <md-subhead>Compensation</md-subhead>
+                        <div>
+                            <md-checkbox class="md-primary">For Pay</md-checkbox>
+                            <md-checkbox class="md-primary">For Trade</md-checkbox>
+                        </div>
+                    </md-input-container>
+                    <div flex="5" layout="column"></div>
+                </div>
+            </md-content>
+        </md-sidenav>
 
+        <div flex="5" layout="column"></div>
+        <div flex layout="column">
+            <div flex>
+                <md-button ng-click="toggleLeft()" class="md-warn" hide-gt-md>
+                    Search Bar
+                </md-button>
+            </div>
+            <div flex>
+                <h1>Collaborators</h1>
+            </div>
+            <md-list flex>
+                <md-list-item ng-repeat="collaborator in vm.collaborators.list" class="md-2-line">
+                    <img ng-src="{{collaborator.user_picture}}" class="md-avatar" alt="profile picture" />
+                    <div class="md-list-item-text" layout="column">
+                        <div layout-align="start left">
+                            <h3>{{collaborator.username}}</h3>
+                        </div>
     <div flex="5" layout="column"></div>
     <div flex layout="column">
         <h1>Collaborators</h1>

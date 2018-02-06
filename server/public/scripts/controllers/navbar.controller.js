@@ -1,4 +1,6 @@
 myApp.controller('NavBarController', function NavBarController($mdDialog, UserService) {
+    var self = this
+    self.UserService = UserService;
     self.selectedUser = UserService.selectedUser
     var originatorEv;
 
