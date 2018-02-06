@@ -71,7 +71,8 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       for (let i = 0; i < response.data.length; i++) {
         self.projectCollaboratorArray.list.push({
           username: response.data[i].username,
-          user_project_role: response.data[i].user_project_role
+          user_project_role: response.data[i].user_project_role,
+          user_id: response.data[i].id
         })
       }
       console.log('project collaborators ', self.projectCollaboratorArray);
@@ -189,9 +190,21 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
     }
   
     //submits collaborator ratings
-    self.submitRatings = function(ratings, collaborator) {
+    self.submitRatings = function(ratings, collaborator, project) {
       console.log("ratings", ratings);
       console.log("collaborator", collaborator);
-      
+      console.log('project', project);
+      collaboratorRating = {
+        rating: ratings,
+        project: project.project_id,
+        collaborator: collaborator.user_id
+      }
+      $http({
+        method: 'PUT',
+        url: '/project/collaboratorRatings',
+        data: collaboratorRating
+      }).then(function (response) {
+        console.log('response', response);
+      })
     }
 });

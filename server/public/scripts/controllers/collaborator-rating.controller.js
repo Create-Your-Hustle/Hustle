@@ -5,6 +5,8 @@ myApp.controller('CollaboratorRatingController', function(UserService, ProjectSe
     self.ProjectService = ProjectService;
 
     self.dataToPass = dataToPass
+    self.projectProfile = ProjectService.projectProfile
+
 
     self.submitRatings = ProjectService.submitRatings
 
