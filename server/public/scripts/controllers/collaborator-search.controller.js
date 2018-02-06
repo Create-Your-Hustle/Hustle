@@ -1,13 +1,25 @@
-myApp.controller('CollaboratorSearchController', function (UserService, CollaboratorService, $scope, $timeout, $mdSidenav, $log) {
+myApp.controller('CollaboratorSearchController', function (UserService, CollaboratorService, ProjectService, $timeout, $mdSidenav, $log) {
     console.log('CollaboratorSearchController created');
     const self = this;
 
     self.collaborators = CollaboratorService.collaborators;
     self.getAllCollaboratorsForSearch = CollaboratorService.getAllCollaboratorsForSearch;
+    self.skillArray = ProjectService.skillArray;
+    self.searchParameters = { skills: [' '] };
 
     self.getAllCollaboratorsForSearch();
+    ProjectService.getSkills();
+    self.searchCollaborators = CollaboratorService.searchCollaborators;
+
 
     // side nav
+    self.close = function () {
+        // Component lookup should always be available since we are not using `ng-if`
+        $mdSidenav('left').close()
+            .then(function () {
+                $log.debug("close LEFT is done");
+            });
+    };
 
     /**
      * Supplies a function that will continue to operate until the
@@ -17,7 +29,7 @@ myApp.controller('CollaboratorSearchController', function (UserService, Collabor
         var timer;
 
         return function debounced() {
-            var context = $scope,
+            var context = self,
                 args = Array.prototype.slice.call(arguments);
             $timeout.cancel(timer);
             timer = $timeout(function () {
@@ -27,7 +39,7 @@ myApp.controller('CollaboratorSearchController', function (UserService, Collabor
         };
     }
 
-    $scope.toggleLeft = buildDelayedToggler('left');
+    self.toggleLeft = buildDelayedToggler('left');
 
     /**
      * Build handler to open/close a SideNav; when animation finishes
