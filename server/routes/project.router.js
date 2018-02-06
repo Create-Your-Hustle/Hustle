@@ -337,5 +337,26 @@ router.put('/collaboratorRatings', function (req, res) {
     })
 });
 
+router.get('/myProjects/:id', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`SELECT *
+                            FROM users_projects up
+                            JOIN projects p ON p.project_id = up.project_id
+                            WHERE up.user_id = 1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
+        }
+    });
+});
 
 module.exports = router;

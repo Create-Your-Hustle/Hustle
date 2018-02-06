@@ -65,9 +65,9 @@ myApp.config(function ($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
-    .when('/myproject/:id', {
-      templateUrl: '/views/templates/project-profile.html',
-      controller: 'ProjectProfileController as vm',
+    .when('/myprojects/:id', {
+      templateUrl: '/views/templates/my-projects.html',
+      controller: 'MyProjectsController as vm',
       resolve: {
         getuser: function (UserService) {
           return UserService.getuser();
