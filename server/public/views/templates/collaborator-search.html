@@ -1,65 +1,42 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div class="homeContent">
     <md-content layout-padding layout="row" layout-xs="column">
-    <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
-        <md-toolbar>
-            <h1 class="md-toolbar-tools">Search</h1>
-        </md-toolbar>
-        <md-content layout-padding>
-            <div layout="column">
-                <div>
-                    <span>Search Collaborators</span>
-                </div>
-                <md-input-container>
-                    <input type="text" placeholder="Name" ng-model="vm.searchParameters.username">
-                </md-input-container>
-                <md-input-container flex="20" layout="column">
-                    <label>Skills</label>
-                    <md-select ng-model="vm.searchParameters.skills" ng-model="selectedSkills" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" multiple>
-                        <md-select-header class="demo-select-header">
-                            <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
-                        </md-select-header>
-                        <md-optgroup label="skills">
-                            <md-option ng-value="skill.skill_name" ng-repeat="skill in vm.skillArray.list |
-                                                  filter:searchTerm">{{skill.skill_name}}</md-option>
-                        </md-optgroup>
-                    </md-select>
-                </md-input-container>
-                <md-button ng-click="vm.searchCollaborators(vm.searchParameters)" class="md-raised md-primary">Search</md-button>
-                <div layout-padding>
-                        <span>Filter Results</span>
-                    </div>
-                <md-input-container layout-padding>
-                    <input ng-model="query.user_city" type="text" placeholder="Location">
-                    <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_remote" class="md-primary">Will Work Remote</md-checkbox>
-                    <md-subhead>Compensation</md-subhead>
+        <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
+            <md-toolbar>
+                <h1 class="md-toolbar-tools">Search</h1>
+            </md-toolbar>
+            <md-content layout-padding>
+                <div layout="column">
                     <div>
-                        <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_for_pay" class="md-primary">For Pay</md-checkbox>
-                        <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_for_trade" class="md-primary">For Trade</md-checkbox>
+                        <span>Search Collaborators</span>
                     </div>
                     <md-input-container>
-                        <input type="text" placeholder="Name">
+                        <input type="text" placeholder="Name" ng-model="vm.searchParameters.username">
                     </md-input-container>
                     <md-input-container flex="20" layout="column">
                         <label>Skills</label>
-                        <md-select ng-model="selectedSkills" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" multiple>
+                        <md-select ng-model="vm.searchParameters.skills" ng-model="selectedSkills" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader"
+                            multiple>
                             <md-select-header class="demo-select-header">
                                 <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
                             </md-select-header>
                             <md-optgroup label="skills">
-                                <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillArray.list |
+                                <md-option ng-value="skill.skill_name" ng-repeat="skill in vm.skillArray.list |
                                                   filter:searchTerm">{{skill.skill_name}}</md-option>
                             </md-optgroup>
-                            <!-- <md-option ng-repeat="skill in vm.skillArray.list" ng-value="skill.skill_id">{{skill.skill_name}}</md-option> -->
                         </md-select>
                     </md-input-container>
+                    <md-button ng-click="vm.searchCollaborators(vm.searchParameters)" class="md-raised md-primary">Search</md-button>
+                    <div layout-padding>
+                        <span>Filter Results</span>
+                    </div>
                     <md-input-container layout-padding>
-                        <input type="text" placeholder="Location">
-                        <md-checkbox class="md-primary">Remote Opportunity</md-checkbox>
+                        <input ng-model="query.user_city" type="text" placeholder="Location">
+                        <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_remote" class="md-primary">Will Work Remote</md-checkbox>
                         <md-subhead>Compensation</md-subhead>
                         <div>
-                            <md-checkbox class="md-primary">For Pay</md-checkbox>
-                            <md-checkbox class="md-primary">For Trade</md-checkbox>
+                            <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_for_pay" class="md-primary">For Pay</md-checkbox>
+                            <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_for_trade" class="md-primary">For Trade</md-checkbox>
                         </div>
                     </md-input-container>
                     <div flex="5" layout="column"></div>
@@ -67,43 +44,30 @@
             </md-content>
         </md-sidenav>
 
-        <div flex="5" layout="column"></div>
         <div flex layout="column">
-            <div flex>
+            <div flex="5">
                 <md-button ng-click="toggleLeft()" class="md-warn" hide-gt-md>
                     Search Bar
                 </md-button>
             </div>
-            <div flex>
-                <h1>Collaborators</h1>
-            </div>
+            <h1 class="md-display-2">Collaborators</h1>
             <md-list flex>
-                <md-list-item ng-repeat="collaborator in vm.collaborators.list" class="md-2-line">
-                    <img ng-src="{{collaborator.user_picture}}" class="md-avatar" alt="profile picture" />
+                <md-list-item ng-repeat="collaborator in vm.collaborators.list | filter:query" class="md-2-line">
+                    <img ng-src="{{collaborator.user_picture}}" class="md-avatar" alt="" />
                     <div class="md-list-item-text" layout="column">
-                        <div layout-align="start left">
-                            <h3>{{collaborator.username}}</h3>
-                        </div>
-    <div flex="5" layout="column"></div>
-    <div flex layout="column">
-        <h1>Collaborators</h1>
-        <md-list flex>
-            <md-list-item ng-repeat="collaborator in vm.collaborators.list | filter:query" class="md-2-line">
-                <img ng-src="{{collaborator.user_picture}}" class="md-avatar" alt="" />
-                <div class="md-list-item-text" layout="column">
 
-                    <div layout-align="start left">
-                    <h3>{{collaborator.display_name}}</h3>
-                </div>
-                    <span>{{collaborator.user_skills}}</span>
-                </div>
-                <img alt="stars" />
-                <!-- ng-src="" -->
-                <md-button class="md-raised" aria-label="message">Message</md-button>
-                <!-- ng-click="" -->
-                <md-divider></md-divider>
-            </md-list-item>
-        </md-list>
-    </div>
-</md-content>
-<div ng-include="'views/partials/footer.html'"></div>
+                        <div layout-align="start left">
+                            <h3 class="md-display-1">{{collaborator.display_name}}</h3>
+                        </div>
+                        <span>{{collaborator.user_skills}}</span>
+                    </div>
+                    <img alt="stars" />
+                    <!-- ng-src="" -->
+                    <md-button class="md-raised" aria-label="message">Message</md-button>
+                    <!-- ng-click="" -->
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+        </div>
+    </md-content>
+    <div ng-include="'views/partials/footer.html'"></div>
