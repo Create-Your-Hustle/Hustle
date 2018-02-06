@@ -149,13 +149,11 @@ router.delete('/skill', function (req, res) {
 }); // end collaborator delete
 
 // Collaborator search get
-
-//Project Search Get
 router.get('/search', function (req, res) {
     console.log(req.query);
-    let project_name = req.query.project_name;
-    if (project_name !== '') {
-        project_name = `%` + req.query.project_name + `%`
+    let username = req.query.username;
+    if (username !== '') {
+        username = `%` + req.query.project_name + `%`
     };
 
     let skill_params = req.query.skills; 
@@ -174,27 +172,27 @@ router.get('/search', function (req, res) {
             res.sendStatus(500);
         } else {
             client.query(`WITH name_search AS (
-                                SELECT array_agg(s.skill_name) AS skill_list, p.*, 1 AS order_priority
-                                    FROM projects p
-                                    LEFT JOIN projects_skills ps ON p.project_id = ps.project_id
-                                    LEFT JOIN skills s ON s.skill_id = ps.skill_id
-                                WHERE p.project_name ILIKE $1
-                                GROUP BY p.project_id
-                                ),
-                                skill_search AS (
-                                SELECT array_agg(s.skill_name) AS skill_list, p.*, 2 AS order_priority
-                                    FROM projects p
-                                    LEFT JOIN projects_skills ps ON p.project_id = ps.project_id
-                                    LEFT JOIN skills s ON s.skill_id = ps.skill_id
-                                WHERE s.skill_name IN (${sql_params})
-                                GROUP BY p.project_id
-                                )
-                            SELECT *
-                            FROM name_search
-                            UNION
-                            SELECT *
-                            FROM skill_search
-                            ORDER BY order_priority;`, [project_name, ...skill_params], function (errorMakingDatabaseQuery, result) {
+                            SELECT array_agg(s.skill_name) AS skill_list, u.*, 1 as order_priority
+                                FROM users u
+                                LEFT JOIN users_skills us ON u.id = us.user_id
+                                LEFT JOIN skills s ON s.skill_id = us.skill_id
+                            WHERE u.username ILIKE $1
+                            GROUP BY u.id
+                            ),
+                            skill_search AS (
+                            SELECT array_agg(s.skill_name) AS skill_list, u.*, 1 as order_priority
+                                FROM users u
+                                LEFT JOIN users_skills us ON u.id = us.user_id
+                                LEFT JOIN skills s ON s.skill_id = us.skill_id
+                            WHERE s.skill_name IN (${sql_params})
+                            GROUP BY u.id
+                            )
+                        SELECT *
+                        FROM name_search
+                        UNION
+                        SELECT *
+                        FROM skill_search
+                        ORDER BY order_priority;`, [username, ...skill_params], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         console.log('error', errorMakingDatabaseQuery);
