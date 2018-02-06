@@ -6,6 +6,16 @@
             <img ng-src="{{vm.projectProfile.list[0].project_picture}}" class="projectPhoto" />
             <button class="md-accent md-raised" ng-click="vm.uploadProjectPicture(vm.projectProfile.list[0], projectImage.imageUrl)">Upload Project Image</button>
             <h3>Collaborators</h3>
+            <md-list class="md-dense">
+                <md-list-item class="md-3-line" ng-repeat="collaborator in vm.projectCollaboratorArray.list">
+                    <img ng-src="../views/images/profile-default.jpg" class="md-avatar" alt="" />
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{collaborator.username}}</h3>
+                        <p>{{collaborator.user_project_role}}</p>
+                        <md-button class="md-raised md-primary" ng-click="vm.rateCollaborator($event, collaborator)">Rate</md-button>
+                    </div>
+                </md-list-item>
+            </md-list>
         </div>
         <div layout="column" flex="70" layout-padding>
             <div layout="row">
@@ -23,9 +33,10 @@
                     <md-list class="md-dense">
                         <md-list-item ng-repeat="skill in vm.projectSkillArray.list">
                             <md-content layout="row">
-                                    <p>{{skill.skill_name}} - <img class="skill-rating" ng-src="{{skill.required_rating}}" />
-                                    </p>
-                               
+                                <p>{{skill.skill_name}} -
+                                    <img class="skill-rating" ng-src="{{skill.required_rating}}" />
+                                </p>
+
                             </md-content>
                         </md-list-item>
                     </md-list>
@@ -45,7 +56,6 @@
     </div>
 
 
-    {{vm.projectArray.list[0]}}
 </md-content>
 
 <div ng-include="'views/partials/footer.html'"></div>
