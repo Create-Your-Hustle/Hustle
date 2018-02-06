@@ -12,7 +12,7 @@ router.get('/select', function (req, res) {
             res.sendStatus(500);
         } else {
             // this query needs to be changed to include concatonated skills
-            client.query(`SELECT users.username, users.user_picture, skills.skill_name, users_skills.skill_rating, users.user_city, users.user_state, users.user_remote,
+            client.query(`SELECT users.username,users.displayName, users.user_picture, skills.skill_name, users_skills.skill_rating, users.user_city, users.user_state, users.user_remote,
                 users.user_for_pay, users.user_for_trade, users.user_bio, users.user_weekly_min, users.user_weekly_max, users_skills.skill_id, users_skills.user_id FROM users
                 LEFT JOIN users_skills ON users.id=users_skills.user_id
                 LEFT JOIN skills ON users_skills.skill_id=skills.skill_id
