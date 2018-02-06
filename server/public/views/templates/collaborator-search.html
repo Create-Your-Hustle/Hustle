@@ -61,7 +61,9 @@
                         </div>
                         <span>{{collaborator.user_skills}}</span>
                     </div>
-                    <img alt="stars" />
+                    <div>
+                        <div star-rating rating-value="collaborator.user_rating" max="5"></div>
+                    </div>
                     <!-- ng-src="" -->
                     <md-button class="md-raised" aria-label="message">Message</md-button>
                     <!-- ng-click="" -->
