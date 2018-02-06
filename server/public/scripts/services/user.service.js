@@ -64,7 +64,7 @@ myApp.service('UserService', function($http, $location){
       url: '/collaborator/username',
       data: change,
     }).then(function (response){
-      self.getUser(self.userObject.userName)
+      self.getUser(self.userObject.username)
     })
   }
 
@@ -74,7 +74,7 @@ myApp.service('UserService', function($http, $location){
       url: 'collaborator/preferences',
       data: pref,
     }).then(function (response) {
-      self.getUser(self.userObject.userName)
+      self.getUser(self.userObject.username)
     })
   }
 

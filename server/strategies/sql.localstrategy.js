@@ -82,7 +82,7 @@ passport.use('facebook', new FacebookStrategy({
             FROM users 
             WHERE facebook_id = $1),
             new_user AS (
-            INSERT INTO users (facebook_id, username)
+            INSERT INTO users (facebook_id, display_name)
             SELECT $1, $2
             WHERE NOT EXISTS (
                 SELECT facebook_id
