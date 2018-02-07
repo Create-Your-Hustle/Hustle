@@ -83,6 +83,15 @@ myApp.config(function ($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
+    .when('/myprojects/:id', {
+      templateUrl: '/views/templates/my-projects.html',
+      controller: 'MyProjectsController as vm',
+      resolve: {
+        getuser: function (UserService) {
+          return UserService.getuser();
+        }
+      }
+    })
     .when('/reset/password/:code?', {
       templateUrl: '/views/templates/password-reset.html',
       controller: 'ResetController as vm',
