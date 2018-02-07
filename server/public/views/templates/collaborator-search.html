@@ -37,7 +37,7 @@
                         <div>
                             <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_for_pay" class="md-primary">For Pay</md-checkbox>
                             <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_for_trade" class="md-primary">For Trade</md-checkbox>
-                        </div>
+                        </div>no
                     </md-input-container>
                     <div flex="5" layout="column"></div>
                 </div>
@@ -45,29 +45,32 @@
         </md-sidenav>
 
         <div flex layout="column">
-            <div flex="5">
-                <md-button ng-click="toggleLeft()" class="md-warn" hide-gt-md>
+            <!-- <div flex="5">
+            </div> -->
+            <md-content>
+                <md-button ng-click="toggleLeft()" class="md-raised md-primary" hide-gt-md>
                     Search Bar
                 </md-button>
-            </div>
-            <h1 class="md-display-2">Collaborators</h1>
-            <md-list flex>
-                <md-list-item ng-repeat="collaborator in vm.collaborators.list | filter:query" class="md-2-line">
-                    <img ng-src="{{collaborator.user_picture}}" class="md-avatar" alt="" />
-                    <div class="md-list-item-text" layout="column">
+                <h1 class="md-display-2">Collaborators</h1>
+                <md-list flex>
+                    <md-list-item ng-repeat="collaborator in vm.collaborators.list | filter:query" class="md-2-line">
+                        <img ng-src="{{collaborator.user_picture}}" class="md-avatar" alt="" />
+                        <div class="md-list-item-text" layout="column">
 
-                        <div layout-align="start left">
-                            <h3 class="md-display-1">{{collaborator.display_name}}</h3>
+                            <div layout-align="start left">
+                                <h3 class="md-display-1">{{collaborator.display_name}}</h3>
+                            </div>
+                            <span>{{collaborator.user_skills}}</span>
                         </div>
-                        <span>{{collaborator.user_skills}}</span>
-                    </div>
-                    <img alt="stars" />
-                    <!-- ng-src="" -->
-                    <md-button class="md-raised" aria-label="message">Message</md-button>
-                    <!-- ng-click="" -->
-                    <md-divider></md-divider>
-                </md-list-item>
-            </md-list>
+                        <img alt="stars" />
+                        <!-- ng-src="" -->
+                        <md-button class="md-raised" aria-label="message">Message</md-button>
+                        <!-- ng-click="" -->
+                        <md-divider></md-divider>
+                    </md-list-item>
+                </md-list>
+            </md-content>
         </div>
     </md-content>
-    <div ng-include="'views/partials/footer.html'"></div>
+</div>
+<div ng-include="'views/partials/footer.html'"></div>
