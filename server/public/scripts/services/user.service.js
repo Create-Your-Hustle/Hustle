@@ -66,7 +66,7 @@ myApp.service('UserService', function($http, $location){
     }).then(function (response){
       self.getUser(self.userObject.username)
     })
-  }
+  };
 
   self.editUserPreferences = function (pref) {
     $http({
@@ -76,7 +76,7 @@ myApp.service('UserService', function($http, $location){
     }).then(function (response) {
       self.getUser(self.userObject.username)
     })
-  }
+  };
 
   self.uploadProfilePicture = function (profile) {
     var fsClient = filestack.init('AR2OVvMAHTTiTRo7bG05Vz');
@@ -128,5 +128,18 @@ myApp.service('UserService', function($http, $location){
     $http.get('/user/logout').then(function(response) {
       $location.path("/home");
     });
-  }
+  };
+
+  self.getUserById = function (id) {
+    if(!id) {
+      id = self.userObject.id
+    }
+    $http({
+      method:'GET',
+      url:'/collaborator/select/id',
+      params: {id: id},
+    }).then(function (response) {
+      self.selectedUser.list = response.data;
+    })
+  };
 });
