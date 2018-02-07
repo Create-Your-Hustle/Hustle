@@ -31,6 +31,27 @@ router.get('/select', function (req, res) {
 
 
 
+  router.put('/profilePicture', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`UPDATE users SET user_picture=$1  WHERE user_id=$2;`, [req.body.user_picture, req.user.id],
+                function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                })
+        }
+    })
+});
+
+
+
 // Get all info for collaborator search page
 router.get('/search/all', function (req, res) {
     pool.connect(function (errorConnectingToDatabase, client, done) {
