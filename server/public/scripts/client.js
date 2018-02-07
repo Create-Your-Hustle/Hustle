@@ -22,6 +22,15 @@ myApp.config(function ($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
+    .when('/user/:id', {
+      templateUrl: '/views/templates/user.html',
+      controller: 'UserController as vm',
+      resolve: {
+        getuser: function (UserService) {
+          return UserService.getuser();
+        }
+      }
+    })
     .when('/info', {
       templateUrl: '/views/templates/info.html',
       controller: 'InfoController as vm',
@@ -65,9 +74,18 @@ myApp.config(function ($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
-    .when('/myproject/:id', {
+    .when('/projectprofile/:id', {
       templateUrl: '/views/templates/project-profile.html',
       controller: 'ProjectProfileController as vm',
+      resolve: {
+        getuser: function (UserService) {
+          return UserService.getuser();
+        }
+      }
+    })
+    .when('/myprojects/:id', {
+      templateUrl: '/views/templates/my-projects.html',
+      controller: 'MyProjectsController as vm',
       resolve: {
         getuser: function (UserService) {
           return UserService.getuser();

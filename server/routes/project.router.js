@@ -114,7 +114,7 @@ router.get('/search', function (req, res) {
         project_name = `%` + req.query.project_name + `%`
     };
 
-    let skill_params = req.query.skills; 
+    let skill_params = req.query.skills;
 
     let sql_params = ''
     for (let i = 0; i < skill_params.length; i++) {
@@ -191,7 +191,8 @@ router.get('/skillList', function (req, res) {
             res.sendStatus(500);
         } else {
             client.query(`SELECT * 
-                            FROM skills`, function (errorMakingDatabaseQuery, result) {
+                            FROM skills
+                            ORDER BY skill_name`, function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         console.log('error', errorMakingDatabaseQuery);
@@ -351,15 +352,38 @@ router.put('/collaboratorRatings', function (req, res) {
 
             for (let i = 0; i < req.body.rating.length; i++) {
                 client.query(`INSERT INTO ratings (reviewed_user_id, reviewer_id, rating, rating_type)
-                VALUES ($1, $2, $3, $4);`, 
-                [req.body.collaborator, req.user.id, req.body.rating[i].current, req.body.rating[i].rating_type]            ,
-                function(errorMakingQuery, result) {
+                VALUES ($1, $2, $3, $4);`,
+                    [req.body.collaborator, req.user.id, req.body.rating[i].current, req.body.rating[i].rating_type],
+                    function (errorMakingQuery, result) {
+                        done();
+                        if (errorMakingQuery) {
+                            res.sendStatus(500)
+                        }
+                    });
+            }
+        }
+    })
+});
+
+
+router.get('/myProjects/:id', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`SELECT *
+                            FROM users_projects up
+                            JOIN projects p ON p.project_id = up.project_id
+                            WHERE up.user_id = $1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
                     done();
-                    if (errorMakingQuery) {
-                        res.sendStatus(500)
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
                     }
                 });
-            }
         }
     })
 });
@@ -384,6 +408,7 @@ router.post('/addProjectSkill', function (req, res) {
                 })
         }
     })
+
 });
 
 //accepts collaboration requests on projects

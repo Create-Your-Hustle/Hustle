@@ -10,7 +10,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
   self.projectCollaborationRequestArray = { list: [] }
   self.projectProfile = { list: [] };
   self.imageUrl = {};
-
+  self.myProjectsArray = { list: [] };
 
 
   //Get all projects
@@ -227,6 +227,16 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         data: collaboratorRating
       }).then(function (response) {
         console.log('response', response);
+      })
+    };
+
+    //get list of projects for this user
+    self.getMyProjects = function(user_id){
+      $http({
+        method: 'GET',
+        url: '/project/myProjects/' + user_id,
+      }).then(function (response){
+        self.myProjectsArray.list = response.data;
       })
     }
 

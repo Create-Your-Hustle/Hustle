@@ -2,23 +2,23 @@
   <div ng-controller="NavBarController as nc">
     <md-toolbar>
       <div class="instructions" layout="column" layout-fill>
-        <div md-sticky  class="orangeDiv">
+        <div md-sticky>
           <h1 class="lead show-xs md-display-1" layout="row" layout-align="center">HUSTLE</h1>
           <div layout="row">
-            <div flex="50" layout="row" class="navbar hide-xs orangeDiv">
+            <div flex="50" layout="row" class="navbar hide-xs ">
             </div>
-            <div flex="50" layout="row" class="navbar hide-xs orangeDiv" layout-align="start">
+            <div flex="50" layout="row" class="navbar hide-xs " layout-align="start">
               <div>
-                <h3 class="md-subhead instructions orangeDiv">
+                <h3 class="md-subhead instructions ">
                   <a href="#/collaborator-search">FIND COLLABORATORS</a>
                 </h3>
               </div>
-              <div flex class="navbar hide-xs orangeDiv" layout="row" layout-align="center">
-                <h3 class="md-subhead instructions orangeDiv">
+              <div flex class="navbar hide-xs " layout="row" layout-align="center">
+                <h3 class="md-subhead instructions ">
                   <a href="#/projects">FIND PROJECTS</a>
                 </h3>
               </div>
-              <div flex class="navbar hide-xs orangeDiv" layout="row" layout-align="top end">
+              <div flex class="navbar hide-xs " layout="row" layout-align="top end">
                 <md-menu>
                   <md-button ng-mouseenter="nc.openMenu($mdMenu, $event)">
                     <img class="md-icon" ng-src="{{nc.selectedUser.list[0].user_picture}}" alt="profile picture" aria-label="Open Menu">
@@ -31,7 +31,7 @@
                     </md-menu-item>
                     <md-menu-item>
                       <md-subheader class="instructions secondFont">
-                        <a href="#/myproject">MY PROJECTS</a>
+                        <a href="#/myprojects/{{vm.selectedUser.list[0].user_id}}">MY PROJECTS</a>
                       </md-subheader>
                     </md-menu-item>
                     <md-menu-item>
