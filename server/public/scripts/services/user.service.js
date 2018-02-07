@@ -7,6 +7,7 @@ myApp.service('UserService', function($http, $location){
     username: '',
     password: ''
   };
+  self.collaboratorProjects = {list: []};
 
   self.validateEmail= function(email) {
     var valEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -129,4 +130,16 @@ myApp.service('UserService', function($http, $location){
       $location.path("/home");
     });
   }
+
+  //Get projects for a collaborator
+  self.getCollaboratorProjects = function () {
+    $http({
+      method: 'GET',
+      url: '/project/collaborator-projects',
+      params: self.user
+    }).then(function (response) {
+      console.log('response', response);
+      self.collaboratorProjects.list = response.data;
+    });
+  };
 });
