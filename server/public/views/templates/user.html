@@ -108,8 +108,13 @@
 
                     </div>
                 </div>
-                <div>
-                    <h2>Projects</h2>
+                <div layout="column">
+                    <div flex>
+                        <h2>Projects</h2>
+                    </div>
+                    <div flex ng-repeat="project in vm.collaboratorProjects.list">
+                        <p>{{project}}</p>
+                    </div>
                 </div>
             </div>
         </div>

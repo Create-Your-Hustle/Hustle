@@ -1,12 +1,13 @@
-myApp.controller('UserController', function(UserService) {
+myApp.controller('UserController', function(UserService, ProjectService) {
   console.log('UserController created');
   let self = this;
   self.userService = UserService;
+  self.userService = ProjectService;
   self.userObject = UserService.userObject;
   self.selectedUser = UserService.selectedUser
   self.isEditing = {}
   self.skillslist = UserService.skillslist
-
+  self.collaboratorProjects = ProjectService.collaboratorProjects;
 
   self.getUser = UserService.getUser
   self.editUser = UserService.editUser
@@ -15,6 +16,7 @@ myApp.controller('UserController', function(UserService) {
   self.getSkills = UserService.getSkills
   self.addSkill = UserService.addSkill
   self.uploadProfilePicture = UserService.uploadProfilePicture
+  self.getCollaboratorProjects = ProjectService.getCollaboratorProjects;
 
   self.editUsername = function (value) {
     console.log(value)
@@ -29,7 +31,7 @@ myApp.controller('UserController', function(UserService) {
 
   self.getUser()
   self.getSkills()
-
+  self.getCollaboratorProjects();
 
 
 

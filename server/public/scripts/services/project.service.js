@@ -8,6 +8,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
   self.projectSkillArray = { list: [] };
   self.projectCollaboratorArray = { list: [] };
   self.projectProfile = { list: [] };
+  self.collaboratorProjects = { list: [] };
   self.imageUrl = {};
 
 
@@ -228,4 +229,15 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       
       
     }
+
+  //Get projects for a collaborator
+  self.getCollaboratorProjects = function () {
+    $http({
+      method: 'GET',
+      url: '/project/collaborator-projects'
+    }).then(function (response) {
+      console.log('response', response);
+      self.collaboratorProjects.list = response.data;
+    });
+  };
 });
