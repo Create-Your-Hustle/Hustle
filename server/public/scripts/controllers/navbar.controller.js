@@ -10,4 +10,6 @@ myApp.controller('NavBarController', function NavBarController($mdDialog, UserSe
     };
 
     originatorEv = null;
+
+    //UserService.getProfilePic();
 });

@@ -7,7 +7,7 @@ myApp.service('UserService', function($http, $location){
     username: '',
     password: ''
   };
-
+  
   self.validateEmail= function(email) {
     var valEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return valEmail.test(email);
@@ -142,4 +142,35 @@ myApp.service('UserService', function($http, $location){
       self.selectedUser.list = response.data;
     })
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  self.getProfilePic = function () {
+    $http({
+      method:'GET',
+      url:'/collaborator/profilepic',
+    }).then(function (response) {
+      
+    })
+  };
+
 });
