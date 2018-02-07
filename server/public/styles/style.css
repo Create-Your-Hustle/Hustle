@@ -165,6 +165,10 @@ md-card {
 
 }
 
+.lightOrangeDiv{
+  background-color: #FF5722;
+}
+
 /* Change the link color to #111 (black) on hover */
 li a:hover {
   text-decoration: underline;
@@ -253,3 +257,9 @@ margin-top:20px;
   width: 60px;
 }
 
+.rightBorder{
+  border-right-width: 6px;
+  border-right-style: solid;
+  border-right-color: #FF5722;
+  margin-right: 8px;
+} 

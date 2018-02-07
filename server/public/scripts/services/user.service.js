@@ -67,7 +67,7 @@ myApp.service('UserService', function($http, $location){
     }).then(function (response){
       self.getUser(self.userObject.username)
     })
-  }
+  };
 
   self.editUserPreferences = function (pref) {
     $http({
@@ -77,7 +77,7 @@ myApp.service('UserService', function($http, $location){
     }).then(function (response) {
       self.getUser(self.userObject.username)
     })
-  }
+  };
 
   self.uploadProfilePicture = function (profile) {
     var fsClient = filestack.init('AR2OVvMAHTTiTRo7bG05Vz');
@@ -133,13 +133,39 @@ myApp.service('UserService', function($http, $location){
 
   //Get projects for a collaborator
   self.getCollaboratorProjects = function () {
-    $http({
-      method: 'GET',
-      url: '/project/collaborator-projects',
-      params: self.user
-    }).then(function (response) {
-      console.log('response', response);
-      self.collaboratorProjects.list = response.data;
-    });
+    if (self.user.username) {
+      $http({
+        method: 'GET',
+        url: '/project/collaborator-projects',
+        params: self.user
+      }).then(function (response) {
+        console.log('response', response);
+        self.collaboratorProjects.list = response.data;
+      });
+    } else {
+      $http({
+        method: 'GET',
+        url: '/project/collaborator-projects',
+        params: self.selectedUser.list
+      }).then(function (response) {
+        console.log('response', response);
+        self.collaboratorProjects.list = response.data;
+      });
+    }
   };
+
+  self.getUserById = function (id) {
+    if(!id) {
+      id = self.userObject.id
+    }
+    $http({
+      method:'GET',
+      url:'/collaborator/select/id',
+      params: {id: id},
+    }).then(function (response) {
+      self.selectedUser.list = response.data;
+    })
+  };
+
+  console.log('selectedUser.list', self.selectedUser.list);
 });
