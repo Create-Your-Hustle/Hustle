@@ -54,7 +54,7 @@
                 </md-button>
                 <h1 class="md-display-2">Collaborators</h1>
                 <md-list flex>
-                    <md-list-item ng-repeat="collaborator in vm.collaborators.list | filter:query" class="md-2-line">
+                    <md-list-item href="#/user/{{collaborator.id}}" ng-repeat="collaborator in vm.collaborators.list | filter:query" class="md-2-line">
                         <img ng-src="{{collaborator.user_picture}}" class="md-avatar" alt="" />
                         <div class="md-list-item-text" layout="column">
 
