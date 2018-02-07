@@ -10,7 +10,7 @@
                         <div flex>
                             <img class="profilePhoto" ng-src="{{vm.selectedUser.list[0].user_picture}}">
                         </br>
-                        <md-button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Change Profile Picture?s</md-button>
+                        <md-button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Change Profile Picture?</md-button>
                         </div>
                     </div>
                     <div flex>
@@ -54,7 +54,7 @@
                             </tr>
                         </table>
                         </br>
-                        <table>
+                        <table ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" >
                             <th>
                                 <H1 class="md-display-1">Add New Skills? </H1>
                             </th>
