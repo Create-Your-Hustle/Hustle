@@ -32,7 +32,7 @@ router.put('/', function (req, res) {
             console.log('error', errorConnectingToDatabase);
             done();
         } else {
-            client.query("SELECT * FROM users WHERE email = $1", [req.body.email], function (errorMakingDatabaseQuery, result) {
+            client.query("SELECT * FROM users WHERE username = $1", [req.body.email], function (errorMakingDatabaseQuery, result) {
                 if (errorMakingDatabaseQuery) {
                     console.log('error', errorMakingDatabaseQuery);
                     done();
@@ -46,7 +46,7 @@ router.put('/', function (req, res) {
                 } else {
                     var code = chance.string({ length: 16, pool: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' });
 
-                    client.query('UPDATE users SET code = $1 WHERE email = $2;', [code, req.body.email], function (err, result) {
+                    client.query('UPDATE users SET code = $1 WHERE username = $2;', [code, req.body.email], function (err, result) {
                         done();
                         if (err) {
                             console.log('query err ', err);
