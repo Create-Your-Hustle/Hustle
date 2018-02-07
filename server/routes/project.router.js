@@ -256,7 +256,29 @@ router.get('/project-collaborators/:id', function (req, res) {
         } else {
             client.query(`SELECT users_projects.user_project_role, users.username, users.id FROM users_projects
                         JOIN users ON users_projects.user_id = users.id
-                        WHERE project_id = $1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
+                        WHERE project_id = $1 AND collaboration_request = false;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
+        }
+    });
+});
+
+//Get collaboration requests 
+router.get('/collaboration-requests/:id', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`SELECT users_projects.user_project_role, users.username, users.id FROM users_projects
+                        JOIN users ON users_projects.user_id = users.id
+                        WHERE project_id = $1 AND collaboration_request = true;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         console.log('error', errorMakingDatabaseQuery);
@@ -277,9 +299,12 @@ router.put('/message', function (req, res) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`SELECT * FROM users_projects
-            JOIN users ON users_projects.user_id = users.id
-            WHERE project_id = $1 AND can_edit = true;`, [req.body.project_id], function (errorMakingDatabaseQuery, result) {
+            client.query(`WITH insert_invite AS (
+                INSERT INTO users_projects (can_edit, user_id, project_id, user_project_role, collaboration_request)
+                VALUES (false, $1, $2, 'guest', true)) 
+                SELECT * FROM users_projects
+                        JOIN users ON users_projects.user_id = users.id
+                        WHERE project_id = $2 AND can_edit = true;`, [req.user.id, req.body.project_id], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         res.sendStatus(500);
@@ -339,6 +364,7 @@ router.put('/collaboratorRatings', function (req, res) {
     })
 });
 
+//Add skill to a project
 router.post('/addProjectSkill', function (req, res) {
     console.log('REQ.BODY', req.body);
     pool.connect(function (errorConnectingToDatabase, client, done) {
@@ -348,6 +374,48 @@ router.post('/addProjectSkill', function (req, res) {
         } else {
             client.query(`INSERT INTO projects_skills (required_rating, project_id, skill_id)
             VALUES ($1, $2, $3);`, [req.body.level, req.body.project, req.body.skill],
+                function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                })
+        }
+    })
+});
+
+//accepts collaboration requests on projects
+router.put('/acceptCollaboration', function (req, res) {
+    console.log('accept REQ.BODY', req.body);
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`UPDATE users_projects SET collaboration_request= false, collaborator= true  WHERE user_id=$1 AND project_id=$2;`, [req.body.user, req.body.project],
+                function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                })
+        }
+    })
+});
+
+//declines collaboration requests on projects
+router.put('/declineCollaboration', function (req, res) {
+    console.log('decline REQ.BODY', req.body);
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`UPDATE users_projects SET collaboration_request= false, collaborator= false  WHERE user_id=$1 AND project_id=$2;`, [req.body.user, req.body.project],
                 function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {

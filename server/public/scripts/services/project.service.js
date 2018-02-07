@@ -7,6 +7,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
   self.skillArray = { list: [] };
   self.projectSkillArray = { list: [] };
   self.projectCollaboratorArray = { list: [] };
+  self.projectCollaborationRequestArray = { list: [] }
   self.projectProfile = { list: [] };
   self.imageUrl = {};
 
@@ -76,9 +77,29 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
           user_id: response.data[i].id
         })
       }
-      console.log('project collaborators ', self.projectCollaboratorArray);
     })
   }
+
+  
+  //Get Collaboration Requests
+  self.getCollaborationRequests = function (id) {
+    self.projectCollaborationRequestArray.list = [];
+    $http({
+      method: 'GET',
+      url: '/project/collaboration-requests/' + id
+    }).then(function (response) {
+      console.log('response', response);
+      for (let i = 0; i < response.data.length; i++) {
+        self.projectCollaborationRequestArray.list.push({
+          username: response.data[i].username,
+          user_project_role: response.data[i].user_project_role,
+          user_id: response.data[i].id
+        })
+      }
+      console.log('collaboration requests ', self.projectCollaborationRequestArray);
+    })
+  }
+
 
   self.uploadProjectPicture = function (project) {
     console.log('uploadProjectPicture')
@@ -224,8 +245,41 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         data: projectSkill
       }).then(function (response) {
         console.log('response', response);
+      })      
+    }//End Add Skill
+
+    //Adds Collaborator to a project
+    self.acceptCollaboration = function(user, project) {
+      console.log('accepted');
+      collaborationRequest = {
+        user: user.user_id,
+        project: project,
+      }
+      $http({
+        method: 'PUT',
+        url: '/project/acceptCollaboration',
+        data: collaborationRequest
+      }).then(function (response) {
+        console.log('response', response);
+        self.getCollaborationRequests($routeParams.id)
       })
-      
-      
+    }
+
+    //Declines collaboration request
+    self.declineCollaboration = function(user, project) {
+      console.log('declined');      
+      collaborationRequest = {
+        user: user.user_id,
+        project: project,
+      }
+      $http({
+        method: 'PUT',
+        url: '/project/declineCollaboration',
+        data: collaborationRequest
+      }).then(function (response) {
+        console.log('response', response);
+        self.getCollaborationRequests($routeParams.id)
+      })
+
     }
 });
