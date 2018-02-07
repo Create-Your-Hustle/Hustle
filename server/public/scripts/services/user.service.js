@@ -56,6 +56,7 @@ myApp.service('UserService', function($http, $location){
       params: {name: username},
     }).then(function (response) {
       self.selectedUser.list = response.data;
+      self.getCollaboratorProjects();
     })
   };
 
@@ -133,25 +134,14 @@ myApp.service('UserService', function($http, $location){
 
   //Get projects for a collaborator
   self.getCollaboratorProjects = function () {
-    if (self.user.username) {
-      $http({
-        method: 'GET',
-        url: '/project/collaborator-projects',
-        params: self.user
-      }).then(function (response) {
-        console.log('response', response);
-        self.collaboratorProjects.list = response.data;
-      });
-    } else {
-      $http({
-        method: 'GET',
-        url: '/project/collaborator-projects',
-        params: self.selectedUser.list
-      }).then(function (response) {
-        console.log('response', response);
-        self.collaboratorProjects.list = response.data;
-      });
-    }
+    $http({
+      method: 'GET',
+      url: '/project/collaborator-projects',
+      params: self.selectedUser.list[0]
+    }).then(function (response) {
+      console.log('response', response);
+      self.collaboratorProjects.list = response.data;
+    });
   };
 
   self.getUserById = function (id) {
@@ -164,8 +154,7 @@ myApp.service('UserService', function($http, $location){
       params: {id: id},
     }).then(function (response) {
       self.selectedUser.list = response.data;
+      self.getCollaboratorProjects();
     })
   };
-
-  console.log('selectedUser.list', self.selectedUser.list);
 });

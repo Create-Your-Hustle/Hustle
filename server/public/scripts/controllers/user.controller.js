@@ -31,7 +31,6 @@ myApp.controller('UserController', function(UserService, CollaboratorService, $r
 
 
   self.getSkills();
-  self.getCollaboratorProjects();
 
   //check if navigating to /user (on login to direct to logged in profile, or if navigating to a /user/:id through search etc)
   if(!$routeParams.id){
