@@ -8,6 +8,7 @@
                 <div flex layout-xs="column" layout="row">
                     <div flex>
                         <img class="profilePhoto" ng-src="{{vm.selectedUser.list[0].user_picture}}">
+                        <button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Upload Project Image</button>
                     </div>
                     <div flex>
                         <h2>
