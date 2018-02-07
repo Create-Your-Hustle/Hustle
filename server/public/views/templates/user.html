@@ -9,7 +9,8 @@
                     <div flex layout="column" class="rightBorder">
                         <div flex>
                             <img class="profilePhoto" ng-src="{{vm.selectedUser.list[0].user_picture}}">
-                        <button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Upload Project Image</button>
+                        </br>
+                        <md-button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Change Profile Picture?</md-button>
                         </div>
                     </div>
                     <div flex>
@@ -29,7 +30,7 @@
                                 <input ng-value="help" ng-model="vm.selectedUser.list[0].displayName">
                             </span>
                             <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-hide="vm.isEditing.username">
-                                <md-button class="md-raised md-primary" ng-click="vm.isEditing.username = true">Edit Display Name or Bio?</md-button>
+                                <md-button class="md-raised md-accent" ng-click="vm.isEditing.username = true">Edit Display Name or Bio?</md-button>
                             </span>
                             <span ng-if="vm.userObject.id === vm.selectedUser.list[0].id" ng-show="vm.isEditing.username">
                                 <md-button class="md-raised md-primary" ng-click="vm.editUsername(vm.selectedUser.list[0])">Save</md-button>
@@ -53,16 +54,16 @@
                             </tr>
                         </table>
                         </br>
-                        <table>
+                        <table ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" >
                             <th>
                                 <H1 class="md-display-1">Add New Skills? </H1>
                             </th>
                             <tr>
                                 <td style="text-decoration: underline">
-                                    <H4 class="md-subhead">New Skill</H4>
+                                    <H4 class="md-subhead">Skill Name?</H4>
                                 </td>
                                 <td style="text-decoration: underline">
-                                    <H4 class="md-subhead">Skill Level</H4>
+                                    <H4 class="md-subhead">Skill Level?</H4>
                                 </td>
                             </tr>
                             <tr ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
@@ -81,7 +82,7 @@
                                     </md-select>
                                 </td>
                                 <td>
-                                    <md-button class="md-raised md-primary" ng-click="vm.addSkill(vm.newSkill)">add</md-button>
+                                    <md-button class="md-raised md-primary" ng-click="vm.addSkill(vm.newSkill)">Add?</md-button>
                                 </td>
 
                             </tr>
@@ -110,8 +111,8 @@
                             </span>
                             <span ng-show="vm.isEditing.preferences">
                                 Compensation:
-                                <md-checkbox ng-model="vm.selectedUser.list[0].user_for_pay">For pay</md-checkbox>
-                                <md-checkbox ng-model="vm.selectedUser.list[0].user_for_trade">For trade</md-checkbox>
+                                <md-checkbox ng-model="vm.selectedUser.list[0].user_for_pay">For Pay</md-checkbox>
+                                <md-checkbox ng-model="vm.selectedUser.list[0].user_for_trade">For Trade</md-checkbox>
                             </span>
                         </p>
                         <p>
@@ -124,7 +125,7 @@
                                 <input ng-model="vm.selectedUser.list[0].user_weekly_max"> hours
                             </span>
                         </p>
-                        <md-button class="md-raised md-primary" ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-hide="vm.isEditing.preferences"
+                        <md-button class="md-raised md-accent" ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-hide="vm.isEditing.preferences"
                             ng-click="vm.isEditing.preferences = true">Edit?</md-button>
                         <md-button class="md-raised md-primary" ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-show="vm.isEditing.preferences"
                             ng-click="vm.editPreferences(vm.selectedUser.list[0])">Done?</md-button>

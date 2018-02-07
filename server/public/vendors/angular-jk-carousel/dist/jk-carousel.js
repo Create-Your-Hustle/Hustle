@@ -1,9 +1,3 @@
-/* commonjs package manager support (eg componentjs) */
-if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports){
-  module.exports = 'jkAngularCarousel';
-}
-
-
 (function() {
   'use strict';
 
@@ -38,7 +32,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     };
 
     that.onDataChange = function() {
-      if (!that.data || that.data.length === 0) {
+      if (that.isDataInvalidOrTooSmall()) {
         return;
       }
       that.executeCloneData();
@@ -70,6 +64,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       }
       var currentElementParentWidth = that.elementParent.prop('offsetWidth');
       if( currentElementParentWidth < that.maxWidth ){
+        console.log(currentElementParentWidth, that.maxWidth);
         var newHeight = (that.maxHeight * currentElementParentWidth) / that.maxWidth;
         that.element.css('width', currentElementParentWidth + 'px');
         that.element.css('height', newHeight + 'px');
@@ -80,7 +75,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     };
 
     that.resizeSlides = function(){
-      var slides = that.element[0].querySelectorAll('.slide');
+      var slides = $window.document.getElementsByClassName('slide');
       for( var index=0; index < slides.length; index++ ){
         var slide = angular.element(slides[index]);
         slide.css('width', that.currentWidth + 'px');
@@ -137,22 +132,13 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     };
 
     that.validateAutoSlide = function() {
-      if( typeof(that.autoSlide) === 'string' ){
-        that.autoSlide = that.autoSlide === 'true' ? true : false;
-      }
       if (!that.autoSlide) {
         that.stopAutoSlide();
       } else {
         that.startAutoSlide();
       }
     };
-	
-    that.validateAutoSlideStopOnAction = function() { 
-      if( typeof(that.autoSlideStopOnAction) === 'string' ){ 
-        that.autoSlideStopOnAction = that.autoSlideStopOnAction === 'true' ? true : false; 
-      } 
-    }; 
- 	
+
     that.restartAutoSlide = function() {
       if (!that.autoSlide) {
         return;
@@ -171,7 +157,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     that.startAutoSlide = function() {
       if (!angular.isDefined(that.autoSlideInterval)) {
         that.autoSlideInterval = $interval(function() {
-          that.navigateRight(true);
+          that.navigateRight();
         }, that.autoSlideTime);
       }
     };
@@ -196,11 +182,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       that.radioButtonIndex = that.currentIndex;
       that.currentMarginLeftValue += that.currentWidth;
       that.applyMarginLeft();
-      if (that.autoSlideStopOnAction) { 
-        that.stopAutoSlide(); 
-      } else {         
-        that.restartAutoSlide(); 
-      }
+      that.restartAutoSlide();
       if (that.currentIndex === -1) {
         that.restartFromLastItem();
       }
@@ -222,7 +204,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       that.restartAutoSlide();
     };
 
-    that.navigateRight = function(autoSlide) {
+    that.navigateRight = function() {
       if (that.isDataInvalidOrTooSmall()) {
         return;
       }
@@ -230,11 +212,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       that.radioButtonIndex = that.currentIndex;
       that.currentMarginLeftValue -= that.currentWidth;
       that.applyMarginLeft();
-      if (!autoSlide && that.autoSlideStopOnAction) { 
-        that.stopAutoSlide(); 
-      } else {         
-        that.restartAutoSlide(); 
-      }
+      that.restartAutoSlide();
       if (that.currentIndex === that.data.length) {
         $timeout(function() {
           that.restartFromFirstItem();
@@ -269,15 +247,11 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       }
       that.currentIndex = that.radioButtonIndex;
       that.applyMarginLeft();
-      if (that.autoSlideStopOnAction) { 
-        that.stopAutoSlide(); 
-      } else {         
-        that.restartAutoSlide(); 
-      }         
-	};
+      that.restartAutoSlide();
+    };
 
     that.isDataInvalidOrTooSmall = function() {
-      if (!that.data || that.data.length <= 1) {
+      if (!that.data || that.data.length === 0) {
         return true;
       }
       return false;
@@ -306,9 +280,6 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       if (attrs.autoSlideTime === undefined) {
         ctrl.autoSlideTime = 5000;
       }
-      if (attrs.autoSlideStopOnAction === undefined) { 
-        ctrl.autoSlideStopOnAction = false; 
-      }       	  
       ctrl.registerElement(element);
       scope.$on('$destroy', function() {
         ctrl.stopAutoSlide();
@@ -319,13 +290,6 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       scope.$watch('ctrl.autoSlideTime', function() {
         ctrl.restartAutoSlide();
       });
-      scope.$watch('ctrl.autoSlideStopOnAction', function() { 
-        ctrl.validateAutoSlideStopOnAction(); 
-      });
-      scope.$watch('ctrl.data', function () {
-        ctrl.onDataChange();
-      });
-      
     }
 
     return {
@@ -337,13 +301,11 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       controllerAs: 'ctrl',
       bindToController: {
         data: '=',
-        currentIndex: '=',
         itemTemplateUrl: '=',
         maxWidth: '@?',
         maxHeight: '@?',
         autoSlide: '@?',
-        autoSlideTime: '@?', 
-        autoSlideStopOnAction: '@?'
+        autoSlideTime: '@?'
       },
       link: link
     };
@@ -357,4 +319,4 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
 }());
 
-(function(){angular.module("jkAngularCarousel.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("carousel-directive.html","<div class=\"jk-carousel\" >\n\n  <div class=\"slides-container\" layout=\"row\"\n    md-swipe-left=\"ctrl.navigateRight()\"\n    md-swipe-right=\"ctrl.navigateLeft()\"\n  >\n    <div\n      ng-repeat=\"slideItem in ctrl.cloneData\"\n      class=\"slide\"\n    >\n      <div ng-include=\"ctrl.itemTemplateUrl\" ></div>\n    </div>\n  </div>\n\n  <md-button class=\"md-icon-button left-arrow-button\" ng-click=\"ctrl.navigateLeft()\" >\n    <md-icon >chevron_left</md-icon>\n  </md-button>\n\n  <md-button class=\"md-icon-button right-arrow-button\" ng-click=\"ctrl.navigateRight()\" >\n    <md-icon >chevron_right</md-icon>\n  </md-button>\n\n  <md-radio-group\n    class=\"radio-buttons-container\"\n    layout=\"row\"\n    ng-model=\"ctrl.radioButtonIndex\"\n    layout-align=\"center center\"\n    ng-change=\"ctrl.onRadioButtonClick()\" >\n    <md-radio-button\n      ng-repeat=\"item in ctrl.data\"\n      ng-value=\"$index\"\n      aria-label=\"$index\" >\n    </md-radio-button>\n  </md-radio-group>\n\n</div>\n");}]);})();
+(function(){angular.module("jkAngularCarousel.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("carousel-directive.html","<div class=\"jk-carousel\" >\n\n  <div class=\"slides-container\" layout=\"row\" >\n    <div\n      ng-repeat=\"slideItem in ctrl.cloneData\"\n      class=\"slide\"\n    >\n      <div ng-include=\"ctrl.itemTemplateUrl\" ></div>\n    </div>\n  </div>\n\n  <md-button class=\"md-icon-button left-arrow-button\" >\n    <md-icon ng-click=\"ctrl.navigateLeft()\" >chevron_left</md-icon>\n  </md-button>\n\n  <md-button class=\"md-icon-button right-arrow-button\" >\n    <md-icon ng-click=\"ctrl.navigateRight()\" >chevron_right</md-icon>\n  </md-button>\n\n  <md-radio-group\n    class=\"radio-buttons-container\"\n    layout=\"row\"\n    ng-model=\"ctrl.radioButtonIndex\"\n    layout-align=\"center center\"\n    ng-change=\"ctrl.onRadioButtonClick()\" >\n    <md-radio-button\n      ng-repeat=\"item in ctrl.data\"\n      ng-value=\"$index\"\n      aria-label=\"$index\" >\n    </md-radio-button>\n  </md-radio-group>\n\n</div>\n");}]);})();
