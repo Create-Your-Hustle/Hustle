@@ -12,7 +12,7 @@ router.get('/select', function (req, res) {
             res.sendStatus(500);
         } else {
             // this query needs to be changed to include concatonated skills
-            client.query(`SELECT users.username, users.user_picture, skills.skill_name, users_skills.skill_rating, users.user_city, users.user_state, users.user_remote,
+            client.query(`SELECT users.username, users.display_name, users.user_picture, skills.skill_name, users_skills.skill_rating, users.user_city, users.user_state, users.user_remote,
                 users.user_for_pay, users.user_for_trade, users.user_bio, users.user_weekly_min, users.user_weekly_max, users_skills.skill_id, users_skills.user_id FROM users
                 LEFT JOIN users_skills ON users.id=users_skills.user_id
                 LEFT JOIN skills ON users_skills.skill_id=skills.skill_id
@@ -31,19 +31,41 @@ router.get('/select', function (req, res) {
 
 
 
-// Get all info for collaborator search page
-router.get('/search/all', function (req, res) {
+  router.put('/profilePicture', function (req, res) {
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
+            client.query(`UPDATE users SET user_picture=$1  WHERE user_id=$2;`, [req.body.user_picture, req.user.id],
+                function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                })
+        }
+    })
+});
 
-            client.query(`SELECT string_agg(s.skill_name, ', ') AS user_skills, u.*
-                        FROM users u
-                        LEFT JOIN users_skills us ON u.id = us.user_id
-                        LEFT JOIN skills s ON s.skill_id = us.skill_id
-                        GROUP BY u.id;`, function (errorMakingDatabaseQuery, result) {
+
+
+// Get all info for collaborator search page
+router.get('/search/all', function (req, res) {
+    if (req.isAuthenticated()) {
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            if (errorConnectingToDatabase) {
+                console.log('error', errorConnectingToDatabase);
+                res.sendStatus(500);
+            } else {
+
+                client.query(`SELECT string_agg(s.skill_name, ', ') AS user_skills, u.*
+                            FROM users u
+                            LEFT JOIN users_skills us ON u.id = us.user_id
+                            LEFT JOIN skills s ON s.skill_id = us.skill_id
+                            GROUP BY u.id;`, function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         console.log('error', errorMakingDatabaseQuery);
@@ -52,8 +74,11 @@ router.get('/search/all', function (req, res) {
                         res.send(result.rows);
                     }
                 }); // end query
-        }
-    });
+            }
+        });
+    } else {
+        res.sendStatus(401);
+    }
 }); // end collaborator/search/all get
 
 // Main collaborator post
@@ -87,7 +112,7 @@ router.put('/username', function (req, res) {
                 console.log('error', errorConnectingToDatabase);
                 res.sendStatus(500);
             } else {
-                client.query(`UPDATE users SET username = $1, user_bio = $2 WHERE id = $3`, [req.body.username, req.body.user_bio, req.user.id], function (errorMakingDatabaseQuery, result) {
+                client.query(`UPDATE users SET display_name = $1, user_bio = $2 WHERE id = $3`, [req.body.displayName, req.body.user_bio, req.user.id], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         res.sendStatus(500);
@@ -150,23 +175,62 @@ router.delete('/skill', function (req, res) {
 
 // Collaborator search get
 router.get('/search', function (req, res) {
+    console.log(req.query);
+    let username = req.query.username;
+    if (username !== '') {
+        username = `%` + req.query.project_name + `%`
+    };
+
+    let skill_params = req.query.skills; 
+
+    let sql_params = ''
+    for (let i = 0; i < skill_params.length; i++) {
+        const element = skill_params[i];
+        sql_params += ('$' + (i + 2));
+        if (i < skill_params.length - 1) {
+            sql_params += ', '
+        };
+    };
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`PUT SQL HERE`, function (errorMakingDatabaseQuery, result) {
-                done();
-                if (errorMakingDatabaseQuery) {
-                    console.log('error', errorMakingDatabaseQuery);
-                    res.sendStatus(500);
-                } else {
-                    res.send(result.rows);
-                }
-            });
+            client.query(`WITH name_search AS (
+                            SELECT array_agg(s.skill_name) AS skill_list, u.*, 1 as order_priority
+                                FROM users u
+                                LEFT JOIN users_skills us ON u.id = us.user_id
+                                LEFT JOIN skills s ON s.skill_id = us.skill_id
+                            WHERE u.username ILIKE $1
+                            GROUP BY u.id
+                            ),
+                            skill_search AS (
+                            SELECT array_agg(s.skill_name) AS skill_list, u.*, 1 as order_priority
+                                FROM users u
+                                LEFT JOIN users_skills us ON u.id = us.user_id
+                                LEFT JOIN skills s ON s.skill_id = us.skill_id
+                            WHERE s.skill_name IN (${sql_params})
+                            GROUP BY u.id
+                            )
+                        SELECT *
+                        FROM name_search
+                        UNION
+                        SELECT *
+                        FROM skill_search
+                        ORDER BY order_priority;`, [username, ...skill_params], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
         }
     });
 }); // end collaborator search get
+
+
 
 
 module.exports = router;

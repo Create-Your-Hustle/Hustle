@@ -1,41 +1,42 @@
 <div ng-include="'views/partials/nav.html'"></div>
 
 <md-content layout-padding>
-    <div layout="row" layout-padding>
-        <div layout="column" flex="30" layout-align="center center" layout-padding>
-            <img ng-src="{{vm.projectProfile.list[0].project_picture}}" class="projectPhoto" />
-            <button class="md-accent md-raised" ng-click="vm.uploadProjectPicture(vm.projectProfile.list[0], projectImage.imageUrl)">Upload Project Image</button>
-            <h3>Collaborators</h3>
-            <md-list class="md-dense">
-                <md-list-item class="md-3-line" ng-repeat="collaborator in vm.projectCollaboratorArray.list">
-                    <img ng-src="../views/images/profile-default.jpg" class="md-avatar" alt="" />
-                    <div class="md-list-item-text" layout="column">
-                        <h3>{{collaborator.username}}</h3>
-                        <p>{{collaborator.user_project_role}}</p>
-                        <md-button class="md-raised md-primary" ng-click="vm.rateCollaborator($event, collaborator)">Rate</md-button>
-                    </div>
-                </md-list-item>
-            </md-list>
-        </div>
-        <div layout="column" flex="70" layout-padding>
-            <div layout="row">
-                <div flex="70">
-                    <h1>{{vm.projectProfile.list[0].project_name}}</h1>
-                </div>
-                <div flex="30" class="dialog-demo-content">
-                    <md-button class="md-accent md-raised" ng-click="vm.contactProjectOwner($event)">Contact Project Owner</md-button>
-                </div>
+    <div class="homeContent">
+        <div layout="row" layout-padding>
+            <div layout="column" flex="30" layout-align="center center" layout-padding>
+                <img ng-src="{{vm.projectProfile.list[0].project_picture}}" class="projectPhoto" />
+                <button class="md-accent md-raised" ng-click="vm.uploadProjectPicture(vm.projectProfile.list[0], projectImage.imageUrl)">Upload Project Image</button>
+                <h3>Collaborators</h3>
+                <md-list class="md-dense">
+                    <md-list-item class="md-3-line" ng-repeat="collaborator in vm.projectCollaboratorArray.list">
+                        <img ng-src="../views/images/profile-default.jpg" class="md-avatar" alt="" />
+                        <div class="md-list-item-text" layout="column">
+                            <h3>{{collaborator.username}}</h3>
+                            <p>{{collaborator.user_project_role}}</p>
+                            <md-button class="md-raised md-primary" ng-click="vm.rateCollaborator($event, collaborator)">Rate</md-button>
+                        </div>
+                    </md-list-item>
+                </md-list>
             </div>
-            <p>{{vm.projectProfile.list[0].project_description}}</p>
-            <div layout="row">
-                <div flex="50">
-                    <h3>Looking For...</h3>
-                    <md-list class="md-dense">
-                        <md-list-item ng-repeat="skill in vm.projectSkillArray.list">
-                            <md-content layout="row">
-                                <p>{{skill.skill_name}} -
-                                    <img class="skill-rating" ng-src="{{skill.required_rating}}" />
-                                </p>
+            <div layout="column" flex="70" layout-padding>
+                <div layout="row">
+                    <div flex="70">
+                        <h1>{{vm.projectProfile.list[0].project_name}}</h1>
+                    </div>
+                    <div flex="30" class="dialog-demo-content">
+                        <md-button class="md-accent md-raised" ng-click="vm.contactProjectOwner($event)">Contact Project Owner</md-button>
+                    </div>
+                </div>
+                <p>{{vm.projectProfile.list[0].project_description}}</p>
+                <div layout="row">
+                    <div flex="50">
+                        <h3>Looking For...</h3>
+                        <md-list class="md-dense">
+                            <md-list-item ng-repeat="skill in vm.projectSkillArray.list">
+                                <md-content layout="row">
+                                    <p>{{skill.skill_name}} -
+                                        <img class="skill-rating" ng-src="{{skill.required_rating}}" />
+                                    </p>
 
                             </md-content>
                         </md-list-item>
@@ -68,9 +69,19 @@
                     <p>Project City: {{vm.projectProfile.list[0].project_city}}, {{vm.projectProfile.list[0].project_state}}</p>
                     <div ng-hide="vm.projectProfile.list[0].project_remote">
                         Not Accepting Remote Collaboration
+                                </md-content>
+                            </md-list-item>
+                        </md-list>
                     </div>
-                    <div ng-show="vm.projectProfile.list[0].project_remote">
-                        Accepting Remote Collaboration
+                    <div flex="50">
+                        <h3>Preferences</h3>
+                        <p>Project City: {{vm.projectProfile.list[0].project_city}}, {{vm.projectProfile.list[0].project_state}}</p>
+                        <div ng-hide="vm.projectProfile.list[0].project_remote">
+                            Not Accepting Remote Collaboration
+                        </div>
+                        <div ng-show="vm.projectProfile.list[0].project_remote">
+                            Accepting Remote Collaboration
+                        </div>
                     </div>
                 </div>
             </div>

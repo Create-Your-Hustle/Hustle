@@ -6,6 +6,7 @@ myApp.controller('ProjectSearchController', function(UserService, ProjectService
     self.projectSearchArray = ProjectService.projectArray;
     self.skillArray = ProjectService.skillArray;
     self.getProjectSearchResult = ProjectService.getProjectSearchResult;
+    self.searchParameters = { skills: [' '] };
 
     ProjectService.getSkills();
     ProjectService.getProjects();

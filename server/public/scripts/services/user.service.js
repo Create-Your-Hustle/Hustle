@@ -64,7 +64,7 @@ myApp.service('UserService', function($http, $location){
       url: '/collaborator/username',
       data: change,
     }).then(function (response){
-      self.getUser(self.userObject.userName)
+      self.getUser(self.userObject.username)
     })
   }
 
@@ -74,8 +74,39 @@ myApp.service('UserService', function($http, $location){
       url: 'collaborator/preferences',
       data: pref,
     }).then(function (response) {
-      self.getUser(self.userObject.userName)
+      self.getUser(self.userObject.username)
     })
+  }
+
+  self.uploadProfilePicture = function (profile) {
+    var fsClient = filestack.init('AR2OVvMAHTTiTRo7bG05Vz');
+    function openPicker() {
+      fsClient.pick({
+        fromSources: ["local_file_system", "url", "imagesearch", "facebook", "instagram", "googledrive", "dropbox", "evernote", "flickr", "webcam", "video", "audio"],
+        maxSize: 102400000,
+        maxFiles: 5,
+        minFiles: 1,
+        imageDim: [400, 250],
+        transformations: {
+          crop: {
+            force: true,
+            aspectRatio: 1
+          }
+        }
+      }).then(function (response) {
+        // declare this function to handle response
+        self.selectedUser.list[0].user_picture = response.filesUploaded[0].url;
+        console.log('Here we are', self.selectedUser.list[0])
+        $http({
+          method: 'PUT',
+          url: '/collaborator/profilePicture',
+          data: self.selectedUser.list[0]
+        }).then(function (response) {
+          console.log('response', response);
+        })
+      });
+    }
+    openPicker();
   }
 
   self.getuser = function(){

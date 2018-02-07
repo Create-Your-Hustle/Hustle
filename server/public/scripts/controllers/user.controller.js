@@ -14,11 +14,11 @@ myApp.controller('UserController', function(UserService) {
   self.deleteSkill = UserService.deleteSkill
   self.getSkills = UserService.getSkills
   self.addSkill = UserService.addSkill
+  self.uploadProfilePicture = UserService.uploadProfilePicture
 
   self.editUsername = function (value) {
     console.log(value)
     self.isEditing.username = false;
-    self.userObject.userName = value.username;
     self.editUser(value);
   }
 
