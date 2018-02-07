@@ -32,12 +32,13 @@ router.get('/select', function (req, res) {
 
 
   router.put('/profilePicture', function (req, res) {
+      console.log('profile picture put')
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`UPDATE users SET user_picture=$1  WHERE user_id=$2;`, [req.body.user_picture, req.user.id],
+            client.query(`UPDATE users SET user_picture=$1  WHERE id=$2;`, [req.body.user_picture, req.user.id],
                 function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
