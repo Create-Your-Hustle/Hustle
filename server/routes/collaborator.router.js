@@ -31,19 +31,41 @@ router.get('/select', function (req, res) {
 
 
 
-// Get all info for collaborator search page
-router.get('/search/all', function (req, res) {
+  router.put('/profilePicture', function (req, res) {
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
+            client.query(`UPDATE users SET user_picture=$1  WHERE user_id=$2;`, [req.body.user_picture, req.user.id],
+                function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                })
+        }
+    })
+});
 
-            client.query(`SELECT string_agg(s.skill_name, ', ') AS skill_list, u.*
-                        FROM users u
-                        LEFT JOIN users_skills us ON u.id = us.user_id
-                        LEFT JOIN skills s ON s.skill_id = us.skill_id
-                        GROUP BY u.id;`, function (errorMakingDatabaseQuery, result) {
+
+
+// Get all info for collaborator search page
+router.get('/search/all', function (req, res) {
+    if (req.isAuthenticated()) {
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            if (errorConnectingToDatabase) {
+                console.log('error', errorConnectingToDatabase);
+                res.sendStatus(500);
+            } else {
+
+                client.query(`SELECT string_agg(s.skill_name, ', ') AS skill_list, u.*
+                            FROM users u
+                            LEFT JOIN users_skills us ON u.id = us.user_id
+                            LEFT JOIN skills s ON s.skill_id = us.skill_id
+                            GROUP BY u.id;`, function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         console.log('error', errorMakingDatabaseQuery);
@@ -52,8 +74,11 @@ router.get('/search/all', function (req, res) {
                         res.send(result.rows);
                     }
                 }); // end query
-        }
-    });
+            }
+        });
+    } else {
+        res.sendStatus(401);
+    }
 }); // end collaborator/search/all get
 
 // Main collaborator post

@@ -7,7 +7,6 @@ myApp.controller('UserController', function(UserService, CollaboratorService, $r
   self.isEditing = {};
   self.skillslist = UserService.skillslist;
 
-
   self.getUser = UserService.getUser;
   self.editUser = UserService.editUser;
   self.editUserPreferences = UserService.editUserPreferences;
@@ -15,6 +14,8 @@ myApp.controller('UserController', function(UserService, CollaboratorService, $r
   self.getSkills = UserService.getSkills;
   self.addSkill = UserService.addSkill;
   self.getUserById = UserService.getUserById;
+  self.uploadProfilePicture = UserService.uploadProfilePicture;
+
 
   self.editUsername = function (value) {
     console.log(value)

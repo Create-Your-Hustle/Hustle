@@ -1,3 +1,4 @@
+
 myApp.service('ProjectService', function ($http, $location, $mdDialog, $routeParams) {
   console.log('ProjectService Loaded');
   const self = this;
@@ -216,5 +217,25 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       }).then(function (response){
         self.myProjectsArray.list = response.data;
       })
+    }
+
+    //Adds skill to a project
+    self.addProjectSkill = function(skill, project) {
+      projectSkill = {
+        level: skill.level,
+        skill: skill.skill[0],
+        project: project
+      }
+      console.log(projectSkill);
+      
+      $http({
+        method: 'POST',
+        url: '/project/addProjectSkill',
+        data: projectSkill
+      }).then(function (response) {
+        console.log('response', response);
+      })
+      
+      
     }
 });
