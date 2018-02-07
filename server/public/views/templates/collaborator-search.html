@@ -11,7 +11,7 @@
                     <span>Search Collaborators</span>
                 </div>
                 <md-input-container>
-                    <input type="text" placeholder="Name" ng-model="vm.searchParameters.username">
+                    <input type="text" placeholder="Name" ng-model="vm.searchParameters.display_name">
                 </md-input-container>
                 <md-input-container flex="20" layout="column">
                     <label>Skills</label>
@@ -47,14 +47,14 @@
     <div flex layout="column">
         <h1>Collaborators</h1>
         <md-list flex>
-            <md-list-item ng-repeat="collaborator in vm.collaborators.list | filter:query" class="md-2-line">
+            <md-list-item href="#/user/{{collaborator.id}}"  ng-repeat="collaborator in vm.collaborators.list | filter:query" class="md-2-line">
                 <img ng-src="{{collaborator.user_picture}}" class="md-avatar" alt="" />
                 <div class="md-list-item-text" layout="column">
 
                     <div layout-align="start left">
                     <h3>{{collaborator.display_name}}</h3>
                 </div>
-                    <span>{{collaborator.user_skills}}</span>
+                    <span>{{collaborator.skill_list}}</span>
                 </div>
                 <img alt="stars" />
                 <!-- ng-src="" -->

@@ -39,7 +39,7 @@ router.get('/search/all', function (req, res) {
             res.sendStatus(500);
         } else {
 
-            client.query(`SELECT string_agg(s.skill_name, ', ') AS user_skills, u.*
+            client.query(`SELECT string_agg(s.skill_name, ', ') AS skill_list, u.*
                         FROM users u
                         LEFT JOIN users_skills us ON u.id = us.user_id
                         LEFT JOIN skills s ON s.skill_id = us.skill_id
@@ -151,9 +151,9 @@ router.delete('/skill', function (req, res) {
 // Collaborator search get
 router.get('/search', function (req, res) {
     console.log(req.query);
-    let username = req.query.username;
-    if (username !== '') {
-        username = `%` + req.query.project_name + `%`
+    let display_name = req.query.display_name;
+    if (display_name !== '') {
+        display_name = `%` + req.query.display_name + `%`
     };
 
     let skill_params = req.query.skills; 
@@ -166,21 +166,22 @@ router.get('/search', function (req, res) {
             sql_params += ', '
         };
     };
+    console.log(display_name, 'is the name', skill_params, 'are the skills', sql_params, 'are the sql params');
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
             client.query(`WITH name_search AS (
-                            SELECT array_agg(s.skill_name) AS skill_list, u.*, 1 as order_priority
+                            SELECT string_agg(s.skill_name, ', ') AS skill_list, u.*, 1 as order_priority
                                 FROM users u
                                 LEFT JOIN users_skills us ON u.id = us.user_id
                                 LEFT JOIN skills s ON s.skill_id = us.skill_id
-                            WHERE u.username ILIKE $1
+                            WHERE u.display_name ILIKE $1
                             GROUP BY u.id
                             ),
                             skill_search AS (
-                            SELECT array_agg(s.skill_name) AS skill_list, u.*, 1 as order_priority
+                            SELECT string_agg(s.skill_name, ', ') AS skill_list, u.*, 1 as order_priority
                                 FROM users u
                                 LEFT JOIN users_skills us ON u.id = us.user_id
                                 LEFT JOIN skills s ON s.skill_id = us.skill_id
@@ -192,7 +193,7 @@ router.get('/search', function (req, res) {
                         UNION
                         SELECT *
                         FROM skill_search
-                        ORDER BY order_priority;`, [username, ...skill_params], function (errorMakingDatabaseQuery, result) {
+                        ORDER BY order_priority;`, [display_name, ...skill_params], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         console.log('error', errorMakingDatabaseQuery);
@@ -205,7 +206,30 @@ router.get('/search', function (req, res) {
     });
 }); // end collaborator search get
 
-
+//get collaborator by id
+router.get('/select/id', function (req, res) {
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            // this query needs to be changed to include concatonated skills
+            client.query(`SELECT users.username, users.display_name, users.user_picture, skills.skill_name, users_skills.skill_rating, users.user_city, users.user_state, users.user_remote,
+                users.user_for_pay, users.user_for_trade, users.user_bio, users.user_weekly_min, users.user_weekly_max, users_skills.skill_id, users_skills.user_id FROM users
+                LEFT JOIN users_skills ON users.id=users_skills.user_id
+                LEFT JOIN skills ON users_skills.skill_id=skills.skill_id
+                WHERE users.id = $1;`, [req.query.id], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
+        }
+    });
+}); 
 
 
 module.exports = router;

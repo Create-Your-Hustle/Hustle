@@ -348,7 +348,7 @@ router.get('/myProjects/:id', function (req, res) {
             client.query(`SELECT *
                             FROM users_projects up
                             JOIN projects p ON p.project_id = up.project_id
-                            WHERE up.user_id = 1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
+                            WHERE up.user_id = $1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         console.log('error', errorMakingDatabaseQuery);
