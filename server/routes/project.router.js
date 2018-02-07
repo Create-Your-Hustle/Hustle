@@ -191,7 +191,8 @@ router.get('/skillList', function (req, res) {
             res.sendStatus(500);
         } else {
             client.query(`SELECT * 
-                            FROM skills`, function (errorMakingDatabaseQuery, result) {
+                            FROM skills
+                            ORDER BY skill_name`, function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         console.log('error', errorMakingDatabaseQuery);
