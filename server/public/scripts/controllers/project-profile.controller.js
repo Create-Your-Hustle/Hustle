@@ -6,6 +6,7 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
 
 
     ProjectService.getProjects();
+    ProjectService.getSkills();
     ProjectService.getProjectProfile($routeParams.id);
     ProjectService.getProjectSkills($routeParams.id);
     ProjectService.getProjectCollaborators($routeParams.id)
@@ -19,6 +20,8 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     self.contactProjectOwner = ProjectService.contactProjectOwner
     self.uploadProjectPicture = ProjectService.uploadProjectPicture
     self.sendMessage = ProjectService.sendMessage
+    self.skillArray = ProjectService.skillArray;
+    self.addProjectSkill = ProjectService.addProjectSkill
 
 
 

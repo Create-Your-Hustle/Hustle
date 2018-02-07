@@ -40,6 +40,28 @@
                             </md-content>
                         </md-list-item>
                     </md-list>
+                    <md-input-container>
+                        <label>Skills</label>
+                        <md-select ng-model="vm.addSkill.skill" ng-model="searchTerms" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader"
+                            multiple>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
+                            </md-select-header>
+                            <md-optgroup label="skills">
+                                <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillArray.list | filter:searchTerm">{{skill.skill_name}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Level</label>
+                        <md-select ng-model="vm.addSkill.level">
+                            <md-option ng-value="1">Apprentice</md-option>
+                            <md-option ng-value="2">Journeyman</md-option>
+                            <md-option ng-value="3">Master</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-button ng-click="vm.addProjectSkill(vm.addSkill, vm.projectProfile.list[0].project_id)" class="md-raised md-primary">Add Skill</md-button>
+
                 </div>
                 <div flex="50">
                     <h3>Preferences</h3>
@@ -54,7 +76,6 @@
             </div>
         </div>
     </div>
-
 
 </md-content>
 
