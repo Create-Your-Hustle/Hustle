@@ -10,12 +10,16 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     ProjectService.getProjectProfile($routeParams.id);
     ProjectService.getProjectSkills($routeParams.id);
     ProjectService.getProjectCollaborators($routeParams.id)
+    ProjectService.getCollaborationRequests($routeParams.id)
 
     self.projectSkillArray = ProjectService.projectSkillArray
     self.projectArray = ProjectService.projectArray
     self.projectProfile = ProjectService.projectProfile
     self.projectCollaboratorArray = ProjectService.projectCollaboratorArray
     self.rateCollaborator = ProjectService.rateCollaborator
+    self.projectCollaborationRequestArray = ProjectService.projectCollaborationRequestArray
+    self.acceptCollaboration = ProjectService.acceptCollaboration
+    self.declineCollaboration = ProjectService.declineCollaboration
 
     self.contactProjectOwner = ProjectService.contactProjectOwner
     self.uploadProjectPicture = ProjectService.uploadProjectPicture

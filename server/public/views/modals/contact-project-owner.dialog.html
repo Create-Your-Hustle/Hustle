@@ -22,6 +22,12 @@
                             <label for="username">Message:</label>
                             <textarea rows="5" cols="60" ng-model="vm.message.message" form="userMessage"></textarea>
                         </div>
+                        <br>
+                        <div>
+                            <md-checkbox ng-model="vm.message.collaboration">
+                                Request to join project
+                            </md-checkbox>
+                        </div>
                         <div>
                             <input class="btn btn-default" type="submit" name="submit" value="Send Message" />
                         </div>

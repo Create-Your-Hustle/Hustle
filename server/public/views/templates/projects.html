@@ -1,57 +1,66 @@
 <div ng-include="'views/partials/nav.html'"></div>
-
 <div class="homeContent">
     <md-content layout="row" layout-xs="column" layout-padding>
-      <div flex="5" layout="column">
-      </div>
-        <md-sidenav style="width: 304px;" class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
+        <div flex="5" layout="column">
+        </div>
+        <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
             <md-toolbar>
                 <h1 class="md-toolbar-tools">Search</h1>
             </md-toolbar>
             <md-content layout-padding>
-                <p>Search Projects</p>
-                <md-input-container>
-                    <input ng-model="vm.searchParameters.project_name" type="text" placeholder="Name">
-                </md-input-container>
-                <md-input-container>
-                    <label>Skills</label>
-                    <md-select ng-model="vm.searchParameters.skills" ng-model="searchTerms" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader"
-                        multiple>
-                        <md-select-header class="demo-select-header">
-                            <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
-                        </md-select-header>
-                        <md-optgroup label="skills">
-                            <md-option ng-value="skill.skill_name" ng-repeat="skill in vm.skillArray.list | filter:searchTerm">{{skill.skill_name}}</md-option>
-                        </md-optgroup>
-                    </md-select>
-                </md-input-container>
-                <md-button ng-click="vm.getProjectSearchResult(vm.searchParameters)" class="md-raised md-primary">Search</md-button>
-                <p>Filter Results</p>
-                <md-input-container layout-padding>
-                    <input type="text" placeholder="Location" ng-model="query.project_city">
-                    <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_remote">Remote Opportunity</md-checkbox>
-                    <md-subhead>Compensation</md-subhead>
+                <div layout="column">
                     <div>
-                        <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_pay">For Pay</md-checkbox>
-                        <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_trade">For Trade</md-checkbox>
+                        <span>Search Projects</span>
                     </div>
-                </md-input-container>
+                    <md-input-container>
+                        <input ng-model="vm.searchParameters.project_name" type="text" placeholder="Name">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Skills</label>
+                        <md-select ng-model="vm.searchParameters.skills" ng-model="searchTerms" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader"
+                            multiple>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
+                            </md-select-header>
+                            <md-optgroup label="skills">
+                                <md-option ng-value="skill.skill_name" ng-repeat="skill in vm.skillArray.list | filter:searchTerm">{{skill.skill_name}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-button ng-click="vm.getProjectSearchResult(vm.searchParameters)" class="md-raised md-primary">Search</md-button>
+                    <div layout-padding>
+                        <p>Filter Results</p>
+                    </div>
+                    <md-input-container layout-padding>
+                        <input type="text" placeholder="Location" ng-model="query.project_city">
+                        <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_remote">Remote Opportunity</md-checkbox>
+                        <md-subhead>Compensation</md-subhead>
+                        <div>
+                            <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_pay">For Pay</md-checkbox>
+                            <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_trade">For Trade</md-checkbox>
+                        </div>
+                    </md-input-container>
+                    <div flex="5" layout="column"></div>
+                </div>
             </md-content>
         </md-sidenav>
+        
         <!-- Project Search Result Cards TO DO - changed fixed width so this will adjust w/modal-->
-        <div layout="column">
-            <div class='md-padding' layout="row" layout-wrap>
-                <md-card href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
+        <div flex layout="column">
+            <div layout-margin layout-padding layout-fill layout="row" layout-xs="column">
+                <md-card flex href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
                     <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
                     <md-card-content>
                         <h2>{{project.project_name}}</h2>
                         <p>{{project.project_description}}</p>
                     </md-card-content>
-                    <div class="md-actions" layout="row" layout-align="end center">
-                        <md-button>
-                            <a href="#/projectprofile/{{project.project_id}}">View Project</a>
-                        </md-button>
-                        <md-button>Message</md-button>
+                    <div class="md-actions" layout="row" layout-align="center center">
+                        <a href="#/projectprofile/{{project.project_id}}">
+                            <md-button class="md-raised md-primary">
+                                View Project
+                            </md-button>
+                        </a>
+                        <md-button class="md-raised md-primary">Message</md-button>
                     </div>
                 </md-card>
             </div>
