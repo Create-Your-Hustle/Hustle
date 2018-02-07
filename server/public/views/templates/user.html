@@ -9,7 +9,7 @@
                     <div flex layout="column" class="rightBorder">
                         <div flex>
                             <img class="profilePhoto" ng-src="{{vm.selectedUser.list[0].user_picture}}">
-                        </div>
+                        <button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Upload Project Image</button>
                     </div>
                     <div flex>
                         <H1 class="md-display-1">{{vm.selectedUser.list[0].display_name}}</H1>
