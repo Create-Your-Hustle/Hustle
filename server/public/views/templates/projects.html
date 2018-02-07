@@ -41,7 +41,7 @@
         <!-- Project Search Result Cards TO DO - changed fixed width so this will adjust w/modal-->
         <div layout="column">
             <div class='md-padding' layout="row" layout-wrap>
-                <md-card style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
+                <md-card href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
                     <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
                     <md-card-content>
                         <h2>{{project.project_name}}</h2>
@@ -49,7 +49,7 @@
                     </md-card-content>
                     <div class="md-actions" layout="row" layout-align="end center">
                         <md-button>
-                            <a href="#/myproject/{{project.project_id}}">View Project</a>
+                            <a href="#/projectprofile/{{project.project_id}}">View Project</a>
                         </md-button>
                         <md-button>Message</md-button>
                     </div>

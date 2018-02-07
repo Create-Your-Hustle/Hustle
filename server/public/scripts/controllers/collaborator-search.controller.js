@@ -10,6 +10,8 @@ myApp.controller('CollaboratorSearchController', function (UserService, Collabor
     self.getAllCollaboratorsForSearch();
     ProjectService.getSkills();
     self.searchCollaborators = CollaboratorService.searchCollaborators;
+    self.selectedUser = CollaboratorService.selectedUser;
+    self.getUser = UserService.getUser;
 
 
     // side nav
