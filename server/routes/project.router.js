@@ -114,7 +114,7 @@ router.get('/search', function (req, res) {
         project_name = `%` + req.query.project_name + `%`
     };
 
-    let skill_params = req.query.skills; 
+    let skill_params = req.query.skills;
 
     let sql_params = ''
     for (let i = 0; i < skill_params.length; i++) {
@@ -327,14 +327,14 @@ router.put('/collaboratorRatings', function (req, res) {
 
             for (let i = 0; i < req.body.rating.length; i++) {
                 client.query(`INSERT INTO ratings (reviewed_user_id, reviewer_id, rating, rating_type)
-                VALUES ($1, $2, $3, $4);`, 
-                [req.body.collaborator, req.user.id, req.body.rating[i].current, req.body.rating[i].rating_type]            ,
-                function(errorMakingQuery, result) {
-                    done();
-                    if (errorMakingQuery) {
-                        res.sendStatus(500)
-                    }
-                });
+                VALUES ($1, $2, $3, $4);`,
+                    [req.body.collaborator, req.user.id, req.body.rating[i].current, req.body.rating[i].rating_type],
+                    function (errorMakingQuery, result) {
+                        done();
+                        if (errorMakingQuery) {
+                            res.sendStatus(500)
+                        }
+                    });
             }
         }
     })
@@ -360,7 +360,8 @@ router.get('/myProjects/:id', function (req, res) {
                     }
                 });
         }
-    });
+    })
+});
 
 router.post('/addProjectSkill', function (req, res) {
     console.log('REQ.BODY', req.body);
