@@ -339,5 +339,25 @@ router.put('/collaboratorRatings', function (req, res) {
     })
 });
 
+router.post('/addProjectSkill', function (req, res) {
+    console.log('REQ.BODY', req.body);
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query(`INSERT INTO projects_skills (required_rating, project_id, skill_id)
+            VALUES ($1, $2, $3);`, [req.body.level, req.body.project, req.body.skill],
+                function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                })
+        }
+    })
+});
 
 module.exports = router;
