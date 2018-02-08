@@ -64,7 +64,6 @@
       }
       var currentElementParentWidth = that.elementParent.prop('offsetWidth');
       if( currentElementParentWidth < that.maxWidth ){
-        console.log(currentElementParentWidth, that.maxWidth);
         var newHeight = (that.maxHeight * currentElementParentWidth) / that.maxWidth;
         that.element.css('width', currentElementParentWidth + 'px');
         that.element.css('height', newHeight + 'px');

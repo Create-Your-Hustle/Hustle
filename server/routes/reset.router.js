@@ -25,16 +25,12 @@ var transporter = nodemailer.createTransport({
 
 
 router.put('/', function (req, res) {
-    console.log('REQ.BODY: ', req.body);
-
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
-            console.log('error', errorConnectingToDatabase);
             done();
         } else {
             client.query("SELECT * FROM users WHERE username = $1", [req.body.email], function (errorMakingDatabaseQuery, result) {
                 if (errorMakingDatabaseQuery) {
-                    console.log('error', errorMakingDatabaseQuery);
                     done();
                 }
 
@@ -49,7 +45,6 @@ router.put('/', function (req, res) {
                     client.query('UPDATE users SET code = $1 WHERE username = $2;', [code, req.body.email], function (err, result) {
                         done();
                         if (err) {
-                            console.log('query err ', err);
                             res.sendStatus(500);
                         } else {
                             let mailOptions = {
@@ -68,10 +63,8 @@ router.put('/', function (req, res) {
 
                             transporter.sendMail(mailOptions, function (error, info) {
                                 if (error) {
-                                    console.log(error);
                                     res.send(error);
                                 }
-                                console.log('Email sent: ', info.response);
                                 res.sendStatus(200);
                             });
                             res.sendStatus(200);
@@ -84,14 +77,10 @@ router.put('/', function (req, res) {
 });
 
 router.put('/password', function (req, res) {
-    console.log('Query', req.query);
-    console.log('Body', req.body);
-
     var password = encryptLib.encryptPassword(req.body.password);
 
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
-            console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
             client.query(`UPDATE users SET password=$1 WHERE code=$2 AND code IS NOT NULL`, [password, req.query.code],

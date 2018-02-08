@@ -1,6 +1,5 @@
 
 myApp.service('ProjectService', function ($http, $location, $mdDialog, $routeParams) {
-  console.log('ProjectService Loaded');
   const self = this;
 
   self.projectArray = { list: [] };
@@ -19,7 +18,6 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       method: 'GET',
       url: '/project'
     }).then(function (response) {
-      console.log('response', response);
       self.projectArray.list = response.data;
     })
   };
@@ -30,7 +28,6 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       method: 'GET',
       url: '/project/profile/' + id
     }).then(function (response) {
-      console.log('ROUTE PARAMS RESPONSE', response);
       self.projectProfile.list = response.data;
     })
   }
@@ -69,7 +66,6 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       method: 'GET',
       url: '/project/project-collaborators/' + id
     }).then(function (response) {
-      console.log('response', response);
       for (let i = 0; i < response.data.length; i++) {
         self.projectCollaboratorArray.list.push({
           username: response.data[i].username,
@@ -88,7 +84,6 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       method: 'GET',
       url: '/project/collaboration-requests/' + id
     }).then(function (response) {
-      console.log('response', response);
       for (let i = 0; i < response.data.length; i++) {
         self.projectCollaborationRequestArray.list.push({
           username: response.data[i].username,
@@ -96,13 +91,11 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
           user_id: response.data[i].id
         })
       }
-      console.log('collaboration requests ', self.projectCollaborationRequestArray);
     })
   }
 
 
   self.uploadProjectPicture = function (project) {
-    console.log('uploadProjectPicture')
     var fsClient = filestack.init('AR2OVvMAHTTiTRo7bG05Vz');
     function openPicker() {
       fsClient.pick({
@@ -120,14 +113,11 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       }).then(function (response) {
         // declare this function to handle response
         project.project_picture = response.filesUploaded[0].url;
-        console.log('IS THIS EVEN WORKING', project);
         $http({
           method: 'PUT',
           url: '/project/projectPicture',
           data: project
-        }).then(function (response) {
-          console.log('response', response);
-        })
+        }).catch()
       });
     }
     openPicker();
@@ -136,14 +126,12 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
 
   self.getProjectSearchResult = function (searchParamsObject) {
-    console.log('project search', searchParamsObject)
     searchParamsObject.skills.push('');
     $http({
       method: 'GET',
       url: '/project/search',
       params: searchParamsObject,
     }).then(function (response) {
-      console.log('response', response);
       self.projectArray.list = response.data;
     })
   };
@@ -154,14 +142,12 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       method: 'GET',
       url: '/project/skillList',
     }).then(function (response) {
-      console.log(response.data);
       self.skillArray.list = response.data;
     })
   }
 
     //Modal for sending a message to project owners
     self.contactProjectOwner = function (ev) {
-      console.log('button Clicked');
       $mdDialog.show({
         controller: 'ProjectProfileController as vm',
         templateUrl: '../views/modals/contact-project-owner.dialog.html',
@@ -179,31 +165,23 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
   //send message to project owner
   self.sendMessage = function (message, project) {
-    console.log('message: ', message);
-    console.log('project: ', project);
     info = {
       message: message.message,
       project_id: project.project_id,
       project_name: project.project_name
     }
-    console.log('info: ', info);
 
     $http({
       method: 'PUT',
       url: '/project/message',
       data: info
-    }).then(function (response) {
-      console.log('response', response);
-    })
+    }).catch()
     
     self.cancel();
   }
 
     //rate project Collaborator modal
     self.rateCollaborator = function (ev, collaborator) {
-    
-      console.log('button Clicked');
-      console.log(collaborator);
       
       $mdDialog.show({
         locals:{dataToPass: collaborator},
@@ -218,9 +196,6 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
   
     //submits collaborator ratings
     self.submitRatings = function(ratings, collaborator, project) {
-      console.log("ratings", ratings);
-      console.log("collaborator", collaborator);
-      console.log('project', project);
       collaboratorRating = {
         rating: ratings,
         project: project.project_id,
@@ -230,9 +205,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         method: 'PUT',
         url: '/project/collaboratorRatings',
         data: collaboratorRating
-      }).then(function (response) {
-        console.log('response', response);
-      });
+      }).catch();
 
       self.cancel();
     };
@@ -254,15 +227,11 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         skill: skill.skill[0],
         project: project
       }
-      console.log(projectSkill);
-      
       $http({
         method: 'POST',
         url: '/project/addProjectSkill',
         data: projectSkill
-      }).then(function (response) {
-        console.log('response', response);
-      })      
+      }).catch()  
     }//End Add Skill
 
     self.createProject = function () {
@@ -276,7 +245,6 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
     //Adds Collaborator to a project
     self.acceptCollaboration = function(user, project) {
-      console.log('accepted');
       collaborationRequest = {
         user: user.user_id,
         project: project,
@@ -286,14 +254,12 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         url: '/project/acceptCollaboration',
         data: collaborationRequest
       }).then(function (response) {
-        console.log('response', response);
         self.getCollaborationRequests($routeParams.id)
       })
     }
 
     //Declines collaboration request
-    self.declineCollaboration = function(user, project) {
-      console.log('declined');      
+    self.declineCollaboration = function(user, project) {   
       collaborationRequest = {
         user: user.user_id,
         project: project,
@@ -303,7 +269,6 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         url: '/project/declineCollaboration',
         data: collaborationRequest
       }).then(function (response) {
-        console.log('response', response);
         self.getCollaborationRequests($routeParams.id)
       })
 
@@ -322,8 +287,6 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
     //edits project preferences
     self.editProjectPreferences = function(project) {
-      console.log(project);
-      
       $http({
         method: 'PUT',
         url: '/project/preferences',
