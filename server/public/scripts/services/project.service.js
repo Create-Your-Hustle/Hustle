@@ -91,9 +91,10 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       console.log('response', response);
       for (let i = 0; i < response.data.length; i++) {
         self.projectCollaborationRequestArray.list.push({
-          username: response.data[i].username,
+          username: response.data[i].display_name,
           user_project_role: response.data[i].user_project_role,
-          user_id: response.data[i].id
+          user_id: response.data[i].id,
+          user_picture: response.data[i].user_picture
         })
       }
       console.log('collaboration requests ', self.projectCollaborationRequestArray);
