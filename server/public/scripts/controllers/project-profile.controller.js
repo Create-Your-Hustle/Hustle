@@ -29,7 +29,8 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     self.sendMessage = ProjectService.sendMessage;
     self.skillArray = ProjectService.skillArray;
     self.addProjectSkill = ProjectService.addProjectSkill;
-    self.editProjectHead = ProjectService.editProjectHead
+    self.editProjectHead = ProjectService.editProjectHead;
+    self.editProjectPreferences = ProjectService.editProjectPreferences;
 
     self.editProjectName = function (value) {
         self.isEditing.project = false;
@@ -38,7 +39,7 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     
       self.editPreferences = function (pref) {
         self.isEditing.preferences = false
-        self.editUserPreferences(pref)
+        self.editProjectPreferences(pref)
       };
 
 

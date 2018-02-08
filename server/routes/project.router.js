@@ -458,7 +458,7 @@ router.put('/declineCollaboration', function (req, res) {
 router.put('/nameAndBio', function (req, res) {
     console.log(req.body);
     
-    // if (req.isAuthenticated()) {       
+    if (req.isAuthenticated()) {       
         pool.connect(function (errorConnectingToDatabase, client, done) {
             if (errorConnectingToDatabase) {
                 console.log('error', errorConnectingToDatabase);
@@ -474,7 +474,32 @@ router.put('/nameAndBio', function (req, res) {
                 });
             }
         });
-    // }
+    }
 }); // end name and bio put
+
+//changes project preferences
+router.put('/preferences', function (req, res) {
+    console.log(req.body);
+    
+    if (req.isAuthenticated()) {       
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            if (errorConnectingToDatabase) {
+                console.log('error', errorConnectingToDatabase);
+                res.sendStatus(500);
+            } else {
+                client.query(`UPDATE projects SET project_city = $1, project_state = $2, project_remote = $3, project_for_pay = $4, project_for_trade = $5
+                 WHERE project_id = $6;`, [req.body.project_city, req.body.project_state, req.body.project_remote, req.body.project_for_pay, req.body.project_for_trade, req.body.project_id], 
+                 function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                });
+            }
+        });
+    }
+}); // end preference put
 
 module.exports = router;

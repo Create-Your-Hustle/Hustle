@@ -295,15 +295,26 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
     //Edits project name and description
     self.editProjectHead = function(project) {
-      console.log(project);
-      
       $http({
         method: 'PUT',
         url: '/project/nameAndBio',
         data: project,
       }).then(function (response){
         self.getProjectProfile(project.project_id)
-      })
+      })      
+    }//end edit project name and description
+
+    //edits project preferences
+    self.editProjectPreferences = function(project) {
+      console.log(project);
       
-    }
+      $http({
+        method: 'PUT',
+        url: '/project/preferences',
+        data: project,
+      }).then(function (response){
+        self.getProjectProfile(project.project_id)
+      })
+
+    }//end edit project preferences
 });
