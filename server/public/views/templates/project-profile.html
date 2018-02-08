@@ -6,7 +6,7 @@
             <div layout="column" flex="30" layout-align="center center" layout-padding>
                 <img ng-src="{{vm.projectProfile.list[0].project_picture}}" class="projectPhoto" />
                 <button ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id" class="md-accent md-raised" ng-click="vm.uploadProjectPicture(vm.projectProfile.list[0], projectImage.imageUrl)">Upload Project Image</button>
-                <h3>Collaborators</h3>
+                <h1 class="md-display-1">Collaborators</h1>
                 <md-list class="md-dense">
                     <md-list-item class="md-3-line" ng-repeat="collaborator in vm.projectCollaboratorArray.list">
                         <img ng-src="{{collaborator.user_picture}}" class="md-avatar"/>
@@ -22,7 +22,7 @@
                 <div layout="row">
                     <div flex="70">
                         <span ng-hide="vm.isEditing.project">
-                            <h1>{{vm.projectProfile.list[0].project_name}}</h1>
+                            <h1 class="md-display-1">{{vm.projectProfile.list[0].project_name}}</h1>
                         </span>
                         <span ng-show="vm.isEditing.project">
                             <input type="text" ng-model="vm.projectProfile.list[0].project_name">
@@ -51,7 +51,7 @@
 
                 <div layout="row">
                     <div flex="50">
-                        <h3>Looking For...</h3>
+                        <h1 class="md-display-1">Looking For...</h1>
                         <md-list class="md-dense">
                             <md-list-item ng-repeat="skill in vm.projectSkillArray.list">
                                 <md-content layout="row">
@@ -87,10 +87,10 @@
                     </div>
                     <div flex="50">
                         <div flex="50">
-                            <h3>Preferences</h3>
+                            <h1 class="md-display-1">Preferences</h1>
                             <!-- location  -->
                             <span ng-hide="vm.isEditing.preferences">
-                                <p>Location: {{vm.projectProfile.list[0].project_city}}, {{vm.projectProfile.list[0].project_state}}</p>
+                                <p><strong>Location:</strong> {{vm.projectProfile.list[0].project_city}}, {{vm.projectProfile.list[0].project_state}}</p>
                             </span>
                             <span ng-show="vm.isEditing.preferences">
                                 <p>Location:</p>
@@ -113,7 +113,7 @@
 
                             <!-- compensation -->
                             <span ng-hide="vm.isEditing.preferences">
-                                <p>Compensation:</p>
+                                <p><strong>Compensation:</strong></p>
                                 <span ng-show=vm.projectProfile.list[0].project_for_pay>Pay</span>
                                 <span ng-show=vm.projectProfile.list[0].project_for_trade>Trade</span>
                             </span>
@@ -132,7 +132,7 @@
                             </span>
                         </div>
                         <div ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id">
-                            <h4>Collaboration Requests</h4>
+                            <h1 class="md-display-1">Collaboration Requests</h1>
                             <md-list-item class="md-3-line" ng-repeat="request in vm.projectCollaborationRequestArray.list" ng-click="goToPerson(person.name, $event)"
                                 class="noright">
                                 <img ng-src="{{ request.user_picture }}" class="md-avatar" />
