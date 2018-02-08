@@ -37,11 +37,11 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
   self.findRating = function (rating) {
     if (rating == 1) {
-      return "../views/images/skill-one.jpg"
+      return "Beginner"
     } else if (rating == 2) {
-      return "../views/images/skill-two.jpg"
+      return "Intermediate"
     } else if (rating == 3) {
-      return "../views/images/skill-three.jpg"
+      return "Expert"
     }
 
   }
@@ -263,7 +263,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       method: 'POST', 
       url: '/project',
     }).then (function (response) {
-      $location.path('/projectprofil/'+response.data[0].project_id)
+      $location.path('/projectprofile/'+response.data[0].project_id)
     })
   }
 
@@ -302,5 +302,29 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
     }
 
+    //Edits project name and description
+    self.editProjectHead = function(project) {
+      $http({
+        method: 'PUT',
+        url: '/project/nameAndBio',
+        data: project,
+      }).then(function (response){
+        self.getProjectProfile(project.project_id)
+      })      
+    }//end edit project name and description
+
+    //edits project preferences
+    self.editProjectPreferences = function(project) {
+      console.log(project);
+      
+      $http({
+        method: 'PUT',
+        url: '/project/preferences',
+        data: project,
+      }).then(function (response){
+        self.getProjectProfile(project.project_id)
+      })
+
+    }//end edit project preferences
 
 });
