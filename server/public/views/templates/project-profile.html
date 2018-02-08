@@ -55,8 +55,7 @@
                         <md-list class="md-dense">
                             <md-list-item ng-repeat="skill in vm.projectSkillArray.list">
                                 <md-content layout="row">
-                                    <p>{{skill.skill_name}} -
-                                        <img class="skill-rating" ng-src="{{skill.required_rating}}" />
+                                    <p>{{skill.skill_name}} - {{skill.required_rating}}
                                     </p>
 
                                 </md-content>

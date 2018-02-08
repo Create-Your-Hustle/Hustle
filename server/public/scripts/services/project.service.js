@@ -37,11 +37,11 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
   self.findRating = function (rating) {
     if (rating == 1) {
-      return "../views/images/skill-one.jpg"
+      return "Beginner"
     } else if (rating == 2) {
-      return "../views/images/skill-two.jpg"
+      return "Intermediate"
     } else if (rating == 3) {
-      return "../views/images/skill-three.jpg"
+      return "Expert"
     }
 
   }
