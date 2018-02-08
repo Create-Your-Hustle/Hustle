@@ -135,8 +135,20 @@
                     <div flex>
                         <h2>Projects</h2>
                     </div>
-                    <div flex ng-repeat="project in vm.collaboratorProjects.list">
-                        <p>{{project}}</p>
+                    <div flex layout="row" layout-xs="column" layout-padding>
+                        <div flex flex-gt-xs="50" layout="row" layout-xs="column" ng-repeat="project in vm.collaboratorProjects.list">
+                            <div flex flex-gt-xs="33">
+                                <img ng-src="{{project.picture}}" class="md-card-image" alt="user avatar" />
+                            </div>
+                            <div flex layout="column">
+                                <div flex>
+                                    <h3>{{project.project_name}}</h3>
+                                </div>
+                                <div flex>
+                                    <span>{{project.project_description}}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
