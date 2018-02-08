@@ -9,7 +9,7 @@
                 <h3>Collaborators</h3>
                 <md-list class="md-dense">
                     <md-list-item class="md-3-line" ng-repeat="collaborator in vm.projectCollaboratorArray.list">
-                        <img ng-src="../views/images/profile-default.jpg" class="md-avatar" alt="" />
+                        <img ng-src="{{collaborator.user_picture}}" class="md-avatar"/>
                         <div class="md-list-item-text" layout="column">
                             <h3>{{collaborator.username}}</h3>
                             <p>{{collaborator.user_project_role}}</p>
