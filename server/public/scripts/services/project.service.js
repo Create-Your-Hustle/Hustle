@@ -172,7 +172,10 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       })
     };
 
-
+  //Cancel modal
+  self.cancel = function() {
+    $mdDialog.cancel();
+  };
 
   //send message to project owner
   self.sendMessage = function (message, project) {
@@ -192,6 +195,8 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
     }).then(function (response) {
       console.log('response', response);
     })
+    
+    self.cancel();
   }
 
     //rate project Collaborator modal
@@ -227,7 +232,9 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         data: collaboratorRating
       }).then(function (response) {
         console.log('response', response);
-      })
+      });
+
+      self.cancel();
     };
 
     //get list of projects for this user

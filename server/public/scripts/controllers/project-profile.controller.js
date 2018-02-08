@@ -24,10 +24,11 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     self.contactProjectOwner = ProjectService.contactProjectOwner
     self.uploadProjectPicture = ProjectService.uploadProjectPicture
     self.sendMessage = ProjectService.sendMessage
+    self.cancel = ProjectService.cancel;
     self.skillArray = ProjectService.skillArray;
     self.addProjectSkill = ProjectService.addProjectSkill
 
-
+    
 
 
 });
