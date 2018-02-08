@@ -258,6 +258,15 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       })      
     }//End Add Skill
 
+    self.createProject = function () {
+      $http ({
+      method: 'POST', 
+      url: '/project',
+    }).then (function (response) {
+      $location.path('/projectprofil/'+response.data[0].project_id)
+    })
+  }
+
     //Adds Collaborator to a project
     self.acceptCollaboration = function(user, project) {
       console.log('accepted');
