@@ -454,4 +454,27 @@ router.put('/declineCollaboration', function (req, res) {
     })
 });
 
+//changes project name and bio
+router.put('/nameAndBio', function (req, res) {
+    console.log(req.body);
+    
+    // if (req.isAuthenticated()) {       
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            if (errorConnectingToDatabase) {
+                console.log('error', errorConnectingToDatabase);
+                res.sendStatus(500);
+            } else {
+                client.query(`UPDATE projects SET project_name = $1, project_description = $2 WHERE project_id = $3;`, [req.body.project_name, req.body.project_description, req.body.project_id], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                });
+            }
+        });
+    // }
+}); // end name and bio put
+
 module.exports = router;

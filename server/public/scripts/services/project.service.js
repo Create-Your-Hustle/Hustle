@@ -292,4 +292,18 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       })
 
     }
+
+    //Edits project name and description
+    self.editProjectHead = function(project) {
+      console.log(project);
+      
+      $http({
+        method: 'PUT',
+        url: '/project/nameAndBio',
+        data: project,
+      }).then(function (response){
+        self.getProjectProfile(project.project_id)
+      })
+      
+    }
 });
