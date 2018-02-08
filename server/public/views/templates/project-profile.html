@@ -5,7 +5,7 @@
         <div layout="row" layout-padding>
             <div layout="column" flex="30" layout-align="center center" layout-padding>
                 <img ng-src="{{vm.projectProfile.list[0].project_picture}}" class="projectPhoto" />
-                <button class="md-accent md-raised" ng-click="vm.uploadProjectPicture(vm.projectProfile.list[0], projectImage.imageUrl)">Upload Project Image</button>
+                <button ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id" class="md-accent md-raised" ng-click="vm.uploadProjectPicture(vm.projectProfile.list[0], projectImage.imageUrl)">Upload Project Image</button>
                 <h3>Collaborators</h3>
                 <md-list class="md-dense">
                     <md-list-item class="md-3-line" ng-repeat="collaborator in vm.projectCollaboratorArray.list">
@@ -41,7 +41,8 @@
                                 </md-content>
                             </md-list-item>
                         </md-list>
-                        <md-input-container>
+                        <div ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id">
+                        <md-input-container >
                             <label>Skills</label>
                             <md-select ng-model="vm.addSkill.skill" ng-model="searchTerms" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader"
                                 multiple>
@@ -56,13 +57,13 @@
                         <md-input-container>
                             <label>Level</label>
                             <md-select ng-model="vm.addSkill.level">
-                                <md-option ng-value="1">Apprentice</md-option>
-                                <md-option ng-value="2">Journeyman</md-option>
-                                <md-option ng-value="3">Master</md-option>
+                                <md-option ng-value="1">Beginner</md-option>
+                                <md-option ng-value="2">Intermediate</md-option>
+                                <md-option ng-value="3">Expert</md-option>
                             </md-select>
                         </md-input-container>
-                        <md-button ng-click="vm.addProjectSkill(vm.addSkill, vm.projectProfile.list[0].project_id)" class="md-raised md-primary">Add Skill</md-button>
-
+                        <md-button  ng-click="vm.addProjectSkill(vm.addSkill, vm.projectProfile.list[0].project_id)" class="md-raised md-primary">Add Skill</md-button>
+                    </div>
                     </div>
                     <div flex="50">
                         <div flex="50">
@@ -75,7 +76,7 @@
                                 Accepting Remote Collaboration
                             </div>
                         </div>
-                        <div>
+                        <div ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id">
                             <h4>Collaboration Requests</h4>
                             <md-list-item class="md-3-line" ng-repeat="request in vm.projectCollaborationRequestArray.list" ng-click="goToPerson(person.name, $event)"
                                 class="noright">
@@ -83,7 +84,7 @@
                                 <div class="md-list-item-text" layout="column">
                                     <p>{{ request.username }}</p>
                                     <md-button class="md-raised md-primary" ng-click="vm.acceptCollaboration(request, vm.projectProfile.list[0].project_id)">Accept</md-button>
-                                    <md-button class="md-raised md-primary" ng-click="vm.declineCollaboration(request, vm.projectProfile.list[0].project_id)">Deny</md-button>
+                                    <md-button class="md-raised md-primary" ng-click="vm.declineCollaboration(request, vm.projectProfile.list[0].project_id)">Dismiss</md-button>
                                 </div>
                             </md-list-item>
                         </div>

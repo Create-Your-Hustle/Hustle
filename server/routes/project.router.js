@@ -234,8 +234,9 @@ router.get('/profile/:id', function (req, res) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`SELECT * FROM projects
-            WHERE project_id = $1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
+            client.query(`SELECT projects.*,  users_projects.user_id FROM projects
+                        JOIN users_projects ON projects.project_id = users_projects.project_id
+                        WHERE projects.project_id = $1 AND can_edit = true;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         console.log('error', errorMakingDatabaseQuery);
@@ -255,7 +256,7 @@ router.get('/project-collaborators/:id', function (req, res) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`SELECT users_projects.user_project_role, users.username, users.id FROM users_projects
+            client.query(`SELECT users_projects.user_project_role, users.display_name, users.id FROM users_projects
                         JOIN users ON users_projects.user_id = users.id
                         WHERE project_id = $1 AND collaboration_request = false;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
                     done();

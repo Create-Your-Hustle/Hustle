@@ -3,6 +3,7 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     const self = this;
 
     self.ProjectService = ProjectService;
+    self.UserService = UserService
 
 
     ProjectService.getProjects();
@@ -12,6 +13,7 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     ProjectService.getProjectCollaborators($routeParams.id)
     ProjectService.getCollaborationRequests($routeParams.id)
 
+    self.userObject = UserService.userObject
     self.projectSkillArray = ProjectService.projectSkillArray
     self.projectArray = ProjectService.projectArray
     self.projectProfile = ProjectService.projectProfile
