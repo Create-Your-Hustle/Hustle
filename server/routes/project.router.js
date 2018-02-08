@@ -52,7 +52,7 @@ router.post('/', function (req, res) {
             client.query(`WITH new_project AS (INSERT INTO projects ("project_name")
             VALUES ('New Project') RETURNING project_id)
             INSERT INTO users_projects ("user_id", "project_id", "can_edit", "user_project_role")
-            VALUES ($1, (Select project_id FROM new_project), true , 'Creator') RETURNING 	project_id;;`, [req.user.id],
+            VALUES ($1, (Select project_id FROM new_project), true , 'Creator') RETURNING 	project_id;`, [req.user.id],
                 function (errorMakingQuery, result) {
                     done();
                     if (errorMakingQuery) {
@@ -237,8 +237,9 @@ router.get('/profile/:id', function (req, res) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`SELECT * FROM projects
-            WHERE project_id = $1;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
+            client.query(`SELECT projects.*,  users_projects.user_id FROM projects
+                        JOIN users_projects ON projects.project_id = users_projects.project_id
+                        WHERE projects.project_id = $1 AND can_edit = true;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         console.log('error', errorMakingDatabaseQuery);
@@ -258,7 +259,7 @@ router.get('/project-collaborators/:id', function (req, res) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`SELECT users_projects.user_project_role, users.username, users.id FROM users_projects
+            client.query(`SELECT users_projects.user_project_role, users.display_name, users.id FROM users_projects
                         JOIN users ON users_projects.user_id = users.id
                         WHERE project_id = $1 AND collaboration_request = false;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
                     done();
@@ -484,5 +485,53 @@ router.put('/declineCollaboration', function (req, res) {
         }
     })
 });
+
+//changes project name and bio
+router.put('/nameAndBio', function (req, res) {
+    console.log(req.body);
+    
+    if (req.isAuthenticated()) {       
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            if (errorConnectingToDatabase) {
+                console.log('error', errorConnectingToDatabase);
+                res.sendStatus(500);
+            } else {
+                client.query(`UPDATE projects SET project_name = $1, project_description = $2 WHERE project_id = $3;`, [req.body.project_name, req.body.project_description, req.body.project_id], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                });
+            }
+        });
+    }
+}); // end name and bio put
+
+//changes project preferences
+router.put('/preferences', function (req, res) {
+    console.log(req.body);
+    
+    if (req.isAuthenticated()) {       
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            if (errorConnectingToDatabase) {
+                console.log('error', errorConnectingToDatabase);
+                res.sendStatus(500);
+            } else {
+                client.query(`UPDATE projects SET project_city = $1, project_state = $2, project_remote = $3, project_for_pay = $4, project_for_trade = $5
+                 WHERE project_id = $6;`, [req.body.project_city, req.body.project_state, req.body.project_remote, req.body.project_for_pay, req.body.project_for_trade, req.body.project_id], 
+                 function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                });
+            }
+        });
+    }
+}); // end preference put
 
 module.exports = router;
