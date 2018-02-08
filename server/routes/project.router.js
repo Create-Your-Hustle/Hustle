@@ -414,6 +414,35 @@ router.post('/addProjectSkill', function (req, res) {
 
 });
 
+//Collaborator projects get
+router.get('/collaborator-projects', function (req, res) {
+    if(req.isAuthenticated()) {
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            const email = req.query.username;
+            if (errorConnectingToDatabase) {
+                console.log('error', errorConnectingToDatabase);
+                res.sendStatus(500);
+            } else {
+                client.query(`SELECT p.project_name, p.project_description, p.project_picture FROM projects p
+                            JOIN users_projects up ON up.project_id = p.project_id
+                            JOIN users u ON u.id = up.user_id
+                            WHERE up.can_edit = true
+                            AND u.username = $1;`, [email], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
+            }
+        });
+    } else {
+        res.sendStatus(401);
+    };
+});
+
 //accepts collaboration requests on projects
 router.put('/acceptCollaboration', function (req, res) {
     console.log('accept REQ.BODY', req.body);
