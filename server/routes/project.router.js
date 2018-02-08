@@ -49,13 +49,16 @@ router.post('/', function (req, res) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`PUT SQL HERE`, [],
+            client.query(`WITH new_project AS (INSERT INTO projects ("project_name")
+            VALUES ('New Project') RETURNING project_id)
+            INSERT INTO users_projects ("user_id", "project_id", "can_edit", "user_project_role")
+            VALUES ($1, (Select project_id FROM new_project), true , 'Creator') RETURNING 	project_id;;`, [req.user.id],
                 function (errorMakingQuery, result) {
                     done();
                     if (errorMakingQuery) {
                         res.sendStatus(500)
                     } else {
-                        res.sendStatus(201);
+                        res.send(result.rows)
                     }
                 });
         }
@@ -410,6 +413,35 @@ router.post('/addProjectSkill', function (req, res) {
         }
     })
 
+});
+
+//Collaborator projects get
+router.get('/collaborator-projects', function (req, res) {
+    if(req.isAuthenticated()) {
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            const email = req.query.username;
+            if (errorConnectingToDatabase) {
+                console.log('error', errorConnectingToDatabase);
+                res.sendStatus(500);
+            } else {
+                client.query(`SELECT p.project_name, p.project_description, p.project_picture FROM projects p
+                            JOIN users_projects up ON up.project_id = p.project_id
+                            JOIN users u ON u.id = up.user_id
+                            WHERE up.can_edit = true
+                            AND u.username = $1;`, [email], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        console.log('error', errorMakingDatabaseQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                });
+            }
+        });
+    } else {
+        res.sendStatus(401);
+    };
 });
 
 //accepts collaboration requests on projects

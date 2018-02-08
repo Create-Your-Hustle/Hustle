@@ -1,20 +1,24 @@
-myApp.controller('UserController', function(UserService, CollaboratorService, $routeParams) {
+myApp.controller('UserController', function(UserService, CollaboratorService, ProjectService, $routeParams) {
   console.log('UserController created');
   let self = this;
   self.userService = UserService;
   self.userObject = UserService.userObject;
-  self.selectedUser = UserService.selectedUser;
-  self.isEditing = {};
-  self.skillslist = UserService.skillslist;
+  self.selectedUser = UserService.selectedUser
+  self.isEditing = {}
+  self.skillslist = UserService.skillslist
+  self.collaboratorProjects = UserService.collaboratorProjects;
 
-  self.getUser = UserService.getUser;
-  self.editUser = UserService.editUser;
-  self.editUserPreferences = UserService.editUserPreferences;
-  self.deleteSkill = UserService.deleteSkill;
-  self.getSkills = UserService.getSkills;
-  self.addSkill = UserService.addSkill;
+  self.getUser = UserService.getUser
+  self.editUser = UserService.editUser
+  self.editUserPreferences = UserService.editUserPreferences
+  self.deleteSkill = UserService.deleteSkill
+  self.getSkills = UserService.getSkills
+  self.addSkill = UserService.addSkill
+  self.uploadProfilePicture = UserService.uploadProfilePicture
+  self.getCollaboratorProjects = UserService.getCollaboratorProjects;
   self.getUserById = UserService.getUserById;
   self.uploadProfilePicture = UserService.uploadProfilePicture;
+  self.createProject = ProjectService.createProject;
 
 
   self.editUsername = function (value) {
