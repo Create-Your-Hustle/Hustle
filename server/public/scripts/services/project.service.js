@@ -263,7 +263,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       method: 'POST', 
       url: '/project',
     }).then (function (response) {
-      $location.path('/projectprofil/'+response.data[0].project_id)
+      $location.path('/projectprofile/'+response.data[0].project_id)
     })
   }
 

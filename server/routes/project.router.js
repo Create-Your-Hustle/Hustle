@@ -52,7 +52,7 @@ router.post('/', function (req, res) {
             client.query(`WITH new_project AS (INSERT INTO projects ("project_name")
             VALUES ('New Project') RETURNING project_id)
             INSERT INTO users_projects ("user_id", "project_id", "can_edit", "user_project_role")
-            VALUES ($1, (Select project_id FROM new_project), true , 'Creator') RETURNING 	project_id;;`, [req.user.id],
+            VALUES ($1, (Select project_id FROM new_project), true , 'Creator') RETURNING 	project_id;`, [req.user.id],
                 function (errorMakingQuery, result) {
                     done();
                     if (errorMakingQuery) {
