@@ -1,4 +1,4 @@
-myApp.controller('UserController', function(UserService, CollaboratorService, $routeParams) {
+myApp.controller('UserController', function(UserService, CollaboratorService, ProjectService, $routeParams) {
   console.log('UserController created');
   let self = this;
   self.userService = UserService;
@@ -17,6 +17,9 @@ myApp.controller('UserController', function(UserService, CollaboratorService, $r
   self.uploadProfilePicture = UserService.uploadProfilePicture
   self.getCollaboratorProjects = UserService.getCollaboratorProjects;
   self.getUserById = UserService.getUserById;
+  self.uploadProfilePicture = UserService.uploadProfilePicture;
+  self.createProject = ProjectService.createProject;
+
 
   self.editUsername = function (value) {
     console.log(value)
