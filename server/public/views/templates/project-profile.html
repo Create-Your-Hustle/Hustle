@@ -94,8 +94,24 @@
                             </span>
                             <span ng-show="vm.isEditing.preferences">
                                 <p>Location:</p>
+                                <form ng-submit="$event.preventDefault()">
                                 <input type="text" ng-model="vm.projectProfile.list[0].project_city">
-                                <input type="text" ng-model="vm.projectProfile.list[0].project_state">
+                                <md-autocomplete
+                                ng-disabled="vm.isDisabled"
+                                md-no-cache="vm.noCache"
+                                md-selected-item="vm.selectedItem"
+                                md-search-text-change="vm.searchTextChange(vm.projectProfile.list[0].project_state)"
+                                md-search-text="vm.projectProfile.list[0].project_state"
+                                md-selected-item-change="vm.selectedItemChange(item)"
+                                md-items="item in vm.querySearch(vm.projectProfile.list[0].project_state)"
+                                md-item-text="item.display"
+                                md-min-length="0"
+                                placeholder="State">
+                              <md-item-template>
+                                <span md-highlight-text="vm.projectProfile.list[0].project_state" md-highlight-flags="^i">{{item.display}}</span>
+                              </md-item-template>
+                                  </md-autocomplete>
+                                </form>
                             </span>
 
                             <!-- remote collaboration -->

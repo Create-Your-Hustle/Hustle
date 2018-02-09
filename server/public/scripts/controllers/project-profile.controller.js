@@ -1,8 +1,10 @@
-myApp.controller('ProjectProfileController', function(UserService, ProjectService, $mdDialog, $routeParams){
+myApp.controller('ProjectProfileController', function(UserService, ProjectService, AutoCompleteService, $mdDialog, $routeParams, $log, $q, $timeout){
+    console.log('ProjectProfileController created');
     const self = this;
 
     self.ProjectService = ProjectService;
     self.UserService = UserService
+    self.AutoCompleteService = AutoCompleteService
 
     self.isEditing = {};
 
@@ -14,6 +16,7 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     ProjectService.getProjectCollaborators($routeParams.id);
     ProjectService.getCollaborationRequests($routeParams.id);
 
+    
     self.userObject = UserService.userObject;
     self.projectSkillArray = ProjectService.projectSkillArray;
     self.projectArray = ProjectService.projectArray;
@@ -31,6 +34,10 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     self.editProjectHead = ProjectService.editProjectHead;
     self.editProjectPreferences = ProjectService.editProjectPreferences;
     self.cancel = ProjectService.cancel;
+    self.querySearch = AutoCompleteService.querySearch;
+    self.searchTextChange = AutoCompleteService.searchTextChange;
+    self.selectedItemChange = AutoCompleteService.selectedItemChange
+    self.loadAll = AutoCompleteService.loadAll;
 
     self.editProjectName = function (value) {
         self.isEditing.project = false;
@@ -42,7 +49,13 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
         self.editProjectPreferences(pref)
       };
 
-    
+      self.simulateQuery = false;
+      self.isDisabled    = false;
+      self.querySearch   = AutoCompleteService.querySearch;
+      self.selectedItemChange = AutoCompleteService.selectedItemChange;
+      self.searchTextChange   = AutoCompleteService.searchTextChange;      
+      self.states = AutoCompleteService.states;
+      
 
 
 });
