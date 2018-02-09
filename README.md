@@ -18,10 +18,8 @@ The primary purpose of the platform is to facilitate initial touchpoints between
 ●	PostgreSQL
 ●	Nodemailer
 ●	Filestack
-●	Facebook SDK
+●	Facebook Oauth 2.0
 ●	Google Oauth 2.0
-●	Google Places API
-●	Post GIS
 
 
 ## Getting Started

@@ -44,11 +44,13 @@
                 </div>
             </md-content>
         </md-sidenav>
-        
+
         <!-- Project Search Result Cards TO DO - changed fixed width so this will adjust w/modal-->
-        <div flex layout="column">
-            <div layout-margin layout-padding layout-fill layout="row" layout-xs="column">
-                <md-card flex href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
+        <md-content flex layout="row">
+                <div flex="5" layout="column">
+                    </div>
+            <div flex="50" layout-margin layout-padding layout="row" layout-xs="column">
+                <md-card href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
                     <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
                     <md-card-content>
                         <h2>{{project.project_name}}</h2>
@@ -64,7 +66,7 @@
                     </div>
                 </md-card>
             </div>
-        </div>
+        </md-content>
         <div flex="5" layout="column"></div>
     </md-content>
 </div>
