@@ -22,18 +22,13 @@ passport.use('local', new localStrategy({
   usernameField: 'username'
 }, function (req, username, password, done) {
   pool.connect(function (err, client, release) {
-    console.log('called local - pg');
 
     // assumes the username will be unique, thus returning 1 or 0 results
     client.query("SELECT * FROM users WHERE username = $1", [username],
       function (err, result) {
         var user = {};
-
-        console.log('here');
-
         // Handle Errors
         if (err) {
-          console.log('connection err ', err);
           done(null, user);
         }
 
@@ -41,18 +36,14 @@ passport.use('local', new localStrategy({
 
         if (result.rows[0] != undefined) {
           user = result.rows[0];
-          console.log('User obj', user);
           // Hash and compare
           if (encryptLib.comparePassword(password, user.password)) {
             // all good!
-            console.log('passwords match');
             done(null, user);
           } else {
-            console.log('password does not match');
             done(null, false, { message: 'Incorrect credentials.' });
           }
         } else {
-          console.log('no user');
           done(null, false);
         }
 
@@ -67,13 +58,9 @@ passport.use('facebook', new FacebookStrategy({
   callbackURL: process.env.FACEBOOK_APP_URL
 },
   function (token, refreshToken, profile, done) {
-
-    console.log(profile)
-
     pool.connect(function (err, client, release) {
 
       if (err) {
-        console.log('Error connecting to database', err)
         // Does this need to be here?  Can it even do anything?
         res.sendStatus(500);
       } else {
@@ -93,7 +80,6 @@ passport.use('facebook', new FacebookStrategy({
             SELECT * FROM new_user;`, [profile.id, profile.displayName], function (error, result) {
             release()
             if (error) {
-              console.log('Error making query', error)
               done(null, false);
             } else {
               done(null, result.rows[0])
@@ -110,11 +96,9 @@ passport.use(new GoogleStrategy({
   callbackURL: process.env.GOOGLE_CALLBACK_URL
 },
   function (accessToken, refreshToken, profile, done) {
-    console.log(profile.emails)
     pool.connect(function (err, client, release) {
 
       if (err) {
-        console.log('Error connecting to database', err)
         // Does this need to be here?  Can it even do anything?
         res.sendStatus(500);
       } else {
@@ -134,7 +118,6 @@ passport.use(new GoogleStrategy({
       SELECT * FROM new_user;`, [profile.id, profile.emails[0].value], function (error, result) {
             release()
             if (error) {
-              console.log('Error making query', error)
               done(null, false);
             } else {
               done(null, result.rows[0])
