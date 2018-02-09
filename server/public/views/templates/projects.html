@@ -47,7 +47,7 @@
         
         <!-- Project Search Result Cards TO DO - changed fixed width so this will adjust w/modal-->
         <div flex layout="column">
-            <div layout-margin layout-padding layout-fill layout="row" layout-xs="column">
+            <div layout-margin layout-padding layout-fill layout="column" layout-xs="column" layout-wrap>
                 <md-card flex href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
                     <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
                     <md-card-content>
