@@ -5,7 +5,7 @@
         <div class="md-toolbar-tools">
             <h2>Contact Project Owner</h2>
             <span flex></span>
-            <md-button class="md-icon-button" ng-click="cancel()">
+            <md-button class="md-icon-button" ng-click="vm.cancel()">
                 <md-icon md-svg-src="../assets/closebutton.png" aria-label="Close dialog"></md-icon>
             </md-button>
         </div>
@@ -21,6 +21,12 @@
                         <div>
                             <label for="username">Message:</label>
                             <textarea rows="5" cols="60" ng-model="vm.message.message" form="userMessage"></textarea>
+                        </div>
+                        <br>
+                        <div>
+                            <md-checkbox ng-model="vm.message.collaboration">
+                                Request to join project
+                            </md-checkbox>
                         </div>
                         <div>
                             <input class="btn btn-default" type="submit" name="submit" value="Send Message" />

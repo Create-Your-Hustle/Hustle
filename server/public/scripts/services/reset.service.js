@@ -1,6 +1,10 @@
-myApp.service('ResetService', function ($http, $location, $routeParams) {
+myApp.service('ResetService', function ($http, $location, $routeParams, $mdDialog) {
     console.log('ResetService Loaded');
     const self = this;
+
+    self.cancel = function() {
+        $mdDialog.cancel();
+      };
 
     self.sendReset = function (email) {
         console.log('email: ', email);
@@ -10,7 +14,9 @@ myApp.service('ResetService', function ($http, $location, $routeParams) {
             data: email
         }).then(function (response) {
             console.log('response', response);
-        })
+        });
+
+        self.cancel();
     };
 
     self.setNewPassword = function (user) {

@@ -7,6 +7,7 @@ myApp.service('UserService', function($http, $location){
     username: '',
     password: ''
   };
+  self.collaboratorProjects = {list: []};
 
   self.validateEmail= function(email) {
     var valEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -55,6 +56,7 @@ myApp.service('UserService', function($http, $location){
       params: {name: username},
     }).then(function (response) {
       self.selectedUser.list = response.data;
+      self.getCollaboratorProjects();
     })
   };
 
@@ -115,6 +117,7 @@ myApp.service('UserService', function($http, $location){
         if(response.data.username) {
             // user has a curret session on the server
             self.userObject.userName = response.data.username;
+            self.userObject.id = response.data.id;
         } else {
             // user has no session, bounce them back to the login page
             $location.path("/home");
@@ -128,6 +131,18 @@ myApp.service('UserService', function($http, $location){
     $http.get('/user/logout').then(function(response) {
       $location.path("/home");
     });
+  }
+
+  //Get projects for a collaborator
+  self.getCollaboratorProjects = function () {
+    $http({
+      method: 'GET',
+      url: '/project/collaborator-projects',
+      params: self.selectedUser.list[0]
+    }).then(function (response) {
+      console.log('response', response);
+      self.collaboratorProjects.list = response.data;
+    });
   };
 
   self.getUserById = function (id) {
@@ -140,6 +155,7 @@ myApp.service('UserService', function($http, $location){
       params: {id: id},
     }).then(function (response) {
       self.selectedUser.list = response.data;
+      self.getCollaboratorProjects();
     })
   };
 });

@@ -7,6 +7,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
   self.skillArray = { list: [] };
   self.projectSkillArray = { list: [] };
   self.projectCollaboratorArray = { list: [] };
+  self.projectCollaborationRequestArray = { list: [] }
   self.projectProfile = { list: [] };
   self.imageUrl = {};
   self.myProjectsArray = { list: [] };
@@ -36,11 +37,11 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
   self.findRating = function (rating) {
     if (rating == 1) {
-      return "../views/images/skill-one.jpg"
+      return "Beginner"
     } else if (rating == 2) {
-      return "../views/images/skill-two.jpg"
+      return "Intermediate"
     } else if (rating == 3) {
-      return "../views/images/skill-three.jpg"
+      return "Expert"
     }
 
   }
@@ -76,9 +77,29 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
           user_id: response.data[i].id
         })
       }
-      console.log('project collaborators ', self.projectCollaboratorArray);
     })
   }
+
+  
+  //Get Collaboration Requests
+  self.getCollaborationRequests = function (id) {
+    self.projectCollaborationRequestArray.list = [];
+    $http({
+      method: 'GET',
+      url: '/project/collaboration-requests/' + id
+    }).then(function (response) {
+      console.log('response', response);
+      for (let i = 0; i < response.data.length; i++) {
+        self.projectCollaborationRequestArray.list.push({
+          username: response.data[i].username,
+          user_project_role: response.data[i].user_project_role,
+          user_id: response.data[i].id
+        })
+      }
+      console.log('collaboration requests ', self.projectCollaborationRequestArray);
+    })
+  }
+
 
   self.uploadProjectPicture = function (project) {
     console.log('uploadProjectPicture')
@@ -151,7 +172,10 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       })
     };
 
-
+  //Cancel modal
+  self.cancel = function() {
+    $mdDialog.cancel();
+  };
 
   //send message to project owner
   self.sendMessage = function (message, project) {
@@ -171,6 +195,8 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
     }).then(function (response) {
       console.log('response', response);
     })
+    
+    self.cancel();
   }
 
     //rate project Collaborator modal
@@ -206,7 +232,9 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         data: collaboratorRating
       }).then(function (response) {
         console.log('response', response);
-      })
+      });
+
+      self.cancel();
     };
 
     //get list of projects for this user
@@ -234,8 +262,76 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         data: projectSkill
       }).then(function (response) {
         console.log('response', response);
+      })      
+    }//End Add Skill
+
+    self.createProject = function () {
+      $http ({
+      method: 'POST', 
+      url: '/project',
+    }).then (function (response) {
+      $location.path('/projectprofile/'+response.data[0].project_id)
+    })
+  }
+
+    //Adds Collaborator to a project
+    self.acceptCollaboration = function(user, project) {
+      console.log('accepted');
+      collaborationRequest = {
+        user: user.user_id,
+        project: project,
+      }
+      $http({
+        method: 'PUT',
+        url: '/project/acceptCollaboration',
+        data: collaborationRequest
+      }).then(function (response) {
+        console.log('response', response);
+        self.getCollaborationRequests($routeParams.id)
       })
-      
-      
     }
+
+    //Declines collaboration request
+    self.declineCollaboration = function(user, project) {
+      console.log('declined');      
+      collaborationRequest = {
+        user: user.user_id,
+        project: project,
+      }
+      $http({
+        method: 'PUT',
+        url: '/project/declineCollaboration',
+        data: collaborationRequest
+      }).then(function (response) {
+        console.log('response', response);
+        self.getCollaborationRequests($routeParams.id)
+      })
+
+    }
+
+    //Edits project name and description
+    self.editProjectHead = function(project) {
+      $http({
+        method: 'PUT',
+        url: '/project/nameAndBio',
+        data: project,
+      }).then(function (response){
+        self.getProjectProfile(project.project_id)
+      })      
+    }//end edit project name and description
+
+    //edits project preferences
+    self.editProjectPreferences = function(project) {
+      console.log(project);
+      
+      $http({
+        method: 'PUT',
+        url: '/project/preferences',
+        data: project,
+      }).then(function (response){
+        self.getProjectProfile(project.project_id)
+      })
+
+    }//end edit project preferences
+
 });
