@@ -32,7 +32,7 @@
                             <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-hide="vm.isEditing.username">
                                 <md-button class="md-raised md-accent" ng-click="vm.isEditing.username = true">Edit Display Name or Bio?</md-button>
                             </span>
-                            <span ng-if="vm.userObject.id === vm.selectedUser.list[0].id" ng-show="vm.isEditing.username">
+                            <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-show="vm.isEditing.username">
                                 <md-button class="md-raised md-primary" ng-click="vm.editUsername(vm.selectedUser.list[0])">Save</md-button>
                             </span>
                         </h2>
