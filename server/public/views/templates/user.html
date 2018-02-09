@@ -48,7 +48,7 @@
                             <tr ng-repeat="skills in vm.selectedUser.list ">
                                 <td>{{skills.skill_name}}</td>
                                 <td>{{skills.skill_rating}}</td>
-                                <td ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
+                                <td layout="end end"ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
                                     <md-button class="md-raised md-primary" ng-click="vm.deleteSkill(skills)">Delete</md-button>
                                 </td>
                             </tr>
@@ -56,7 +56,7 @@
                         </br>
                         <table ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
 
-                            <h2 class="md-display-1">Add New Skills</h2>
+                     
 
 
                             <tr ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
