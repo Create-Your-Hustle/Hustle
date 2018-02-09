@@ -8,7 +8,6 @@ const path = require('path');
 router.get('/select', function (req, res) {
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
-            console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
             // this query needs to be changed to include concatonated skills
@@ -19,7 +18,6 @@ router.get('/select', function (req, res) {
                 WHERE users.username = $1;`, [req.query.name], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
-                        console.log('error', errorMakingDatabaseQuery);
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
@@ -34,7 +32,6 @@ router.get('/select', function (req, res) {
   router.put('/profilePicture', function (req, res) {
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
-            console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
             client.query(`UPDATE users SET user_picture=$1  WHERE id=$2;`, [req.body.user_picture, req.user.id],
@@ -57,7 +54,6 @@ router.get('/search/all', function (req, res) {
     if (req.isAuthenticated()) {
         pool.connect(function (errorConnectingToDatabase, client, done) {
             if (errorConnectingToDatabase) {
-                console.log('error', errorConnectingToDatabase);
                 res.sendStatus(500);
             } else {
 
@@ -68,7 +64,6 @@ router.get('/search/all', function (req, res) {
                             GROUP BY u.id;`, function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
-                        console.log('error', errorMakingDatabaseQuery);
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
@@ -86,7 +81,6 @@ router.post('/skill', function (req, res) {
     if (req.isAuthenticated) {
         pool.connect(function (errorConnectingToDatabase, client, done) {
             if (errorConnectingToDatabase) {
-                console.log('error', errorConnectingToDatabase);
                 res.sendStatus(500);
             } else {
                 client.query(`INSERT INTO users_skills (user_id, skill_id, skill_rating)
@@ -109,7 +103,6 @@ router.put('/username', function (req, res) {
 
         pool.connect(function (errorConnectingToDatabase, client, done) {
             if (errorConnectingToDatabase) {
-                console.log('error', errorConnectingToDatabase);
                 res.sendStatus(500);
             } else {
                 client.query(`UPDATE users SET display_name = $1, user_bio = $2 WHERE id = $3`, [req.body.displayName, req.body.user_bio, req.user.id], function (errorMakingDatabaseQuery, result) {
@@ -130,7 +123,6 @@ router.put('/preferences', function (req, res) {
 
         pool.connect(function (errorConnectingToDatabase, client, done) {
             if (errorConnectingToDatabase) {
-                console.log('error', errorConnectingToDatabase);
                 res.sendStatus(500);
             } else {
                 client.query(`UPDATE users SET user_city = $1, user_state = $2, user_remote = $3, user_for_pay = $4, user_for_trade = $5, 
@@ -154,13 +146,11 @@ router.delete('/skill', function (req, res) {
     if (req.isAuthenticated()) {
         pool.connect(function (errorConnectingToDatabase, client, done) {
             if (errorConnectingToDatabase) {
-                console.log('error', errorConnectingToDatabase);
                 res.sendStatus(500);
             } else {
                 client.query(`DELETE FROM users_skills WHERE user_id = $1 AND skill_id = $2`, [req.user.id, req.query.skill_id], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
-                        console.log('error', errorMakingDatabaseQuery);
                         res.sendStatus(500);
                     } else {
                         res.sendStatus(201);
@@ -175,7 +165,6 @@ router.delete('/skill', function (req, res) {
 
 // Collaborator search get
 router.get('/search', function (req, res) {
-    console.log(req.query);
     let display_name = req.query.display_name;
     if (display_name !== '') {
         display_name = `%` + req.query.display_name + `%`
@@ -191,10 +180,8 @@ router.get('/search', function (req, res) {
             sql_params += ', '
         };
     };
-    console.log(display_name, 'is the name', skill_params, 'are the skills', sql_params, 'are the sql params');
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
-            console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
             client.query(`WITH name_search AS (
@@ -221,7 +208,6 @@ router.get('/search', function (req, res) {
                         ORDER BY order_priority;`, [display_name, ...skill_params], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
-                        console.log('error', errorMakingDatabaseQuery);
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
@@ -235,7 +221,6 @@ router.get('/search', function (req, res) {
 router.get('/select/id', function (req, res) {
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
-            console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
             // this query needs to be changed to include concatonated skills
@@ -246,7 +231,6 @@ router.get('/select/id', function (req, res) {
                 WHERE users.id = $1;`, [req.query.id], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
-                        console.log('error', errorMakingDatabaseQuery);
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);

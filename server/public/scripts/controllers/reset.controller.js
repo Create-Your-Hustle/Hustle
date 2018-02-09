@@ -1,5 +1,4 @@
 myApp.controller('ResetController', function(ResetService, $mdDialog){
-    console.log('ResetController created');
     const self = this;
 
     self.ResetService = ResetService;
@@ -9,7 +8,6 @@ myApp.controller('ResetController', function(ResetService, $mdDialog){
     self.setNewPassword = ResetService.setNewPassword;
 
     self.passwordVerification = function(user) {
-        console.log(user);
         
     };
 

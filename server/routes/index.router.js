@@ -18,7 +18,6 @@ router.get('/', function(req, res) {
 });
 
 router.get('/*', function(req, res) {
-  console.log('404 : ', req.params);
   res.sendStatus(404);
 });
 
