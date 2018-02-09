@@ -1,20 +1,20 @@
-myApp.service('ResetService', function ($http, $location, $routeParams) {
-    console.log('ResetService Loaded');
+myApp.service('ResetService', function ($http, $location, $routeParams, $mdDialog) {
     const self = this;
 
+    self.cancel = function() {
+        $mdDialog.cancel();
+      };
+
     self.sendReset = function (email) {
-        console.log('email: ', email);
         $http({
             method: 'PUT',
             url: '/reset',
             data: email
-        }).then(function (response) {
-            console.log('response', response);
-        })
+        }).catch();
+        self.cancel();
     };
 
     self.setNewPassword = function (user) {
-        console.log('button clicked');
         if (user.password == '') {
             console.log('you must enter a password');
         } else if (user.password === user.password_confirm) {
@@ -26,9 +26,7 @@ myApp.service('ResetService', function ($http, $location, $routeParams) {
                 params: {
                     code: $routeParams.code
                 }
-            }).then(function (response) {
-                console.log('response', response);
-            })
+            }).catch();
         } else {
             console.log('please enter a valid password');
         }

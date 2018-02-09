@@ -32,7 +32,7 @@
                             <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-hide="vm.isEditing.username">
                                 <md-button class="md-raised md-accent" ng-click="vm.isEditing.username = true">Edit Display Name or Bio?</md-button>
                             </span>
-                            <span ng-if="vm.userObject.id === vm.selectedUser.list[0].id" ng-show="vm.isEditing.username">
+                            <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-show="vm.isEditing.username">
                                 <md-button class="md-raised md-primary" ng-click="vm.editUsername(vm.selectedUser.list[0])">Save</md-button>
                             </span>
                         </h2>
@@ -76,9 +76,9 @@
                                 </td>
                                 <td>
                                     <md-select ng-model="vm.newSkill.skill_rating">
-                                        <md-option ng-value="1">Apprentice</md-option>
-                                        <md-option ng-value="2">Journeyman</md-option>
-                                        <md-option ng-value="3">Master</md-option>
+                                        <md-option ng-value="1">Beginner</md-option>
+                                        <md-option ng-value="2">Intermediate</md-option>
+                                        <md-option ng-value="3">Expert</md-option>
                                     </md-select>
                                 </td>
                                 <td>
@@ -138,7 +138,7 @@
                     <div flex layout="row" layout-xs="column" layout-padding>
                         <div flex flex-gt-xs="50" layout="row" layout-xs="column" ng-repeat="project in vm.collaboratorProjects.list">
                             <div flex flex-gt-xs="33">
-                                <img ng-src="{{project.picture}}" class="md-card-image" alt="user avatar" />
+                                <img ng-src="{{project.project_picture}}" class="md-card-image" alt="user avatar" />
                             </div>
                             <div flex layout="column">
                                 <div flex>
