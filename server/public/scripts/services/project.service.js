@@ -74,7 +74,8 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         self.projectCollaboratorArray.list.push({
           username: response.data[i].username,
           user_project_role: response.data[i].user_project_role,
-          user_id: response.data[i].id
+          user_id: response.data[i].id,
+          user_picture: response.data[i].user_picture
         })
       }
     })
@@ -91,9 +92,10 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       console.log('response', response);
       for (let i = 0; i < response.data.length; i++) {
         self.projectCollaborationRequestArray.list.push({
-          username: response.data[i].username,
+          username: response.data[i].display_name,
           user_project_role: response.data[i].user_project_role,
-          user_id: response.data[i].id
+          user_id: response.data[i].id,
+          user_picture: response.data[i].user_picture
         })
       }
       console.log('collaboration requests ', self.projectCollaborationRequestArray);
@@ -184,7 +186,8 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
     info = {
       message: message.message,
       project_id: project.project_id,
-      project_name: project.project_name
+      project_name: project.project_name,
+      project_role: message.skill
     }
     console.log('info: ', info);
 
@@ -262,6 +265,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         data: projectSkill
       }).then(function (response) {
         console.log('response', response);
+        self.getProjectSkills($routeParams.id);
       })      
     }//End Add Skill
 

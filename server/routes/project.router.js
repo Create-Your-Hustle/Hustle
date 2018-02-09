@@ -259,7 +259,7 @@ router.get('/project-collaborators/:id', function (req, res) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`SELECT users_projects.user_project_role, users.display_name, users.id FROM users_projects
+            client.query(`SELECT users_projects.user_project_role, users.display_name, users.id, users.user_picture FROM users_projects
                         JOIN users ON users_projects.user_id = users.id
                         WHERE project_id = $1 AND collaboration_request = false;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
                     done();
@@ -281,7 +281,7 @@ router.get('/collaboration-requests/:id', function (req, res) {
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query(`SELECT users_projects.user_project_role, users.username, users.id FROM users_projects
+            client.query(`SELECT users_projects.user_project_role, users.display_name, users.id, users.user_picture FROM users_projects
                         JOIN users ON users_projects.user_id = users.id
                         WHERE project_id = $1 AND collaboration_request = true;`, [req.params.id], function (errorMakingDatabaseQuery, result) {
                     done();
@@ -306,10 +306,10 @@ router.put('/message', function (req, res) {
         } else {
             client.query(`WITH insert_invite AS (
                 INSERT INTO users_projects (can_edit, user_id, project_id, user_project_role, collaboration_request)
-                VALUES (false, $1, $2, 'guest', true)) 
+                VALUES (false, $1, $2, $3, true)) 
                 SELECT * FROM users_projects
                         JOIN users ON users_projects.user_id = users.id
-                        WHERE project_id = $2 AND can_edit = true;`, [req.user.id, req.body.project_id], function (errorMakingDatabaseQuery, result) {
+                        WHERE project_id = $2 AND can_edit = true;`, [req.user.id, req.body.project_id, req.body.project_role], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         res.sendStatus(500);
