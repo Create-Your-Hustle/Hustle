@@ -9,8 +9,8 @@
                     <div flex layout="column" class="rightBorder">
                         <div flex>
                             <img class="profilePhoto" ng-src="{{vm.selectedUser.list[0].user_picture}}">
-                        </br>
-                        <md-button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Change Profile Picture?</md-button>
+                            </br>
+                            <md-button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Change Profile Picture?</md-button>
                         </div>
                     </div>
                     <div flex>
@@ -54,7 +54,7 @@
                             </tr>
                         </table>
                         </br>
-                        <table ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" >
+                        <table ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
                             <th>
                                 <H1 class="md-display-1">Add New Skills? </H1>
                             </th>
@@ -133,22 +133,29 @@
                 </div>
                 <div layout="column">
                     <div flex>
-                        <h1 class="md-display-1">Projects <md-button ng-click="vm.createProject()" class="md-raised md-primary">Create New Project</md-button></h1>
+                        <h1 class="md-display-1">Projects
+                            <md-button ng-click="vm.createProject()" class="md-raised md-primary">Create New Project</md-button>
+                        </h1>
                     </div>
-                    <div flex layout="row" layout-xs="column" layout-padding>
-                        <div flex flex-gt-xs="50" layout="row" layout-xs="column" ng-repeat="project in vm.collaboratorProjects.list">
-                            <div flex flex-gt-xs="33">
-                                <img ng-src="{{project.project_picture}}" class="md-card-image" alt="user avatar" />
-                            </div>
-                            <div flex layout="column">
-                                <div flex>
-                                    <h3>{{project.project_name}}</h3>
+                    <div flex-xs flex-gt-xs="50" layout="column" layout-gt-xs="row" layout-padding>
+                        <!-- add ng click -->
+                        <md-card flex flex-gt-xs="50" ng-repeat="project in vm.collaboratorProjects.list">
+                            <md-card-title>
+                                <md-card-title-media layout-margin>
+                                    <div class="md-media-lg card-media">
+                                        <img ng-src="{{project.project_picture}}" class="md-card-image" alt="project picture" />
+                                    </div>
+                                </md-card-title-media>
+                                <div layout="column">
+                                    <div flex>
+                                        <h3 class="md-headline">{{project.project_name}}</h3>
+                                    </div>
+                                    <div flex>
+                                        <span class="md-subhead">{{project.project_description}}</span>
+                                    </div>
                                 </div>
-                                <div flex>
-                                    <span>{{project.project_description}}</span>
-                                </div>
-                            </div>
-                        </div>
+                            </md-card-title>
+                        </md-card>
                     </div>
                 </div>
             </div>
