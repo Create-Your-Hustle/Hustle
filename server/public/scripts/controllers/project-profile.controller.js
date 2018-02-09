@@ -16,7 +16,7 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     ProjectService.getProjectCollaborators($routeParams.id);
     ProjectService.getCollaborationRequests($routeParams.id);
 
-    self.loadAll = AutoCompleteService.loadAll;
+    
     self.userObject = UserService.userObject;
     self.projectSkillArray = ProjectService.projectSkillArray;
     self.projectArray = ProjectService.projectArray;
@@ -37,6 +37,7 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
     self.querySearch = AutoCompleteService.querySearch;
     self.searchTextChange = AutoCompleteService.searchTextChange;
     self.selectedItemChange = AutoCompleteService.selectedItemChange
+    self.loadAll = AutoCompleteService.loadAll;
 
     self.editProjectName = function (value) {
         self.isEditing.project = false;
@@ -50,12 +51,10 @@ myApp.controller('ProjectProfileController', function(UserService, ProjectServic
 
       self.simulateQuery = false;
       self.isDisabled    = false;
-      // self.states        = AutoCompleteService.loadAll();
       self.querySearch   = AutoCompleteService.querySearch;
       self.selectedItemChange = AutoCompleteService.selectedItemChange;
-      self.searchTextChange   = AutoCompleteService.searchTextChange;
-      
-      self.states = AutoCompleteService.states
+      self.searchTextChange   = AutoCompleteService.searchTextChange;      
+      self.states = AutoCompleteService.states;
       
 
 
