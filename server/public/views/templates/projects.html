@@ -1,6 +1,6 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div class="homeContent">
-    <md-content layout="row" layout-xs="column" layout-padding>
+    <md-content layout="row" layout-xs="column" layout-padding>       
         <div flex="5" layout="column">
         </div>
         <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
@@ -46,9 +46,9 @@
         </md-sidenav>
         
         <!-- Project Search Result Cards TO DO - changed fixed width so this will adjust w/modal-->
-        <div flex layout="column">
-            <div layout-margin layout-padding layout-fill layout="column" layout-xs="column" layout-wrap>
-                <md-card flex href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
+        <div flex layout="column" >
+            <div layout-margin layout-padding layout-fill layout="row" layout-wrap>
+                <md-card  href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
                     <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
                     <md-card-content>
                         <h2>{{project.project_name}}</h2>

@@ -37,11 +37,11 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
 
   self.findRating = function (rating) {
     if (rating == 1) {
-      return "../views/images/skill-one.jpg"
+      return "Beginner"
     } else if (rating == 2) {
-      return "../views/images/skill-two.jpg"
+      return "Intermediate"
     } else if (rating == 3) {
-      return "../views/images/skill-three.jpg"
+      return "Expert"
     }
 
   }
@@ -74,7 +74,8 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         self.projectCollaboratorArray.list.push({
           username: response.data[i].username,
           user_project_role: response.data[i].user_project_role,
-          user_id: response.data[i].id
+          user_id: response.data[i].id,
+          user_picture: response.data[i].user_picture
         })
       }
     })
@@ -91,9 +92,10 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       console.log('response', response);
       for (let i = 0; i < response.data.length; i++) {
         self.projectCollaborationRequestArray.list.push({
-          username: response.data[i].username,
+          username: response.data[i].display_name,
           user_project_role: response.data[i].user_project_role,
-          user_id: response.data[i].id
+          user_id: response.data[i].id,
+          user_picture: response.data[i].user_picture
         })
       }
       console.log('collaboration requests ', self.projectCollaborationRequestArray);
@@ -172,7 +174,10 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       })
     };
 
-
+  //Cancel modal
+  self.cancel = function() {
+    $mdDialog.cancel();
+  };
 
   //send message to project owner
   self.sendMessage = function (message, project) {
@@ -181,7 +186,8 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
     info = {
       message: message.message,
       project_id: project.project_id,
-      project_name: project.project_name
+      project_name: project.project_name,
+      project_role: message.skill
     }
     console.log('info: ', info);
 
@@ -192,6 +198,8 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
     }).then(function (response) {
       console.log('response', response);
     })
+    
+    self.cancel();
   }
 
     //rate project Collaborator modal
@@ -227,7 +235,9 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         data: collaboratorRating
       }).then(function (response) {
         console.log('response', response);
-      })
+      });
+
+      self.cancel();
     };
 
     //get list of projects for this user
@@ -255,8 +265,18 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         data: projectSkill
       }).then(function (response) {
         console.log('response', response);
+        self.getProjectSkills($routeParams.id);
       })      
     }//End Add Skill
+
+    self.createProject = function () {
+      $http ({
+      method: 'POST', 
+      url: '/project',
+    }).then (function (response) {
+      $location.path('/projectprofile/'+response.data[0].project_id)
+    })
+  }
 
     //Adds Collaborator to a project
     self.acceptCollaboration = function(user, project) {
@@ -292,4 +312,30 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
       })
 
     }
+
+    //Edits project name and description
+    self.editProjectHead = function(project) {
+      $http({
+        method: 'PUT',
+        url: '/project/nameAndBio',
+        data: project,
+      }).then(function (response){
+        self.getProjectProfile(project.project_id)
+      })      
+    }//end edit project name and description
+
+    //edits project preferences
+    self.editProjectPreferences = function(project) {
+      console.log(project);
+      
+      $http({
+        method: 'PUT',
+        url: '/project/preferences',
+        data: project,
+      }).then(function (response){
+        self.getProjectProfile(project.project_id)
+      })
+
+    }//end edit project preferences
+
 });

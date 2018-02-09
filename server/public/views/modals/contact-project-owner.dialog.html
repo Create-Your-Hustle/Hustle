@@ -5,7 +5,7 @@
         <div class="md-toolbar-tools">
             <h2>Contact Project Owner</h2>
             <span flex></span>
-            <md-button class="md-icon-button" ng-click="cancel()">
+            <md-button class="md-icon-button" ng-click="vm.cancel()">
                 <md-icon md-svg-src="../assets/closebutton.png" aria-label="Close dialog"></md-icon>
             </md-button>
         </div>
@@ -29,9 +29,20 @@
                             </md-checkbox>
                         </div>
                         <div>
+                            <md-select ng-model="vm.message.skill" ng-model="searchTerms" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                <md-select-header class="demo-select-header">
+                                    <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
+                                </md-select-header>
+                                <md-optgroup label="skills">
+                                    <md-option ng-value="skill.skill_name" ng-repeat="skill in vm.projectSkillArray.list | filter:searchTerm">{{skill.skill_name}}</md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </div>
+                        <div>
                             <input class="btn btn-default" type="submit" name="submit" value="Send Message" />
                         </div>
                     </form>
+                    {{vm.message}}
             </div>
         </md-content>
     </md-dialog-content>
