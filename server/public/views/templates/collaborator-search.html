@@ -7,9 +7,6 @@
             </md-toolbar>
             <md-content layout-padding>
                 <div layout="column">
-                    <div>
-                        <span>Search Collaborators</span>
-                    </div>
                     <md-input-container>
                         <input type="text" placeholder="Name" ng-model="vm.searchParameters.display_name">
                     </md-input-container>
@@ -26,18 +23,19 @@
                             </md-optgroup>
                         </md-select>
                     </md-input-container>
-                    <md-button ng-click="vm.searchCollaborators(vm.searchParameters)" class="md-raised md-primary">Search</md-button>
-                    <div layout-padding>
-                        <span>Filter Results</span>
-                    </div>
+                    <md-button ng-click="vm.searchCollaborators(vm.searchParameters)" class="md-raised md-accent">Search</md-button>
+                </div>
+            </md-content>
+            <md-toolbar>
+                <h1 class="md-toolbar-tools">Filter Results</h1>
+            </md-toolbar>
+            <md-content layout-padding>
+                <div layout="column">
                     <md-input-container layout-padding>
-                        <input ng-model="query.user_city" type="text" placeholder="Location">
-                        <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_remote" class="md-primary">Will Work Remote</md-checkbox>
-                        <md-subhead>Compensation</md-subhead>
-                        <div>
-                            <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_for_pay" class="md-primary">For Pay</md-checkbox>
-                            <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_for_trade" class="md-primary">For Trade</md-checkbox>
-                        </div>
+                        <input ng-model="query.user_city" type="text" placeholder="City">
+                        <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_remote" class="md-primary">Will Work Remote</md-checkbox></br>
+                            <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_for_pay" class="md-primary">For Pay</md-checkbox></br>
+                            <md-checkbox ng-true-value="'true'" ng-false-value="''" ng-model="query.user_for_trade" class="md-primary">For Trade</md-checkbox></br>
                     </md-input-container>
                     <div flex="5" layout="column"></div>
                 </div>

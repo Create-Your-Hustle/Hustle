@@ -6,7 +6,6 @@ var encryptLib = require('../modules/encryption');
 
 // Handles request for HTML file
 router.get('/', function(req, res, next) {
-  console.log('get /register route');
   res.sendFile(path.resolve(__dirname, '../public/views/templates/register.html'));
 });
 
@@ -17,11 +16,9 @@ router.post('/', function(req, res, next) {
     username: req.body.username,
     password: encryptLib.encryptPassword(req.body.password)
   };
-  console.log('new user:', saveUser);
 
   pool.connect(function(err, client, done) {
     if(err) {
-      console.log("Error connecting: ", err);
       res.sendStatus(500);
     }
     client.query("INSERT INTO users (username, display_name, password) VALUES ($1, $2, $3) RETURNING id",
@@ -30,7 +27,6 @@ router.post('/', function(req, res, next) {
           client.end();
 
           if(err) {
-            console.log("Error inserting data: ", err);
             res.sendStatus(500);
           } else {
             res.sendStatus(201);

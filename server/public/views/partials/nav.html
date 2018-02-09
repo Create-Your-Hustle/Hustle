@@ -5,23 +5,23 @@
         <div md-sticky>
           <h1 class="lead show-xs md-display-1" layout="row" layout-align="center">HUSTLE</h1>
           <div layout="row">
-            <div flex="50" layout="row" class="navbar hide-xs ">
+            <div flex="90" layout="row" class="navbar hide-xs ">
+                <div>
+                    <h3 class="md-subhead instructions ">
+                      <a href="#/collaborator-search">FIND COLLABORATORS</a>
+                    </h3>
+                  </div>
+                  <div flex="40" class="navbar hide-xs " layout="row" layout-align="center">
+                    <h3 class="md-subhead instructions ">
+                      <a href="#/projects">FIND PROJECTS</a>
+                    </h3>
+                  </div>
             </div>
-            <div flex="50" layout="row" class="navbar hide-xs " layout-align="start">
-              <div>
-                <h3 class="md-subhead instructions ">
-                  <a href="#/collaborator-search">FIND COLLABORATORS</a>
-                </h3>
-              </div>
-              <div flex class="navbar hide-xs " layout="row" layout-align="center">
-                <h3 class="md-subhead instructions ">
-                  <a href="#/projects">FIND PROJECTS</a>
-                </h3>
-              </div>
-              <div flex class="navbar hide-xs " layout="row" layout-align="top end">
+            <div flex="10" class="navbar hide-xs ">
+              <div flex class="navbar hide-xs " >
                 <md-menu>
                   <md-button ng-mouseenter="nc.openMenu($mdMenu, $event)">
-                    <img class="md-icon" ng-src="{{nc.selectedUser.list[0].user_picture}}" alt="profile picture" aria-label="Open Menu">
+                    <img class="md-icon" ng-src="{{nc.selectedUser.list[0].user_picture}}" class="md-avatar" alt="profile picture" aria-label="Open Menu">
                   </md-button>
                   <md-menu-content width="4" class="instructions">
                     <md-menu-item>
@@ -42,6 +42,7 @@
                   </md-menu-content>
                 </md-menu>
               </div>
+              <!-- <h1 class="md-display-1">{{nc.selectedUser.list[0].display_name}}</h1> -->
             </div>
           </div>
         </div>

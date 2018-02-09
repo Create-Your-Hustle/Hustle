@@ -1,5 +1,4 @@
 myApp.service('CollaboratorService', function ($http, $location) {
-    console.log('CollaboratorService Loaded');
     const self = this;
 
     self.collaborators = { list: [] };
@@ -10,7 +9,6 @@ myApp.service('CollaboratorService', function ($http, $location) {
         method:'GET',
         url:'/collaborator/search/all'
       }).then(function (response) {
-        console.log('getAllCollaboratorsForSearch response', response);
         self.collaborators.list = response.data;
       });
     };
@@ -21,7 +19,6 @@ myApp.service('CollaboratorService', function ($http, $location) {
         url:'/collaborator/search',
         params: searchParameterObject,
       }).then(function (response) {
-        console.log('searchCollaborators response', response);
         self.collaborators.list = response.data;
       });
     };

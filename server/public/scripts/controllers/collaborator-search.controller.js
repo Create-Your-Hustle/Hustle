@@ -1,5 +1,4 @@
 myApp.controller('CollaboratorSearchController', function (UserService, CollaboratorService, ProjectService, $timeout, $mdSidenav, $log) {
-    console.log('CollaboratorSearchController created');
     const self = this;
 
     self.collaborators = CollaboratorService.collaborators;

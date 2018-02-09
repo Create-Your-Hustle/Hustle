@@ -1,5 +1,4 @@
 myApp.controller('CollaboratorRatingController', function(UserService, ProjectService, dataToPass, $mdDialog, $routeParams){
-    console.log('CollaboratorRatingController created');
     const self = this;
 
     self.ProjectService = ProjectService;
@@ -40,8 +39,5 @@ myApp.controller('CollaboratorRatingController', function(UserService, ProjectSe
         },
     ];
 
-    self.getSelectedRating = function (rating) {
-        console.log(rating);
-    };
 
 });

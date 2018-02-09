@@ -48,13 +48,6 @@ body:nth-child {
   margin-left: 10px;
 }
 
-.message:nth-child(odd) {
-   /* background-color: #eeeeee; */
-}
-
-/* .message:nth-child(even) {
-  background-color: #f8f8f8; */
-/* } */
 
 .btn-danger{
   margin-left: 10px;
@@ -105,8 +98,8 @@ a {
 }
 
 .homeContent{
-  padding-left: 10em;
-  padding-right: 10em;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 md-card {
@@ -187,9 +180,7 @@ li a:hover {
 .dialogdemoBasicUsage #popupContainer {
   position: relative; }
 
-.loginRegister{
-    /* color: black; */
-  }
+
 .dialogdemoBasicUsage .footer {
   width: 100%;
   text-align: center;

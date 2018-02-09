@@ -1,9 +1,7 @@
 myApp.controller('HomeController', function ($http, $location, UserService, $mdDialog, $mdSticky) {
-  console.log('HomeController created');
   const vm = this;
 
   vm.showLogin = function (ev) {
-    console.log('clicked login')
     $mdDialog.show({
       controller: 'LoginController as lc',
       templateUrl: '../views/modals/loginregister.dialog.html',
@@ -13,14 +11,11 @@ myApp.controller('HomeController', function ($http, $location, UserService, $mdD
       fullscreen: self.customFullscreen
     })
       .then(function () {
-        console.log("yay")
       }, function () {
-        console.log("nay")
       });
   };
 
   vm.stickyHeader = function(ev) {
-    console.log ('making header sticky')
 
   }
 
