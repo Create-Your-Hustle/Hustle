@@ -450,7 +450,7 @@ router.put('/declineCollaboration', function (req, res) {
         if (errorConnectingToDatabase) {
             res.sendStatus(500);
         } else {
-            client.query(`DELETE FROM users_projects WHERE user_id=$1 AND project_id=$2;`, [req.body.user, req.body.project],
+            client.query(`DELETE FROM users_projects WHERE user_id=$1 AND project_id=$2 AND collaboration_request=true;`, [req.body.user, req.body.project],
                 function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
