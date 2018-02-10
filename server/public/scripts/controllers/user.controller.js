@@ -7,6 +7,8 @@ myApp.controller('UserController', function (UserService, CollaboratorService, P
   self.isEditing = {}
   self.skillslist = UserService.skillslist;
   self.collaboratorProjects = UserService.collaboratorProjects;
+  self.contactCollaborator = UserService.contactCollaborator;
+  self.sendMessage = UserService.sendMessage;
 
 
   self.getUser = UserService.getUser

@@ -164,4 +164,32 @@ myApp.service('UserService', function($http, $location){
       self.navbarPicture.list = response.data;
     });
   };
+
+  //Modal for sending a message to collaborator
+  self.contactCollaborator = function (ev) {
+    $mdDialog.show({
+      controller: 'UserController as vm',
+      templateUrl: '../views/modals/contact-collaborator.dialog.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      fullscreen: self.customFullscreen
+    })
+  };
+
+  //send message to project owner
+  self.sendMessage = function (message, collaborator) {
+    info = {
+      message: message.message,
+      id: collaborator.id,
+    }
+
+    $http({
+      method: 'PUT',
+      url: '/collaborator/message',
+      data: info
+    }).catch()
+    
+    self.cancel();
+  }
 });
