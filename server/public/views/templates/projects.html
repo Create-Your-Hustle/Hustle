@@ -1,17 +1,14 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div class="homeContent">
-    <md-content layout="row" layout-xs="column" layout-padding>       
+    <md-content layout="row" layout-xs="column" layout-padding>
         <div flex="5" layout="column">
         </div>
         <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
             <md-toolbar>
-                <h1 class="md-toolbar-tools">Search</h1>
+                <h1 class="md-toolbar-tools">Search Projects</h1>
             </md-toolbar>
             <md-content layout-padding>
                 <div layout="column">
-                    <div>
-                        <span>Search Projects</span>
-                    </div>
                     <md-input-container>
                         <input ng-model="vm.searchParameters.project_name" type="text" placeholder="Name">
                     </md-input-container>
@@ -27,28 +24,29 @@
                             </md-optgroup>
                         </md-select>
                     </md-input-container>
-                    <md-button ng-click="vm.getProjectSearchResult(vm.searchParameters)" class="md-raised md-primary">Search</md-button>
-                    <div layout-padding>
-                        <p>Filter Results</p>
-                    </div>
+                    <md-button ng-click="vm.getProjectSearchResult(vm.searchParameters)" class="md-raised md-accent">Search</md-button>
+                </div>
+            </md-content>
+            <md-toolbar>
+                <h1 class="md-toolbar-tools">Filter Results</h1>
+            </md-toolbar>
+            <md-content layout-padding>
+                <div layout="column">
                     <md-input-container layout-padding>
-                        <input type="text" placeholder="Location" ng-model="query.project_city">
-                        <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_remote">Remote Opportunity</md-checkbox>
-                        <md-subhead>Compensation</md-subhead>
-                        <div>
-                            <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_pay">For Pay</md-checkbox>
-                            <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_trade">For Trade</md-checkbox>
-                        </div>
+                        <input type="text" placeholder="City" ng-model="query.project_city">
+                        <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_remote">Remote Opportunity</md-checkbox></br>
+                            <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_pay">For Pay</md-checkbox></br>
+                            <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_trade">For Trade</md-checkbox></br>
                     </md-input-container>
                     <div flex="5" layout="column"></div>
                 </div>
             </md-content>
         </md-sidenav>
-        
+
         <!-- Project Search Result Cards TO DO - changed fixed width so this will adjust w/modal-->
-        <div flex layout="column" >
+        <div flex layout="column">
             <div layout-margin layout-padding layout-fill layout="row" layout-wrap>
-                <md-card  href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
+                <md-card href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
                     <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
                     <md-card-content>
                         <h2>{{project.project_name}}</h2>
