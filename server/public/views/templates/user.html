@@ -10,7 +10,7 @@
                         <div flex="20">
                             <img class="profilePhoto" ng-src="{{vm.selectedUser.list[0].user_picture}}">
                             </br>
-                            <md-button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Change Profile Picture</md-button>
+                            <md-button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Change Profile Picture?</md-button>
                         </div>
                     </div>
                     <div flex="65">
@@ -152,9 +152,38 @@
 
                     </div>
                 </div>
+<<<<<<< HEAD
                 <!-- display this user's projects -->
                 <div layout="row" layout-sm="column" layout-xs="column" layout-padding md-whiteframe="5">
                     <h2>My Projects</h2>
+=======
+                <div layout="column">
+                    <div flex>
+                        <h1 class="md-display-1">Projects
+                            <md-button ng-click="vm.createProject()" class="md-raised md-primary">Create New Project</md-button>
+                        </h1>
+                    </div>
+                    <div flex-xs flex-gt-xs="50" layout="column" layout-gt-xs="row" layout-padding>
+                        <!-- add ng click -->
+                        <md-card flex flex-gt-xs="50" ng-repeat="project in vm.collaboratorProjects.list">
+                            <md-card-title>
+                                <md-card-title-media layout-margin>
+                                    <div class="md-media-lg card-media">
+                                        <img ng-src="{{project.project_picture}}" class="md-card-image" alt="project picture" />
+                                    </div>
+                                </md-card-title-media>
+                                <div layout="column">
+                                    <div flex>
+                                        <h3 class="md-headline">{{project.project_name}}</h3>
+                                    </div>
+                                    <div flex>
+                                        <span class="md-subhead">{{project.project_description}}</span>
+                                    </div>
+                                </div>
+                            </md-card-title>
+                        </md-card>
+                    </div>
+>>>>>>> master
                 </div>
     </md-content>
 </div>

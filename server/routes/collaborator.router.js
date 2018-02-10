@@ -239,7 +239,31 @@ router.get('/select/id', function (req, res) {
                 });
         }
     });
-}); 
+});
+
+// Get picture of current user for navbar
+router.get('/picture', function (req, res) {
+    if (req.isAuthenticated()) {
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            if (errorConnectingToDatabase) {
+                res.sendStatus(500);
+            } else {
+
+                client.query(`SELECT user_picture FROM users
+                            WHERE id = $1;`, [req.user.id], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                }); // end query
+            }
+        });
+    } else {
+        res.sendStatus(401);
+    }
+}); // end collaborator/search/all get
 
 
 module.exports = router;

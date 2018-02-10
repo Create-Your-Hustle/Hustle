@@ -13,6 +13,7 @@ myApp.service('UserService', function($http, $location){
     return valEmail.test(email);
   }
    
+  self.navbarPicture = {list: []};
 
   self.skillslist = {list:[]}
 
@@ -140,6 +141,7 @@ myApp.service('UserService', function($http, $location){
     });
   };
 
+  //Get user by ID (view other collaborator profiles)
   self.getUserById = function (id) {
     if(!id) {
       id = self.userObject.id
@@ -154,34 +156,13 @@ myApp.service('UserService', function($http, $location){
     })
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  self.getProfilePic = function () {
+  //Get collaborator picture for navbar
+  self.getUserPicture = function () {
     $http({
-      method:'GET',
-      url:'/collaborator/profilepic',
+      method: 'GET',
+      url: '/collaborator/picture'
     }).then(function (response) {
-      
-    })
+      self.navbarPicture.list = response.data;
+    });
   };
-
 });
