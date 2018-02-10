@@ -300,14 +300,17 @@ router.put('/message', function (req, res) {
                             from: `Hustle <startyourhustle@gmail.com>`,
                             to: `${result.rows[0].email}`,
                             subject: `HUSTLE: Collaborator message about ${req.body.project_name}`,
-                            html: `<h2>You've received a message about ${req.body.project_name}</h2>
+                            html: `
+                            <div bgcolor="#ff634f">
+                            <h2>You've received a message about ${req.body.project_name}</h2>
                             <h3>From:</h3>
                             <p>${req.user.display_name}</p>
                             <h3>Message:</h3>
                             <p>${req.body.message}</p>
                             <h3>Link to Project:</h3>
                             <ul><a href="http://localhost:5000/#/projectprofile/${req.body.project_id}">Click Here</a></ul>
-                                <p>Thank you</p>`,
+                                <p>Thank you</p>
+                                </div>`,
 
                             auth: {
                                 user: 'startyourhustle@gmail.com',
@@ -447,7 +450,7 @@ router.put('/declineCollaboration', function (req, res) {
         if (errorConnectingToDatabase) {
             res.sendStatus(500);
         } else {
-            client.query(`UPDATE users_projects SET collaboration_request= false, collaborator= false  WHERE user_id=$1 AND project_id=$2;`, [req.body.user, req.body.project],
+            client.query(`DELETE FROM users_projects WHERE user_id=$1 AND project_id=$2;`, [req.body.user, req.body.project],
                 function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
