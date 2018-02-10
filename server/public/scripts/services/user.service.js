@@ -13,6 +13,7 @@ myApp.service('UserService', function($http, $location){
     return valEmail.test(email);
   }
    
+  self.navbarPicture = {list: []};
 
   self.skillslist = {list:[]}
 
@@ -152,5 +153,15 @@ myApp.service('UserService', function($http, $location){
       self.selectedUser.list = response.data;
       self.getCollaboratorProjects();
     })
+  };
+
+  //Get collaborator picture for navbar
+  self.getUserPicture = function () {
+    $http({
+      method: 'GET',
+      url: '/collaborator/picture'
+    }).then(function (response) {
+      self.navbarPicture.list = response.data;
+    });
   };
 });
