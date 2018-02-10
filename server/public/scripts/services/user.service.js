@@ -153,4 +153,14 @@ myApp.service('UserService', function($http, $location){
       self.getCollaboratorProjects();
     })
   };
+
+  //Get collaborator picture for navbar
+  self.getUserPicture = function () {
+    $http({
+      method: 'GET',
+      url: '/collaborator/picture'
+    }).then(function (response) {
+      
+    });
+  };
 });
