@@ -13,6 +13,7 @@ myApp.service('UserService', function($http, $location){
     return valEmail.test(email);
   }
    
+  self.navbarPicture = {list: []};
 
   self.skillslist = {list:[]}
 
@@ -160,7 +161,7 @@ myApp.service('UserService', function($http, $location){
       method: 'GET',
       url: '/collaborator/picture'
     }).then(function (response) {
-      
+      self.navbarPicture.list = response.data;
     });
   };
 });
