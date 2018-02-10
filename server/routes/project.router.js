@@ -277,6 +277,10 @@ router.get('/collaboration-requests/:id', function (req, res) {
 
 //Message project creator
 router.put('/message', function (req, res) {
+    console.log(req.body);
+    console.log(req.user);
+    
+    
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             res.sendStatus(500);
@@ -295,8 +299,15 @@ router.put('/message', function (req, res) {
                         var mailOptions = {
                             from: `Hustle <startyourhustle@gmail.com>`,
                             to: `${result.rows[0].email}`,
-                            subject: `HUSTLE: Collaborator message for ${req.body.project_name}`,
-                            text: `${req.body.message}`,
+                            subject: `HUSTLE: Collaborator message about ${req.body.project_name}`,
+                            html: `<h2>You've received a message about ${req.body.project_name}</h2>
+                            <h3>From:</h3>
+                            <p>${req.user.display_name}</p>
+                            <h3>Message:</h3>
+                            <p>${req.body.message}</p>
+                            <h3>Link to Project:</h3>
+                            <ul><a href="http://localhost:5000/#/projectprofile/${req.body.project_id}">Click Here</a></ul>
+                                <p>Thank you</p>`,
 
                             auth: {
                                 user: 'startyourhustle@gmail.com',
