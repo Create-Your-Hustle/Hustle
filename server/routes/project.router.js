@@ -287,51 +287,51 @@ router.put('/message', function (req, res) {
                 res.sendStatus(500);
             } else {
                 client.query(`WITH insert_invite AS (
-                    INSERT INTO users_projects (can_edit, user_id, project_id, user_project_role, collaboration_request)
-                    VALUES (false, $1, $2, $3, true)) 
-                    SELECT * FROM users_projects
+                            INSERT INTO users_projects (can_edit, user_id, project_id, user_project_role, collaboration_request)
+                            VALUES (false, $1, $2, $3, true)) 
+                            SELECT * FROM users_projects
                             JOIN users ON users_projects.user_id = users.id
                             WHERE project_id = $2 AND can_edit = true;`, [req.user.id, req.body.project_id, req.body.project_role], function (errorMakingDatabaseQuery, result) {
-                        done();
-                        if (errorMakingDatabaseQuery) {
-                            res.sendStatus(500);
-                        } else {
-                            //send message via nodemailer
-                            var mailOptions = {
-                                from: `Hustle <startyourhustle@gmail.com>`,
-                                to: `${result.rows[0].email}`,
-                                subject: `HUSTLE: Collaborator message about ${req.body.project_name}`,
-                                html: `
-                                <div bgcolor="#ff634f">
-                                <h2>You've received a message about ${req.body.project_name}</h2>
-                                <h3>From:</h3>
-                                <p>${req.user.display_name}</p>
-                                <h3>Message:</h3>
-                                <p>${req.body.message}</p>
-                                <h3>Link to Project:</h3>
-                                <ul><a href="http://localhost:5000/#/projectprofile/${req.body.project_id}">Click Here</a></ul>
-                                    <p>Thank you</p>
-                                    </div>`,
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        //send message via nodemailer
+                        var mailOptions = {
+                            from: `Hustle <startyourhustle@gmail.com>`,
+                            to: `${result.rows[0].email}`,
+                            subject: `HUSTLE: Collaborator message about ${req.body.project_name}`,
+                            html: `
+                            <div bgcolor="#ff634f">
+                            <h2>You've received a message about ${req.body.project_name}</h2>
+                            <h3>From:</h3>
+                            <p>${req.user.display_name}</p>
+                            <h3>Message:</h3>
+                            <p>${req.body.message}</p>
+                            <h3>Link to Project:</h3>
+                            <ul><a href="http://localhost:5000/#/projectprofile/${req.body.project_id}">Click Here</a></ul>
+                                <p>Thank you</p>
+                                </div>`,
 
-                                auth: {
-                                    user: 'startyourhustle@gmail.com',
-                                    refreshToken: process.env.NODEMAILER_REFRESHTOKEN,
-                                    accessToken: process.env.NODEMAILER_ACCESSTOKEN
-                                }
-                            };
+                            auth: {
+                                user: 'startyourhustle@gmail.com',
+                                refreshToken: process.env.NODEMAILER_REFRESHTOKEN,
+                                accessToken: process.env.NODEMAILER_ACCESSTOKEN
+                            }
+                        };
 
-                            transporter.sendMail(mailOptions, function (error, info) {
-                                if (error) {
-                                    console.log('This is your error: ', error);
-                                } else {
-                                    console.log('Email sent: ' + info.response);
-                                }
-                            });
-                            res.sendStatus(201);
-                        }
-                    })
+                        transporter.sendMail(mailOptions, function (error, info) {
+                            if (error) {
+                                console.log('This is your error: ', error);
+                            } else {
+                                console.log('Email sent: ' + info.response);
+                            }
+                        });
+                        res.sendStatus(201);
+                    }
+                });
             }
-        })
+        });
     } else {
         res.sendStatus(401);
     }
