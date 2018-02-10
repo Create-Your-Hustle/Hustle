@@ -3,7 +3,6 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngMaterial', 'jkAngularCarousel
 /// Routes ///
 myApp.config(function ($routeProvider, $locationProvider, $mdThemingProvider) {
   $locationProvider.hashPrefix('');
-  console.log('myApp -- config')
   $routeProvider
     .when('/home', {
       templateUrl: '/views/templates/home.html',
@@ -100,31 +99,31 @@ myApp.config(function ($routeProvider, $locationProvider, $mdThemingProvider) {
       redirectTo: 'home'
     });
 
-  // $mdThemingProvider.definePalette('primaryColorRorange', {
-  //   '50': 'ff634f',
-  //   '100': 'ff634f',
-  //   '200': 'ff634f',
-  //   '300': 'ff634f',
-  //   '400': 'ff634f',
-  //   '500': 'ff634f',
-  //   '600': 'ff634f',
-  //   '700': 'ff634f',
-  //   '800': 'ff634f',
-  //   '900': 'ff634f',
-  //   'A100': 'ff634f',
-  //   'A200': 'ff634f',
-  //   'A400': 'ff634f',
-  //   'A700': 'ff634f',
+  $mdThemingProvider.definePalette('primaryColorRorange', {
+    '50': 'ff634f',
+    '100': 'ff634f',
+    '200': 'ff634f',
+    '300': 'ff634f',
+    '400': 'ff634f',
+    '500': 'ff634f',
+    '600': 'ff634f',
+    '700': 'ff634f',
+    '800': 'ff634f',
+    '900': 'ff634f',
+    'A100': 'ff634f',
+    'A200': 'ff634f',
+    'A400': 'ff634f',
+    'A700': 'ff634f',
   //   'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
   // on this palette should be dark or light
 
   // 'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
   //  '200', '300', '400', 'A100'],
   // 'contrastLightColors': undefined    // could also specify this if default was 'dark'
-  // });
+  });
 
   $mdThemingProvider.theme('default')
-    .primaryPalette('deep-orange', {
+    .primaryPalette('primaryColorRorange', {
       'default': '400'
     })
     .accentPalette('blue-grey')

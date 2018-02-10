@@ -1,5 +1,4 @@
 myApp.service('UserService', function($http, $location){
-  console.log('UserService Loaded');
   let self = this;
   self.userObject = {};
   self.selectedUser = {list: []}
@@ -98,14 +97,11 @@ myApp.service('UserService', function($http, $location){
       }).then(function (response) {
         // declare this function to handle response
         self.selectedUser.list[0].user_picture = response.filesUploaded[0].url;
-        console.log('Here we are', self.selectedUser.list[0])
         $http({
           method: 'PUT',
           url: '/collaborator/profilePicture',
           data: self.selectedUser.list[0]
-        }).then(function (response) {
-          console.log('response', response);
-        })
+        }).catch()
       });
     }
     openPicker();
@@ -140,7 +136,6 @@ myApp.service('UserService', function($http, $location){
       url: '/project/collaborator-projects',
       params: self.selectedUser.list[0]
     }).then(function (response) {
-      console.log('response', response);
       self.collaboratorProjects.list = response.data;
     });
   };

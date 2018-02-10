@@ -1,5 +1,4 @@
 myApp.controller('ProjectSearchController', function(UserService, ProjectService, skillFilter, $timeout, $log, $mdSidenav){
-    console.log('ProjectSearchController created');
     const self = this;
 
     //TODO - change this to ProjectService.projectSearchArray after search functionality is complete
@@ -14,9 +13,7 @@ myApp.controller('ProjectSearchController', function(UserService, ProjectService
     //filter logic - TODO are we using this??
     self.filteredProjects = [];
     self.parametersChanged = function (skills) {
-        console.log(skills);
         self.filteredProjects = skillFilter(self.projectSearchArray.list, skills)
-        console.log('EVENTS', self.filteredProjects);
     };
 
     //checkboxes - set checked to true, unchecked to null (so the )

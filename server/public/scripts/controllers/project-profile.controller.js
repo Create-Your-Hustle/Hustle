@@ -1,5 +1,4 @@
 myApp.controller('ProjectProfileController', function(UserService, ProjectService, $mdDialog, $routeParams){
-    console.log('ProjectProfileController created');
     const self = this;
 
     self.ProjectService = ProjectService;

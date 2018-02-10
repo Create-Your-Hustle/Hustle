@@ -28,6 +28,9 @@ body:nth-child {
 
 .profilePhoto {
   width: 300px;
+  border-radius: 50%;
+  box-shadow: 15px solid #ff634f;
+  border: 5px solid black;
 }
 
 .instructions {
@@ -48,13 +51,6 @@ body:nth-child {
   margin-left: 10px;
 }
 
-.message:nth-child(odd) {
-   /* background-color: #eeeeee; */
-}
-
-/* .message:nth-child(even) {
-  background-color: #f8f8f8; */
-/* } */
 
 .btn-danger{
   margin-left: 10px;
@@ -165,9 +161,9 @@ md-card {
 
 }
 
-.lightOrangeDiv{
+/* .lightOrangeDiv{
   background-color: #FF5722;
-}
+} */
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {
@@ -187,9 +183,7 @@ li a:hover {
 .dialogdemoBasicUsage #popupContainer {
   position: relative; }
 
-.loginRegister{
-    /* color: black; */
-  }
+
 .dialogdemoBasicUsage .footer {
   width: 100%;
   text-align: center;
@@ -256,10 +250,3 @@ margin-top:20px;
   height: 60px;
   width: 60px;
 }
-
-.rightBorder{
-  border-right-width: 6px;
-  border-right-style: solid;
-  border-right-color: #FF5722;
-  margin-right: 8px;
-} 
