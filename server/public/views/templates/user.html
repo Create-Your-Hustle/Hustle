@@ -16,7 +16,7 @@
                     <div flex="65">
                         <h1 ng-hide="vm.isEditing.username" class="md-display-1">{{vm.selectedUser.list[0].display_name}}</h1>
                         <md-input-container ng-show="vm.isEditing.username" class="md-display-1">
-                            <input type="text" placeholder="{{vm.selectedUser.list[0].display_name}}">
+                            <input ng-model="vm.selectedUser.list[0].display_name" type="text" ng-value="{{vm.selectedUser.list[0].display_name}}">
                         </md-input-container>
                         <p>
                             <span ng-hide="vm.isEditing.username">{{vm.selectedUser.list[0].user_bio}}</span>
@@ -28,66 +28,66 @@
                             </span>
                         </p>
 
-                        <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-hide="vm.isEditing.username">
-                            <md-button class="md-raised md-accent" ng-click="vm.isEditing.username = true">Edit Display Name or Bio</md-button>
+                        <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" >
+                            <md-button ng-hide="vm.isEditing.username" class="md-raised md-accent" ng-click="vm.isEditing.username = true">Edit Display Name or Bio</md-button>
+                    
+                            <md-button ng-show="vm.isEditing.username" class="md-raised md-primary"
+                                ng-click="vm.editUsername(vm.selectedUser.list[0])">Save</md-button>
                         </span>
-                        <span ng-if="vm.userObject.id === vm.selectedUser.list[0].id" ng-show="vm.isEditing.username">
-                            <md-button ng-if="vm.userObject.id === vm.selectedUser.list[0].id" ng-show="vm.isEditing.username" class="md-raised md-primary" ng-click="vm.editUsername(vm.selectedUser.list[0])">Save</md-button>
-                        </span>
-                       
+                
 
                     </div>
                 </div>
 
                 <div md-whiteframe="5" flex layout-xs="column" layout-sm="column" layout="row" layout-padding>
-                        <div flex class="rightBorder">
-                                <table>
-                                    <th>
-                                        <h2 class="md-display-1">Skills </h2>
-                                    </th>
-                                    <tr ng-repeat="skills in vm.selectedUser.list ">
-                                        <td>{{skills.skill_name}}</td>
-                                        <td>{{skills.skill_rating}}</td>
-                                        <td ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
-                                            <md-button class="md-raised md-primary" ng-click="vm.deleteSkill(skills)">Delete</md-button>
-                                        </td>
-                                    </tr>
-                                </table>
-                                </br>
-                                <table ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" >
-                                    <th>
-                                        <h2 class="md-display-1">Add New Skills </h2>
-                                    </th>
-                                    <tr>
-                                        <td style="text-decoration: underline">
-                                            <H4 class="md-subhead">Skill Name</H4>
-                                        </td>
-                                        <td style="text-decoration: underline">
-                                            <H4 class="md-subhead">Skill Level</H4>
-                                        </td>
-                                    </tr>
-                                    <tr ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
-                                        <td>
-                                            <md-select ng-model="vm.newSkill.skill_id">
-                                                <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillslist.list">
-                                                    {{skill.skill_name}}
-                                                </md-option>
-                                            </md-select>
-                                        </td>
-                                        <td>
-                                            <md-select ng-model="vm.newSkill.skill_rating">
-                                                <md-option ng-value="1">Beginner</md-option>
-                                                <md-option ng-value="2">Intermediate</md-option>
-                                                <md-option ng-value="3">Expert</md-option>
-                                            </md-select>
-                                        </td>
-                                        <td>
-                                            <md-button class="md-raised md-primary" ng-click="vm.addSkill(vm.newSkill)">Add</md-button>
-                                        </td>
-        
-                                    </tr>
-                                </table>
-                            </div>
+                    <div flex class="rightBorder">
+                        <table>
+                            <th>
+                                <h2 class="md-display-1">Skills </h2>
+                            </th>
+                            <tr ng-repeat="skills in vm.selectedUser.list ">
+                                <td>{{skills.skill_name}}</td>
+                                <td>{{skills.skill_rating}}</td>
+                                <td ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
+                                    <md-button class="md-raised md-primary" ng-click="vm.deleteSkill(skills)">Delete</md-button>
+                                </td>
+                            </tr>
+                        </table>
+                        </br>
+                        <table ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
+                            <th>
+                                <h2 class="md-display-1">Add New Skills </h2>
+                            </th>
+                            <tr>
+                                <td style="text-decoration: underline">
+                                    <H4 class="md-subhead">Skill Name</H4>
+                                </td>
+                                <td style="text-decoration: underline">
+                                    <H4 class="md-subhead">Skill Level</H4>
+                                </td>
+                            </tr>
+                            <tr ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
+                                <td>
+                                    <md-select ng-model="vm.newSkill.skill_id">
+                                        <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillslist.list">
+                                            {{skill.skill_name}}
+                                        </md-option>
+                                    </md-select>
+                                </td>
+                                <td>
+                                    <md-select ng-model="vm.newSkill.skill_rating">
+                                        <md-option ng-value="1">Beginner</md-option>
+                                        <md-option ng-value="2">Intermediate</md-option>
+                                        <md-option ng-value="3">Expert</md-option>
+                                    </md-select>
+                                </td>
+                                <td>
+                                    <md-button class="md-raised md-primary" ng-click="vm.addSkill(vm.newSkill)">Add</md-button>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
                     <div flex>
 
                         <h2 class="md-display-1">Preferences</h2>
@@ -102,10 +102,10 @@
                                 <b>Location:</b>
                                 <md-input-container>
                                     <label>City</label>
-                                    <input ng-model="vm.selectedUser.list[0].user_city"> 
+                                    <input ng-model="vm.selectedUser.list[0].user_city">
                                 </md-input-container>
                                 <md-input-container>
-                                        <label>State</label>                                    
+                                    <label>State</label>
                                     <input ng-model="vm.selectedUser.list[0].user_state">
                                 </md-input-container>
                                 <md-checkbox ng-model="vm.selectedUser.list[0].user_remote">Willing to work remotely</md-checkbox>
@@ -148,9 +148,14 @@
                         <md-button class="md-raised md-accent" ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-hide="vm.isEditing.preferences"
                             ng-click="vm.isEditing.preferences = true">Edit</md-button>
                         <md-button class="md-raised md-primary" ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" ng-show="vm.isEditing.preferences"
-                        ng-click="vm.editPreferences(vm.selectedUser.list[0])">Save</md-button>
+                            ng-click="vm.editPreferences(vm.selectedUser.list[0])">Save</md-button>
 
                     </div>
+                </div>
+                <!-- display this user's projects -->
+                <div layout="row" layout-sm="column" layout-xs="column" layout-padding md-whiteframe="5">
+                    <h2>My Projects</h2>
+                </div>
     </md-content>
-
-    <!-- <div ng-include="'views/partials/footer.html'"> -->
+</div>
+<div ng-include="'views/partials/footer.html'">

@@ -106,7 +106,7 @@ router.put('/username', function (req, res) {
             if (errorConnectingToDatabase) {
                 res.sendStatus(500);
             } else {
-                client.query(`UPDATE users SET display_name = $1, user_bio = $2 WHERE id = $3`, [req.body.displayName, req.body.user_bio, req.user.id], function (errorMakingDatabaseQuery, result) {
+                client.query(`UPDATE users SET display_name = $1, user_bio = $2 WHERE id = $3`, [req.body.display_name, req.body.user_bio, req.user.id], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         res.sendStatus(500);
