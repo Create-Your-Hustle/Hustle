@@ -32,7 +32,7 @@ myApp.service('UserService', function($http, $location){
       method: 'GET',
       url: 'project/skillList',
     }).then( function (response){
-      self.skillslist.list = response.data
+      self.skillslist.list = response.data      
     })
   }
 

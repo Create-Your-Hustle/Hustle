@@ -11,7 +11,15 @@ myApp.service('AutoCompleteService', function ($http, $location, $routeParams, $
         return function filterFn(state) {
           return (state.value.indexOf(lowercaseQuery) === 0);
         };
-      }  
+      } 
+      
+      self.createFilterForSkill = function(query) {
+        var lowercaseQuery = angular.lowercase(query);
+  
+        return function filterFn(skill) {
+          return (skill.value.indexOf(lowercaseQuery) === 0);
+        };
+      }
 
     self.querySearch = function(query) {
         var results = query ? self.states.filter( self.createFilterFor(query) ) : self.states,
@@ -24,8 +32,20 @@ myApp.service('AutoCompleteService', function ($http, $location, $routeParams, $
           return results;
         }
       }
+
+      self.querySearchSkills = function(query) {
+        var results = query ? self.skills.list.filter( self.createFilterForSkill(query) ) : self.skills.list,
+            deferred;
+        if (self.simulateQuery) {
+          deferred = $q.defer();
+          $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+          return deferred.promise;
+        } else {
+          return results;
+        }
+      }
   
-      self.searchTextChange = function(text) {
+      self.searchTextChange = function(text) {        
         $log.info('Text changed to ' + text);
       }
   
@@ -47,5 +67,23 @@ myApp.service('AutoCompleteService', function ($http, $location, $routeParams, $
         });
       }
       self.states = self.loadAll();
+
+      
+      // Build list of skills for autocomplete
+      self.skills = {list:[]}
+      self.loadAllSkills = function() {
+        console.log('in load all skills');
+          $http({
+            method: 'GET',
+            url: 'project/skillList',
+          }).then( function (response){
+            self.skills.list = response.data  
+            console.log(self.skills.list);
+             console.log(self.states);
+                
+          })
+        
+      }
+      self.loadAllSkills();
 
 });
