@@ -20,11 +20,12 @@ myApp.controller('UserController', function (UserService, CollaboratorService, P
   self.getUserById = UserService.getUserById;
   self.uploadProfilePicture = UserService.uploadProfilePicture;
   self.createProject = ProjectService.createProject;
-  self.querySearch = AutoCompleteService.querySearch;
   self.searchTextChange = AutoCompleteService.searchTextChange;
-  self.selectedItemChange = AutoCompleteService.selectedItemChange
+  self.selectedItemChange = AutoCompleteService.selectedItemChange;
+  self.querySearch = AutoCompleteService.querySearch;
   self.loadAll = AutoCompleteService.loadAll;
-
+  self.querySearchSkills = AutoCompleteService.querySearchSkills;
+  self.loadAllSkills = AutoCompleteService.loadAllSkills;
 
   self.editUsername = function (value) {
     self.isEditing.username = false;
@@ -51,9 +52,12 @@ myApp.controller('UserController', function (UserService, CollaboratorService, P
   self.simulateQuery = false;
   self.isDisabled = false;
   self.querySearch = AutoCompleteService.querySearch;
+  self.querySearchSkills = AutoCompleteService.querySearchSkills;
   self.selectedItemChange = AutoCompleteService.selectedItemChange;
   self.searchTextChange = AutoCompleteService.searchTextChange;
   self.states = AutoCompleteService.states;
+  self.skills = AutoCompleteService.skills
+
 
 
 });
