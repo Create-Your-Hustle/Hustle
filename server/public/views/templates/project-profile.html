@@ -29,7 +29,9 @@
                         </span>
                     </div>
                     <div flex="30" class="dialog-demo-content">
-                        <md-button class="md-accent md-raised" ng-click="vm.contactProjectOwner($event)">Contact Project Owner</md-button>
+                        <span ng-hide="vm.userObject.id === vm.projectProfile.list[0].user_id">
+                            <md-button class="md-accent md-raised" ng-click="vm.contactProjectOwner($event)">Contact Project Owner</md-button>
+                        </span>
                     </div>
                 </div>
 
@@ -94,8 +96,24 @@
                             </span>
                             <span ng-show="vm.isEditing.preferences">
                                 <p>Location:</p>
+                                <form ng-submit="$event.preventDefault()">
                                 <input type="text" ng-model="vm.projectProfile.list[0].project_city">
-                                <input type="text" ng-model="vm.projectProfile.list[0].project_state">
+                                <md-autocomplete
+                                ng-disabled="vm.isDisabled"
+                                md-no-cache="vm.noCache"
+                                md-selected-item="vm.selectedItem"
+                                md-search-text-change="vm.searchTextChange(vm.projectProfile.list[0].project_state)"
+                                md-search-text="vm.projectProfile.list[0].project_state"
+                                md-selected-item-change="vm.selectedItemChange(item)"
+                                md-items="item in vm.querySearch(vm.projectProfile.list[0].project_state)"
+                                md-item-text="item.display"
+                                md-min-length="0"
+                                placeholder="State">
+                                    <md-item-template>
+                                    <span md-highlight-text="vm.projectProfile.list[0].project_state" md-highlight-flags="^i">{{item.display}}</span>
+                                    </md-item-template>
+                                </md-autocomplete>
+                                </form>
                             </span>
 
                             <!-- remote collaboration -->
@@ -131,6 +149,8 @@
                                 <md-button class="md-raised md-primary" ng-click="vm.editPreferences(vm.projectProfile.list[0])">save</md-button>
                             </span>
                         </div>
+
+                        <!-- collaboration requests repeat -->
                         <div ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id">
                             <h1 class="md-display-1">Collaboration Requests</h1>
                             <md-list-item class="md-3-line" ng-repeat="request in vm.projectCollaborationRequestArray.list" ng-click="goToPerson(person.name, $event)"

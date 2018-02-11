@@ -1,11 +1,13 @@
-myApp.controller('UserController', function(UserService, CollaboratorService, ProjectService, $routeParams) {
+myApp.controller('UserController', function (UserService, CollaboratorService, ProjectService, AutoCompleteService, $routeParams) {
   let self = this;
   self.userService = UserService;
   self.userObject = UserService.userObject;
-  self.selectedUser = UserService.selectedUser
+  self.AutoCompleteService = AutoCompleteService;
+  self.selectedUser = UserService.selectedUser;
   self.isEditing = {}
-  self.skillslist = UserService.skillslist
+  self.skillslist = UserService.skillslist;
   self.collaboratorProjects = UserService.collaboratorProjects;
+
 
   self.getUser = UserService.getUser
   self.editUser = UserService.editUser
@@ -18,7 +20,12 @@ myApp.controller('UserController', function(UserService, CollaboratorService, Pr
   self.getUserById = UserService.getUserById;
   self.uploadProfilePicture = UserService.uploadProfilePicture;
   self.createProject = ProjectService.createProject;
-
+  self.searchTextChange = AutoCompleteService.searchTextChange;
+  self.selectedItemChange = AutoCompleteService.selectedItemChange;
+  self.querySearch = AutoCompleteService.querySearch;
+  self.loadAll = AutoCompleteService.loadAll;
+  self.querySearchSkills = AutoCompleteService.querySearchSkills;
+  self.loadAllSkills = AutoCompleteService.loadAllSkills;
 
   self.editUsername = function (value) {
     self.isEditing.username = false;
@@ -34,12 +41,22 @@ myApp.controller('UserController', function(UserService, CollaboratorService, Pr
   self.getSkills();
 
   //check if navigating to /user (on login to direct to logged in profile, or if navigating to a /user/:id through search etc)
-  if(!$routeParams.id){
+  if (!$routeParams.id) {
     self.getUser();
-  }else{
+  } else {
     self.getUserById($routeParams.id)
   }
 
+
+
+  self.simulateQuery = false;
+  self.isDisabled = false;
+  self.querySearch = AutoCompleteService.querySearch;
+  self.querySearchSkills = AutoCompleteService.querySearchSkills;
+  self.selectedItemChange = AutoCompleteService.selectedItemChange;
+  self.searchTextChange = AutoCompleteService.searchTextChange;
+  self.states = AutoCompleteService.states;
+  self.skills = AutoCompleteService.skills
 
 
 
