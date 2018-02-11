@@ -141,6 +141,7 @@ myApp.service('UserService', function($http, $location){
     });
   };
 
+  //Get user by ID (view other collaborator profiles)
   self.getUserById = function (id) {
     if(!id) {
       id = self.userObject.id

@@ -28,6 +28,9 @@ body:nth-child {
 
 .profilePhoto {
   width: 300px;
+  border-radius: 50%;
+  box-shadow: 15px solid #ff634f;
+  border: 5px solid black;
 }
 
 .instructions {
@@ -158,9 +161,9 @@ md-card {
 
 }
 
-.lightOrangeDiv{
+/* .lightOrangeDiv{
   background-color: #FF5722;
-}
+} */
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {
@@ -247,10 +250,3 @@ margin-top:20px;
   height: 60px;
   width: 60px;
 }
-
-.rightBorder{
-  border-right-width: 6px;
-  border-right-style: solid;
-  border-right-color: #FF5722;
-  margin-right: 8px;
-} 
