@@ -68,7 +68,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
     }).then(function (response) {
       for (let i = 0; i < response.data.length; i++) {
         self.projectCollaboratorArray.list.push({
-          username: response.data[i].username,
+          display_name: response.data[i].display_name,
           user_project_role: response.data[i].user_project_role,
           user_id: response.data[i].id,
           user_picture: response.data[i].user_picture

@@ -100,20 +100,20 @@ myApp.config(function ($routeProvider, $locationProvider, $mdThemingProvider) {
     });
 
   $mdThemingProvider.definePalette('primaryColorRorange', {
-    '50': 'ff634f',
-    '100': 'ff634f',
-    '200': 'ff634f',
-    '300': 'ff634f',
-    '400': 'ff634f',
-    '500': 'ff634f',
-    '600': 'ff634f',
-    '700': 'ff634f',
-    '800': 'ff634f',
-    '900': 'ff634f',
-    'A100': 'ff634f',
-    'A200': 'ff634f',
-    'A400': 'ff634f',
-    'A700': 'ff634f',
+    '50': 'FFECEA',
+    '100': 'FFD0CA',
+    '200': 'FFB1A7',
+    '300': 'FF9284',
+    '400': 'FF7A69',
+    '500': 'FF634F',
+    '600': 'FF5B48',
+    '700': 'FF513F',
+    '800': 'FF4736',
+    '900': 'FF3526',
+    'A100': 'FFFFFF',
+    'A200': 'FFFFFF',
+    'A400': 'FFD6D4',
+    'A700': 'FFBEBA',
   //   'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
   // on this palette should be dark or light
 
@@ -124,7 +124,6 @@ myApp.config(function ($routeProvider, $locationProvider, $mdThemingProvider) {
 
   $mdThemingProvider.theme('default')
     .primaryPalette('primaryColorRorange', {
-      'default': '400'
     })
     .accentPalette('blue-grey')
 });
