@@ -17,79 +17,88 @@
                     <div class="container">
                         <h4 class="subheading-1 secondFont">{{lc.loginMessage}}</h4>
                         <form ng-submit="lc.login()">
-                            <div layout="column">
-                                <div style-align="center">
-                                    <label for="username">E-mail:</label>
+                            <div layout="column" layout-align="start center">
+                                <div>
+                                    <label class="subheading-1 secondFont" for="username">E-mail:</label>
                                     <input type="text" ng-model="lc.user.username" />
                                 </div>
                                 <div>
-                                    <label for="password">Password:</label>
+                                    <label class="subheading-1 secondFont" for="password">Password:</label>
                                     <input type="password" ng-model="lc.user.password" />
                                 </div>
-                                <div>
+                                <div layout="column" layout-align="center center">
                                     <md-input-container>
-                                        <input class="md-button md-primary md-raised secondFont" type="submit" name="submit" value="Log In" />
+                                        <input class="md-button md-accent md-raised secondFont" type="submit" name="submit" value="Log In" />
                                     </md-input-container>
-                                    <div class="img-responsive">
-                                        <a href="/user/facebook">
-                                            <img ng-src="../assets/login-facebook.png"></img>
-                                        </a>
-                                    </div>
-                                    <div class="img-responsive">
-                                        <a href="/user/google">
-                                            <img ng-src="../assets/login-google.png"></img>
-                                        </a>
+                                    <div layout="row" layout-align="center center">
+                                        <div class="img-responsive">
+                                            <a href="/user/facebook">
+                                                <img ng-src="../assets/login-facebook.png"></img>
+                                            </a>
+                                        </div>
+                                        <div class="img-responsive">
+                                            <a href="/user/google">
+                                                <img ng-src="../assets/login-google.png"></img>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
-                                    <a href ng-click="lc.passwordReset($event)"><h4 class="md-subheader">Forgot Password?</h4></a>
-                                <!-- <md-button md-no-ink class="md-primary md-raised secondFont" ng-click="lc.passwordReset($event)">
+                                <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
+                                    <a href ng-click="lc.passwordReset($event)">
+                                        <h4 class="md-subheader">Forgot Password?</h4>
+                                    </a>
+                                    <!-- <md-button md-no-ink class="md-primary md-raised secondFont" ng-click="lc.passwordReset($event)">
                                     Forgot Password
                                 </md-button> -->
-                            </div>
+                                </div>
                         </form>
-                    </div>
+                        </div>
 
 
                 </md-content>
             </md-tab>
-            <md-tab label="Register">
+            <md-tab label="New User?">
                 <md-content class="md-padding">
                     <div class="container">
                         <h4 class="subheading-1 secondFont">{{lc.registerMessage}}</h4>
                         <form ng-submit="lc.registerUser()">
-                            <div layout-align="center">
-                                <label for="username">E-mail:</label>
-                                <input type="text" ng-model="lc.user.username" />
-                            </div>
-                            <div layout-align="center">
-                                <label for="password">Password:</label>
-                                <input type="password" ng-model="lc.user.password" />
-                            </div>
-                            <div layout-align="center">
-                                <label for="password">Retype Password:</label>
-                                <input type="password" ng-model="lc.user.checkPassword" />
-                            </div>
-                            <div layout-align="center">
-                                <md-input-container>
-                                    <input class="md-button md-primary md-raised secondFont" type="submit" name="submit" value="Register" />
-                                </md-input-container>
-                                <div class="img-responsive">
-                                    <a href="/user/facebook">
-                                        <img ng-src="../assets/login-facebook.png"></img>
-                                    </a>
-                                    <a href="/user/google">
-                                        <img ng-src="../assets/login-google.png"></img>
+                            <div layout="column" layout-align="start center">
+                                <div>
+                                    <label class="subheading-1 secondFont" for="username">E-mail:</label>
+                                    <input type="text" ng-model="lc.user.username" />
+                                </div>
+                                <div layout-align="center">
+                                    <label class="subheading-1 secondFont" for="password">Password:</label>
+                                    <input type="password" ng-model="lc.user.password" />
+                                </div>
+                                <div>
+                                    <label class="subheading-1 secondFont" for="password">Retype Password:</label>
+                                    <input type="password" ng-model="lc.user.checkPassword" />
+                                </div>
+                                <div layout="column" layout-align="center center">
+                                    <md-input-container>
+                                        <input class="md-button md-accent md-raised secondFont" type="submit" name="submit" value="Register" />
+                                    </md-input-container>
+                                    <div layout="row" layout-align="center center">
+                                        <div class="img-responsive">
+                                            <a href="/user/facebook">
+                                                <img ng-src="../assets/login-facebook.png"></img>
+                                            </a>
+                                        </div>
+                                        <div class="img-responsive">
+                                            <a href="/user/google">
+                                                <img ng-src="../assets/login-google.png"></img>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <a href="#home">
+                                        <h4 class="md-subheader">Cancel</h4>
                                     </a>
                                 </div>
-                                <a href="#home">Cancel</a>
-                            </div>
                         </form>
-                    </div>
+                        </div>
                 </md-content>
             </md-tab>
         </md-tabs>
     </md-dialog-content>
 </md-dialog>
-
