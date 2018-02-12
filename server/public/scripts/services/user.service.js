@@ -6,6 +6,7 @@ myApp.service('UserService', function($http, $location){
     username: '',
     password: ''
   };
+  self.userSkillArray = { list: [] };
   self.collaboratorProjects = {list: []};
 
   self.validateEmail= function(email) {
@@ -13,6 +14,18 @@ myApp.service('UserService', function($http, $location){
     return valEmail.test(email);
   }
    
+  //adjusts ratings to text
+self.findRating = function (rating) {
+  if (rating == 1) {
+    return "Beginner"
+  } else if (rating == 2) {
+    return "Intermediate"
+  } else if (rating == 3) {
+    return "Expert"
+  }
+
+}
+
   self.navbarPicture = {list: []};
 
   self.skillslist = {list:[]}
@@ -31,7 +44,7 @@ myApp.service('UserService', function($http, $location){
     $http({
       method: 'GET',
       url: 'project/skillList',
-    }).then( function (response){
+    }).then( function (response){      
       self.skillslist.list = response.data      
     })
   }
@@ -55,8 +68,17 @@ myApp.service('UserService', function($http, $location){
       url:'/collaborator/select',
       params: {name: username},
     }).then(function (response) {
+      console.log('user info',response.data);
+      for (let i = 0; i < response.data.length; i++) {
+        self.userSkillArray.list.push({
+          skill_name: response.data[i].skill_name,
+          required_rating: self.findRating(response.data[i].skill_rating)
+        }) 
+      }      
       self.selectedUser.list = response.data;
       self.getCollaboratorProjects();
+      console.log('skill array', self.userSkillArray);
+      
     })
   };
 
@@ -153,6 +175,14 @@ myApp.service('UserService', function($http, $location){
       url:'/collaborator/select/id',
       params: {id: id},
     }).then(function (response) {
+      console.log('user', response.data);
+      for (let i = 0; i < response.data.length; i++) {
+        self.userSkillArray.list.push({
+          skill_name: response.data[i].skill_name,
+          required_rating: self.findRating(response.data[i].skill_rating)
+        }) 
+      } 
+      
       self.selectedUser.list = response.data;
       self.getCollaboratorProjects();
     })
@@ -168,3 +198,5 @@ myApp.service('UserService', function($http, $location){
     });
   };
 });
+
+
