@@ -21,7 +21,9 @@
               <div flex class="navbar hide-xs ">
                 <md-menu>
                   <md-button ng-mouseenter="nc.openMenu($mdMenu, $event)">
-                    <img class="md-icon" ng-src="{{nc.navbarPicture.list[0].user_picture}}" class="md-avatar" alt="profile picture" aria-label="Open Menu">
+                    <md-list-item>
+                    <img ng-src="{{nc.navbarPicture.list[0].user_picture}}" class="md-avatar" alt="profile picture" aria-label="Open Menu">
+                  </md-list-item>
                   </md-button>
                   <md-menu-content width="4" class="instructions">
                     <md-menu-item>
