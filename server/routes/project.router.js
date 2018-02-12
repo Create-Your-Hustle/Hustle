@@ -336,6 +336,7 @@ router.put('/message', function (req, res) {
 
 //Puts collaborator ratings into DB
 router.put('/collaboratorRatings', function (req, res) {
+    console.log(req.body);
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             res.sendStatus(500);
