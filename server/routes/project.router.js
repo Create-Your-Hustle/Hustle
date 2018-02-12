@@ -414,7 +414,7 @@ router.get('/collaborator-projects', function (req, res) {
             if (errorConnectingToDatabase) {
                 res.sendStatus(500);
             } else {
-                client.query(`SELECT p.project_name, p.project_description, p.project_picture FROM projects p
+                client.query(`SELECT p.project_name, p.project_description, p.project_picture, p.project_id FROM projects p
                             JOIN users_projects up ON up.project_id = p.project_id
                             JOIN users u ON u.id = up.user_id
                             WHERE up.can_edit = true
