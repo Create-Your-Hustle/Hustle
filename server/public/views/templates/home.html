@@ -6,20 +6,21 @@
                 <H1>
                     <div class="md-display-4" layout="row" layout-align="center" id="hustleTitle">HUSTLE</div>
                 </H1>
-                <div layout="row" layout-align="center" class="secondFont" style-color="white">
-                    <H2>Where people and ideas meet.</H2>
+                <div layout="row" layout-align="center" class="secondFont">
+                    <H2 style="color:white">Where people and ideas meet.</H2>
                 </div>
                 </br>
                 </br>
             </div>
             <div layout="row" layout-align="center end">
                 <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
-                    <md-button class="md-accent" ng-click="hc.showLogin($event)">
+                    <md-button ng-click="hc.showLogin($event)">
                         Get Started
                     </md-button>
                 </div>
             </div>
         </div>
+    </md-content>
 </div>
 
 <div class="homeContent">
@@ -67,23 +68,21 @@
             <md-button md-no-ink class="md-primary md-raised secondFont" ng-click="hc.showLogin($event)"> Sign Me Up! </md-button>
         </div>
     </div>
-    <div>
-        </br>
-    </div>
-    <div>
-        <md-card layout="column" layout-align="center center" style="padding-bottom: 10px">
-            <jk-carousel data="hc.carousel" item-template-url="'/views/templates/carousel-template.html'" max-width="1000" max-height="600">
-            </jk-carousel>
-        </md-card>
-    </div>
 
     <div id="mission">
         <a name="mission"></a>
         <H1 class="md-display-1 secondFont" layout-align="center center" align="center">Our mission is to facilitate successful collaboration in the pursuit launching more creative and innovative projects.
         </H1>
     </div>
+    <div layout="row" layout-align="center">
+        <jk-carousel layout-align="center" data="hc.carousel" auto-slide="true" auto-slide-time="3000" item-template-url="'/views/templates/carousel-template.html'"
+            max-width="2000" max-height="1200">
+        </jk-carousel>
+    </div>
 
-    <div id="howItWorks">
+
+
+    <!-- <div id="howItWorks">
         <a name="works"></a>
         <div layout-padding layout="column">
             <H1 class="orange md-display-3" layout-align="left start">How It Works </H1>
@@ -93,10 +92,7 @@
                 3) We send an introduction</br>
                 4) You make something amazing!</H2>
         </div>
-    </div>
+    </div> -->
 </div>
-</div>
-</div>
-</md-content>
 <div ng-include="'views/partials/footer.html'"></div>
 </div>
