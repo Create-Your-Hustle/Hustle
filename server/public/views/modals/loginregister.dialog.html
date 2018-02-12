@@ -14,7 +14,6 @@
         <md-tabs md-dynamic-height md-border-bottom>
             <md-tab label="Login">
                 <md-content class="md-padding">
-                    <h1 class="md-display-2">Existing User Login</h1>
                     <div class="container">
                         <h4 class="subheading-1 secondFont">{{lc.loginMessage}}</h4>
                         <form ng-submit="lc.login()">
@@ -44,9 +43,10 @@
                                 </div>
                             </div>
                             <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
-                                <md-button md-no-ink class="md-primary md-raised secondFont" ng-click="lc.passwordReset($event)">
+                                    <a href ng-click="lc.passwordReset($event)"><h4 class="md-subheader">Forgot Password?</h4></a>
+                                <!-- <md-button md-no-ink class="md-primary md-raised secondFont" ng-click="lc.passwordReset($event)">
                                     Forgot Password
-                                </md-button>
+                                </md-button> -->
                             </div>
                         </form>
                     </div>
@@ -56,7 +56,6 @@
             </md-tab>
             <md-tab label="Register">
                 <md-content class="md-padding">
-                    <h1 class="md-display-2">Register New User</h1>
                     <div class="container">
                         <h4 class="subheading-1 secondFont">{{lc.registerMessage}}</h4>
                         <form ng-submit="lc.registerUser()">
