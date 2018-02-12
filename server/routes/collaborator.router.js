@@ -1,8 +1,24 @@
+require('dotenv').config()
+
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const pool = require('../modules/pool.js');
 const path = require('path');
+const nodemailer = require('nodemailer');
+
+
+var transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        type: 'OAuth2',
+        clientId: '360485416428-s79cfmrp2mgkkphdih1uc1oumc9j4su8.apps.googleusercontent.com',
+        clientSecret: 'JFjG6jMjHRmP-CtPNrPWfo5c'
+
+    }
+});
 
 // Main collaborator get
 router.get('/select', function (req, res) {
@@ -264,6 +280,61 @@ router.get('/picture', function (req, res) {
         res.sendStatus(401);
     }
 }); // end collaborator/search/all get
+
+//Message collaborator
+router.put('/message', function (req, res) {
+    if (req.isAuthenticated()) {
+    
+    
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            if (errorConnectingToDatabase) {
+                res.sendStatus(500);
+            } else {
+                client.query(`SELECT * FROM users
+                            WHERE id = $1;`, [req.body.id], function (errorMakingDatabaseQuery, result) {
+                    done();
+                    if (errorMakingDatabaseQuery) {
+                        res.sendStatus(500);
+                    } else {
+                        
+                        //send message via nodemailer
+                        var mailOptions = {
+                            from: `Hustle <startyourhustle@gmail.com>`,
+                            to: `${result.rows[0].username}`,
+                            subject: `HUSTLE: Collaborator message`,
+                            html: `
+                            <div bgcolor="#ff634f">
+                                <h2>You've received a message</h2>
+                                <h3>From:</h3>
+                                <p>${req.user.display_name}</p>
+                                <h3>Message:</h3>
+                                <p>${req.body.message}</p>
+                                <p>Thank you</p>
+                            </div>`,
+
+                            auth: {
+                                user: 'startyourhustle@gmail.com',
+                                refreshToken: process.env.NODEMAILER_REFRESHTOKEN,
+                                accessToken: process.env.NODEMAILER_ACCESSTOKEN
+                            }
+                        };
+
+                        transporter.sendMail(mailOptions, function (error, info) {
+                            if (error) {
+                                console.log('This is your error: ', error);
+                            } else {
+                                console.log('Email sent: ' + info.response);
+                            }
+                        });
+                        res.sendStatus(201);
+                    }
+                });
+            }
+        });
+    } else {
+        res.sendStatus(401);
+    }
+});
 
 
 module.exports = router;

@@ -1,4 +1,4 @@
-myApp.service('UserService', function($http, $location){
+myApp.service('UserService', function($http, $location, $mdDialog){
   let self = this;
   self.userObject = {};
   self.selectedUser = {list: []}
@@ -8,6 +8,11 @@ myApp.service('UserService', function($http, $location){
   };
   self.userSkillArray = { list: [] };
   self.collaboratorProjects = {list: []};
+
+  //Cancel modal
+  self.cancel = function() {
+    $mdDialog.cancel();
+  };
 
   self.validateEmail= function(email) {
     var valEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -197,6 +202,34 @@ self.findRating = function (rating) {
       self.navbarPicture.list = response.data;
     });
   };
+
+  //Modal for sending a message to collaborator
+  self.contactCollaborator = function (ev) {
+    $mdDialog.show({
+      controller: 'UserController as vm',
+      templateUrl: '../views/modals/contact-collaborator.dialog.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      fullscreen: self.customFullscreen
+    })
+  };
+
+  //send message to project owner
+  self.sendMessage = function (message, collaborator) {
+    info = {
+      message: message.message,
+      id: collaborator.user_id,
+    }
+
+    $http({
+      method: 'PUT',
+      url: '/collaborator/message',
+      data: info
+    }).catch()
+    
+    self.cancel();
+  }
 });
 
 
