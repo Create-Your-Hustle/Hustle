@@ -15,29 +15,35 @@ myApp.controller('CollaboratorRatingController', function(UserService, ProjectSe
             title: 'Communication',
             current: 1,
             max: 5,
-            rating_type: 1
+            rating_type: 'communication'
         },{
             title: 'Follow-Through',
             current: 1,
             max: 5,
-            rating_type: 2
+            rating_type: 'followthrough'
         },{
             title: 'Friendliness',
             current: 1,
             max: 5,
-            rating_type: 3
+            rating_type: 'friendliness'
         },{
             title: 'Accuracy',
             current: 1,
             max: 5,
-            rating_type: 4
+            rating_type: 'accuracy'
         },{
             title: 'Overall Experience',
             current: 1,
             max: 5,
-            rating_type: 5
+            rating_type: 'overall'
         },
     ];
 
-
+    // self.ratings = {
+    //     communication: 1,
+    //     followthrough: 1,
+    //     friendliness: 1,
+    //     accuracy: 1,
+    //     overall: 1
+    // };
 });
