@@ -336,23 +336,26 @@ router.put('/message', function (req, res) {
 
 //Puts collaborator ratings into DB
 router.put('/collaboratorRatings', function (req, res) {
-    console.log(req.body);
+    let ratings = req.body.rating;
+    let communication = ratings[0].current;
+    let followthrough = ratings[1].current;
+    let friendliness = ratings[2].current;
+    let accuracy = ratings[3].current;
+    let overall = ratings[4].current;
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             res.sendStatus(500);
         } else {
-
-            for (let i = 0; i < req.body.rating.length; i++) {
-                client.query(`INSERT INTO ratings (reviewed_user_id, reviewer_id, rating, rating_type)
-                VALUES ($1, $2, $3, $4);`,
-                    [req.body.collaborator, req.user.id, req.body.rating[i].current, req.body.rating[i].rating_type],
+                client.query(`INSERT INTO ratings (reviewed_user_id, reviewer_id, communication, followthrough, friendliness, accuracy, overall)
+                VALUES ($1, $2, $3, $4, $5, $6, $7);`,
+                    [req.body.collaborator, req.user.id, communication, followthrough, friendliness, accuracy, overall],
                     function (errorMakingQuery, result) {
                         done();
                         if (errorMakingQuery) {
                             res.sendStatus(500)
                         }
                     });
-            }
+            
         }
     })
 });
