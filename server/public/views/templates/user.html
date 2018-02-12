@@ -37,7 +37,7 @@
 
                     </div>
                     <div flex="10">
-                        <md-button class="md-accent md-raised" ng-click="vm.contactCollaborator($event)">Message</md-button>
+                        <md-button class="md-raised md-primary" ng-click="vm.contactCollaborator($event)" ng-if="vm.userObject.userName !== vm.selectedUser.list[0].username">Message</md-button>
                     </div>
                 </div>
 
