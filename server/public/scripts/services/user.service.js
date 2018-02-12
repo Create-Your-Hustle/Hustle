@@ -32,7 +32,7 @@ myApp.service('UserService', function($http, $location, $mdDialog){
       method: 'GET',
       url: 'project/skillList',
     }).then( function (response){
-      self.skillslist.list = response.data
+      self.skillslist.list = response.data      
     })
   }
 
@@ -125,6 +125,8 @@ myApp.service('UserService', function($http, $location, $mdDialog){
   },
 
   self.logout = function() {
+    self.selectedUser = {};
+    self.userObject = {};
     $http.get('/user/logout').then(function(response) {
       $location.path("/home");
     });

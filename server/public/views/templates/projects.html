@@ -9,12 +9,12 @@
             <md-content layout-padding>
                 <div layout="column">
                     <md-input-container>
-                        <input ng-model="vm.searchParameters.project_name" type="text" placeholder="Name">
+                        <input ng-model="vm.searchParameters.project_name" type="text" placeholder="Name" ng-change="vm.parameterSelected = true">
                     </md-input-container>
                     <md-input-container>
                         <label>Skills</label>
                         <md-select ng-model="vm.searchParameters.skills" ng-model="searchTerms" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader"
-                            multiple>
+                            multiple ng-change="vm.parameterSelected = true">
                             <md-select-header class="demo-select-header">
                                 <input ng-model="searchTerm" type="search" placeholder="Search for a skill.." class="demo-header-searchbox md-text">
                             </md-select-header>
@@ -23,7 +23,7 @@
                             </md-optgroup>
                         </md-select>
                     </md-input-container>
-                    <md-button ng-click="vm.getProjectSearchResult(vm.searchParameters)" class="md-raised md-accent">Search</md-button>
+                    <md-button ng-disabled="!vm.parameterSelected" ng-click="vm.getProjectSearchResult(vm.searchParameters)" class="md-raised md-accent">Search</md-button>
                 </div>
             </md-content>
             <md-toolbar>

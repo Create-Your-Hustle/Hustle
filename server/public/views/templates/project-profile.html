@@ -1,57 +1,58 @@
 <div ng-include="'views/partials/nav.html'"></div>
+<div class="homeContent">
+    <md-content layout="column">
 
-
-    <div class="homeContent lightOrangeDiv">
-        <md-content layout="row" layout-padding>
-            <div layout="column" flex="30" layout-align="center center" layout-padding>
-                <img ng-src="{{vm.projectProfile.list[0].project_picture}}" class="projectPhoto" />
-                <button ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id" class="md-accent md-raised" ng-click="vm.uploadProjectPicture(vm.projectProfile.list[0], projectImage.imageUrl)">Upload Project Image</button>
-                <h1 class="md-display-1">Collaborators</h1>
-                <md-list class="md-dense">
-                    <md-list-item class="md-3-line" ng-repeat="collaborator in vm.projectCollaboratorArray.list">
-                        <img ng-src="{{collaborator.user_picture}}" class="md-avatar"/>
-                        <div class="md-list-item-text" layout="column">
-                            <h3>{{collaborator.username}}</h3>
-                            <p>{{collaborator.user_project_role}}</p>
-                            <md-button class="md-raised md-primary" ng-click="vm.rateCollaborator($event, collaborator)">Rate</md-button>
+        <div flex="70" layout="column">
+            <div class="main" layout="column">
+                <div layout-padding md-whiteframe="5" flex layout-sm="column" layout-xs="column" layout="row">
+                    <div flex layout="row">
+                        <div flex="20">
+                            <img ng-src="{{vm.projectProfile.list[0].project_picture}}" class="projectPhoto" />
+                            </br>
+                            <md-button ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id" class="md-accent md-raised" ng-click="vm.uploadProjectPicture(vm.projectProfile.list[0], projectImage.imageUrl)">Upload Project Image</md-button>
                         </div>
-                    </md-list-item>
-                </md-list>
-            </div>
-            <div layout="column" flex="70" layout-padding>
-                <div layout="row">
-                    <div flex="70">
-                        <span ng-hide="vm.isEditing.project">
-                            <h1 class="md-display-1">{{vm.projectProfile.list[0].project_name}}</h1>
-                        </span>
-                        <span ng-show="vm.isEditing.project">
-                            <input type="text" ng-model="vm.projectProfile.list[0].project_name">
-                        </span>
                     </div>
-                    <div flex="30" class="dialog-demo-content">
-                        <span ng-hide="vm.userObject.id === vm.projectProfile.list[0].user_id">
-                            <md-button class="md-accent md-raised" ng-click="vm.contactProjectOwner($event)">Contact Project Owner</md-button>
-                        </span>
+                    <div flex="65">
+                        <h1 ng-hide="vm.isEditing.project" class="md-display-1">{{vm.projectProfile.list[0].project_name}}</h1>
+                        <md-input-container ng-show="vm.isEditing.project" class="md-display-1">
+                            <input ng-model="vm.selectedUser.list[0].display_name" type="text" ng-value="{{vm.selectedUser.list[0].display_name}}">
+                        </md-input-container>
+                        <div flex="30" class="dialog-demo-content">
+                            <span ng-hide="vm.userObject.id === vm.projectProfile.list[0].user_id">
+                                <md-button class="md-accent md-raised" ng-click="vm.contactProjectOwner($event)">Contact Project Owner</md-button>
+                            </span>
+                        </div>
+                        <p>
+                            <span ng-hide="vm.isEditing.project">{{vm.projectProfile.list[0].project_description}}</span>
+
+                            <span ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id" ng-hide="vm.isEditing.project">
+                                <md-button class="md-raised md-primary" ng-click="vm.isEditing.project = true">Edit Name Or Description</md-button>
+                            </span>
+                            <span ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id" ng-show="vm.isEditing.project">
+                                <md-button class="md-raised md-primary" ng-click="vm.editProjectName(vm.projectProfile.list[0])">save</md-button>
+                            </span>
+
+
                     </div>
                 </div>
 
-                <span ng-hide="vm.isEditing.project">
-                    <p>{{vm.projectProfile.list[0].project_description}}</p>
-                </span>
-                <span ng-show="vm.isEditing.project">
-                    <input type="text" ng-model="vm.projectProfile.list[0].project_description">
-                </span>
+            
+<!-- Collaborator List -->
+                <div md-whiteframe="5" flex layout-xs="column" layout-sm="column" layout="row" layout-padding>
+                    <div flex>
+                        <h1 class="md-display-1">Collaborators</h1>
+                        <md-list class="md-dense">
+                            <md-list-item class="md-3-line" ng-repeat="collaborator in vm.projectCollaboratorArray.list">
+                                <img ng-src="{{collaborator.user_picture}}" class="md-avatar" />
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>{{collaborator.username}}</h3>
+                                    <p>{{collaborator.user_project_role}}</p>
+                                    <md-button class="md-raised md-primary" ng-click="vm.rateCollaborator($event, collaborator)">Rate</md-button>
+                                </div>
+                            </md-list-item>
+                        </md-list>
+                    </div>
 
-                <!-- edit and save for project name and bio -->
-                <span ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id" ng-hide="vm.isEditing.project">
-                    <md-button class="md-raised md-primary" ng-click="vm.isEditing.project = true">Edit Name Or Description</md-button>
-                </span>
-                <span ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id" ng-show="vm.isEditing.project">
-                    <md-button class="md-raised md-primary" ng-click="vm.editProjectName(vm.projectProfile.list[0])">save</md-button>
-                </span>
-
-
-                <div layout="row">
                     <div flex="50">
                         <h1 class="md-display-1">Looking For...</h1>
                         <md-list class="md-dense">
@@ -87,32 +88,28 @@
                             <md-button ng-click="vm.addProjectSkill(vm.addSkill, vm.projectProfile.list[0].project_id)" class="md-raised md-primary">Add Skill</md-button>
                         </div>
                     </div>
-                    <div flex="50">
-                        <div flex="50">
+
+                    <div flex>
+
+                        <div flex>
                             <h1 class="md-display-1">Preferences</h1>
                             <!-- location  -->
                             <span ng-hide="vm.isEditing.preferences">
-                                <p><strong>Location:</strong> {{vm.projectProfile.list[0].project_city}}, {{vm.projectProfile.list[0].project_state}}</p>
+                                <p>
+                                    <strong>Location:</strong> {{vm.projectProfile.list[0].project_city}}, {{vm.projectProfile.list[0].project_state}}</p>
                             </span>
                             <span ng-show="vm.isEditing.preferences">
                                 <p>Location:</p>
                                 <form ng-submit="$event.preventDefault()">
-                                <input type="text" ng-model="vm.projectProfile.list[0].project_city">
-                                <md-autocomplete
-                                ng-disabled="vm.isDisabled"
-                                md-no-cache="vm.noCache"
-                                md-selected-item="vm.selectedItem"
-                                md-search-text-change="vm.searchTextChange(vm.projectProfile.list[0].project_state)"
-                                md-search-text="vm.projectProfile.list[0].project_state"
-                                md-selected-item-change="vm.selectedItemChange(item)"
-                                md-items="item in vm.querySearch(vm.projectProfile.list[0].project_state)"
-                                md-item-text="item.display"
-                                md-min-length="0"
-                                placeholder="State">
-                              <md-item-template>
-                                <span md-highlight-text="vm.projectProfile.list[0].project_state" md-highlight-flags="^i">{{item.display}}</span>
-                              </md-item-template>
-                                  </md-autocomplete>
+                                    <input type="text" ng-model="vm.projectProfile.list[0].project_city">
+                                    <md-autocomplete ng-disabled="vm.isDisabled" md-no-cache="vm.noCache" md-selected-item="vm.selectedItem" md-search-text-change="vm.searchTextChange(vm.projectProfile.list[0].project_state)"
+                                        md-search-text="vm.projectProfile.list[0].project_state" md-selected-item-change="vm.selectedItemChange(item)"
+                                        md-items="item in vm.querySearch(vm.projectProfile.list[0].project_state)" md-item-text="item.display"
+                                        md-min-length="0" placeholder="State">
+                                        <md-item-template>
+                                            <span md-highlight-text="vm.projectProfile.list[0].project_state" md-highlight-flags="^i">{{item.display}}</span>
+                                        </md-item-template>
+                                    </md-autocomplete>
                                 </form>
                             </span>
 
@@ -131,7 +128,9 @@
 
                             <!-- compensation -->
                             <span ng-hide="vm.isEditing.preferences">
-                                <p><strong>Compensation:</strong></p>
+                                <p>
+                                    <strong>Compensation:</strong>
+                                </p>
                                 <span ng-show=vm.projectProfile.list[0].project_for_pay>Pay</span>
                                 <span ng-show=vm.projectProfile.list[0].project_for_trade>Trade</span>
                             </span>
@@ -150,23 +149,23 @@
                             </span>
                         </div>
 
-                        <!-- collaboration requests repeat -->
-                        <div ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id">
-                            <h1 class="md-display-1">Collaboration Requests</h1>
-                            <md-list-item class="md-3-line" ng-repeat="request in vm.projectCollaborationRequestArray.list" ng-click="goToPerson(person.name, $event)"
-                                class="noright">
-                                <img ng-src="{{ request.user_picture }}" class="md-avatar" />
-                                <div class="md-list-item-text" layout="column">
-                                    <p>{{ request.username }}</p>
-                                    <md-button class="md-raised md-primary" ng-click="vm.acceptCollaboration(request, vm.projectProfile.list[0].project_id)">Accept</md-button>
-                                    <md-button class="md-raised md-primary" ng-click="vm.declineCollaboration(request, vm.projectProfile.list[0].project_id)">Dismiss</md-button>
-                                </div>
-                            </md-list-item>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </md-content>
+                <div layout="row" layout-sm="column" layout-xs="column" layout-padding md-whiteframe="5">
+                    <div ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id">
+                        <h1 class="md-display-1">Collaboration Requests</h1>
+                        <md-list-item class="md-3-line" ng-repeat="request in vm.projectCollaborationRequestArray.list" ng-click="goToPerson(person.name, $event)"
+                            class="noright">
+                            <img ng-src="{{ request.user_picture }}" class="md-avatar" />
+                            <div class="md-list-item-text" layout="column">
+                                <p>{{ request.username }}</p>
+                                <md-button class="md-raised md-primary" ng-click="vm.acceptCollaboration(request, vm.projectProfile.list[0].project_id)">Accept</md-button>
+                                <md-button class="md-raised md-primary" ng-click="vm.declineCollaboration(request, vm.projectProfile.list[0].project_id)">Dismiss</md-button>
+                            </div>
+                        </md-list-item>
+                    </div>
+                </div>
+    </md-content>
+    </div>
 
-
-<div ng-include="'views/partials/footer.html'"></div>
+    <div ng-include="'views/partials/footer.html'"></div>
