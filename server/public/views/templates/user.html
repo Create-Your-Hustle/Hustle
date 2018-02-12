@@ -3,14 +3,14 @@
 <div class="homeContent lightOrangeDiv">
     <md-content layout="column">
 
-        <div flex="50" layout="column" id="whatIsThis">
+        <div flex="70" layout="column">
             <div class="main" layout="column">
                 <div layout-padding md-whiteframe="5" flex layout-sm="column" layout-xs="column" layout="row">
                     <div flex layout="row">
                         <div flex="20">
-                            <img class="profilePhoto" ng-src="{{vm.selectedUser.list[0].user_picture}}">
+                            <img class="profilePhoto" ng-src="{{vm.selectedUser.list[0].user_picture}}" alt="">
                             </br>
-                            <md-button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Change Profile Picture?</md-button>
+                            <md-button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Change Profile Picture</md-button>
                         </div>
                     </div>
                     <div flex="65">
