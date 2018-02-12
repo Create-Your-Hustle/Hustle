@@ -15,6 +15,7 @@
                     </div>
                     <div flex="65">
                         <h1 ng-hide="vm.isEditing.username" class="md-display-1">{{vm.selectedUser.list[0].display_name}}</h1>
+                        <md-button class="md-accent md-raised" ng-click="vm.contactCollaborator($event)">Message Collaborator</md-button>
                         <md-input-container ng-show="vm.isEditing.username" class="md-display-1">
                             <input ng-model="vm.selectedUser.list[0].display_name" type="text" ng-value="{{vm.selectedUser.list[0].display_name}}">
                         </md-input-container>
