@@ -125,7 +125,7 @@ myApp.service('UserService', function($http, $location){
   },
 
   self.logout = function() {
-    self.selectedUser = {};
+    self.selectedUser = {list:[]};
     self.userObject = {};
     $http.get('/user/logout').then(function(response) {
       $location.path("/home");

@@ -17,7 +17,7 @@ myApp.service('AutoCompleteService', function ($http, $location, $routeParams, $
         var lowercaseQuery = angular.lowercase(query);
   
         return function filterFn(skill) {
-          return (skill.value.indexOf(lowercaseQuery) === 0);
+          return (skill.skill_name.indexOf(lowercaseQuery) === 0);
         };
       }
 
@@ -77,11 +77,14 @@ myApp.service('AutoCompleteService', function ($http, $location, $routeParams, $
             method: 'GET',
             url: 'project/skillList',
           }).then( function (response){
-            // for (let i = 0; i < response.data.length; i++) {
-            //   self.skills.list.push(response.data[i].skill_name)
+            for (let i = 0; i < response.data.length; i++) {
+              self.skills.list.push({
+                skill_name: response.data[i].skill_name,
+                id: `${i}`
+              })
               
-            // }
-            self.skills.list = response.data  
+            }
+            // self.skills.list = response.data  
             console.log(self.skills.list);
             console.log(self.states);
                 

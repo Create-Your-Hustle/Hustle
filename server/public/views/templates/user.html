@@ -73,10 +73,10 @@
                                         </md-option>
                                     </md-select>
 
-                                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="skill in vm.getMatches(searchText)" 
-                                        md-item-text="skill">
+                                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="skill in vm.querySearchSkills(searchText)" 
+                                        md-item-text="skill.skill_name">
                                         <md-item-template>
-                                        <span md-highlight-text="searchText">{{skill}}</span>
+                                        <span md-highlight-text="searchText">{{skill.skill_name}}</span>
                                         </md-item-template> 
                                         <md-not-found>
                                             No matches found.

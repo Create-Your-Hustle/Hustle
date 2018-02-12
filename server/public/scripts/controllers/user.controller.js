@@ -27,6 +27,8 @@ myApp.controller('UserController', function (UserService, CollaboratorService, P
   self.querySearchSkills = AutoCompleteService.querySearchSkills;
   self.loadAllSkills = AutoCompleteService.loadAllSkills;
 
+  self.getUser();
+  
   self.editUsername = function (value) {
     self.isEditing.username = false;
     self.editUser(value);
