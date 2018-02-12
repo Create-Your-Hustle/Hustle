@@ -261,6 +261,7 @@ myApp.service('ProjectService', function ($http, $location, $mdDialog, $routePar
         data: collaborationRequest
       }).then(function (response) {
         self.getCollaborationRequests($routeParams.id)
+        self.getProjectCollaborators($routeParams.id);
       })
     }
 
