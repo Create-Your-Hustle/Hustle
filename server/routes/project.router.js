@@ -46,8 +46,8 @@ router.post('/', function (req, res) {
         if (errorConnectingToDatabase) {
             res.sendStatus(500);
         } else {
-            client.query(`WITH new_project AS (INSERT INTO projects ("project_name")
-            VALUES ('New Project') RETURNING project_id)
+            client.query(`WITH new_project AS (INSERT INTO projects ("project_name", "project_picture")
+            VALUES ('New Project', '../assets/projectDefault.png') RETURNING project_id)
             INSERT INTO users_projects ("user_id", "project_id", "can_edit", "user_project_role")
             VALUES ($1, (Select project_id FROM new_project), true , 'Creator') RETURNING 	project_id;`, [req.user.id],
                 function (errorMakingQuery, result) {

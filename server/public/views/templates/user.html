@@ -47,9 +47,8 @@
                             <th>
                                 <h2 class="md-display-1">Skills </h2>
                             </th>
-                            <tr ng-repeat="skills in vm.selectedUser.list ">
-                                <td>{{skills.skill_name}}</td>
-                                <td>{{skills.skill_rating}}</td>
+                            <tr ng-repeat="skills in vm.userSkillArray.list ">
+                                <td>{{skills.skill_name}} - {{skills.required_rating}}</td>                                
                                 <td ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
                                     <md-button class="md-raised md-primary" ng-click="vm.deleteSkill(skills)">Delete</md-button>
                                 </td>
