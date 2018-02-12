@@ -13,9 +13,8 @@
                             <md-button ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" class="md-accent md-raised" ng-click="vm.uploadProfilePicture(vm.selectedUser.list[0], projectImage.imageUrl)">Change Profile Picture</md-button>
                         </div>
                     </div>
-                    <div flex="65">
+                    <div flex="55">
                         <h1 ng-hide="vm.isEditing.username" class="md-display-1">{{vm.selectedUser.list[0].display_name}}</h1>
-                        <md-button class="md-accent md-raised" ng-click="vm.contactCollaborator($event)">Message Collaborator</md-button>
                         <md-input-container ng-show="vm.isEditing.username" class="md-display-1">
                             <input ng-model="vm.selectedUser.list[0].display_name" type="text" ng-value="{{vm.selectedUser.list[0].display_name}}">
                         </md-input-container>
@@ -34,8 +33,11 @@
 
                             <md-button ng-show="vm.isEditing.username" class="md-raised md-primary" ng-click="vm.editUsername(vm.selectedUser.list[0])">Save</md-button>
                         </span>
+                        
 
-
+                    </div>
+                    <div flex="10">
+                        <md-button class="md-accent md-raised" ng-click="vm.contactCollaborator($event)">Message</md-button>
                     </div>
                 </div>
 
