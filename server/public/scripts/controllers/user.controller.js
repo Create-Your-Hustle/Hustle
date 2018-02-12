@@ -9,6 +9,7 @@ myApp.controller('UserController', function (UserService, CollaboratorService, P
   self.collaboratorProjects = UserService.collaboratorProjects;
   self.contactCollaborator = UserService.contactCollaborator;
   self.sendMessage = UserService.sendMessage;
+  self.cancel = UserService.cancel;
 
 
   self.getUser = UserService.getUser

@@ -1,8 +1,24 @@
+require('dotenv').config()
+
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const pool = require('../modules/pool.js');
 const path = require('path');
+const nodemailer = require('nodemailer');
+
+
+var transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        type: 'OAuth2',
+        clientId: '360485416428-s79cfmrp2mgkkphdih1uc1oumc9j4su8.apps.googleusercontent.com',
+        clientSecret: 'JFjG6jMjHRmP-CtPNrPWfo5c'
+
+    }
+});
 
 // Main collaborator get
 router.get('/select', function (req, res) {
@@ -280,6 +296,7 @@ router.put('/message', function (req, res) {
                     if (errorMakingDatabaseQuery) {
                         res.sendStatus(500);
                     } else {
+                        
                         //send message via nodemailer
                         var mailOptions = {
                             from: `Hustle <startyourhustle@gmail.com>`,

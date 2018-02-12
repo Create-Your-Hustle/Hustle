@@ -8,6 +8,11 @@ myApp.service('UserService', function($http, $location, $mdDialog){
   };
   self.collaboratorProjects = {list: []};
 
+  //Cancel modal
+  self.cancel = function() {
+    $mdDialog.cancel();
+  };
+
   self.validateEmail= function(email) {
     var valEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return valEmail.test(email);
@@ -184,7 +189,7 @@ myApp.service('UserService', function($http, $location, $mdDialog){
   self.sendMessage = function (message, collaborator) {
     info = {
       message: message.message,
-      id: collaborator.id,
+      id: collaborator.user_id,
     }
 
     $http({
