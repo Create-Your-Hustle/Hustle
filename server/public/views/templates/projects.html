@@ -46,7 +46,7 @@
         <div flex layout="column">
             <div layout-margin layout-padding layout-fill layout="row" layout-wrap>
                 <md-card href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.projectSearchArray.list | filter:query">
-                    <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
+                   <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
                     <md-card-content>
                         <h2>{{project.project_name}}</h2>
                         <p>{{project.project_description}}</p>
@@ -57,7 +57,6 @@
                                 View Project
                             </md-button>
                         </a>
-                        <md-button class="md-raised md-primary">Message</md-button>
                     </div>
                 </md-card>
             </div>

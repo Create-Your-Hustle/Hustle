@@ -14,8 +14,16 @@
                     </div>
                     <div flex="65">
                         <h1 ng-hide="vm.isEditing.project" class="md-display-1">{{vm.projectProfile.list[0].project_name}}</h1>
-                        <md-input-container ng-show="vm.isEditing.project" class="md-display-1">
-                            <input ng-model="vm.selectedUser.list[0].display_name" type="text" ng-value="{{vm.selectedUser.list[0].display_name}}">
+                        <md-input-container ng-show="vm.isEditing.project">
+                            <md-input-container class="md-display-1">
+                                <input type="text" ng-value="" ng-model="vm.projectProfile.list[0].project_name">
+                            </md-input-container>
+                            <br>
+                            <span ng-show="vm.isEditing.project">
+                                <md-input-container>
+                                    <textarea class="md-block" type="text" ng-model="vm.projectProfile.list[0].project_description"></textarea>
+                                </md-input-container>
+                            </span>
                         </md-input-container>
                         <div flex="30" class="dialog-demo-content">
                             <span ng-hide="vm.userObject.id === vm.projectProfile.list[0].user_id">
@@ -25,19 +33,20 @@
                         <p>
                             <span ng-hide="vm.isEditing.project">{{vm.projectProfile.list[0].project_description}}</span>
 
+
                             <span ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id" ng-hide="vm.isEditing.project">
                                 <md-button class="md-raised md-primary" ng-click="vm.isEditing.project = true">Edit Name Or Description</md-button>
                             </span>
                             <span ng-if="vm.userObject.id === vm.projectProfile.list[0].user_id" ng-show="vm.isEditing.project">
-                                <md-button class="md-raised md-primary" ng-click="vm.editProjectName(vm.projectProfile.list[0])">save</md-button>
+                                <md-button class="md-raised md-primary" ng-click="vm.editProjectName(vm.projectProfile.list[0])">Save</md-button>
                             </span>
 
 
                     </div>
                 </div>
 
-            
-<!-- Collaborator List -->
+
+                <!-- Collaborator List -->
                 <div md-whiteframe="5" flex layout-xs="column" layout-sm="column" layout="row" layout-padding>
                     <div flex>
                         <h1 class="md-display-1">Collaborators</h1>
