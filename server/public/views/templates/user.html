@@ -28,13 +28,12 @@
                             </span>
                         </p>
 
-                        <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username" >
+                        <span ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
                             <md-button ng-hide="vm.isEditing.username" class="md-raised md-accent" ng-click="vm.isEditing.username = true">Edit Display Name or Bio</md-button>
-                    
-                            <md-button ng-show="vm.isEditing.username" class="md-raised md-primary"
-                                ng-click="vm.editUsername(vm.selectedUser.list[0])">Save</md-button>
+
+                            <md-button ng-show="vm.isEditing.username" class="md-raised md-primary" ng-click="vm.editUsername(vm.selectedUser.list[0])">Save</md-button>
                         </span>
-                
+
 
                     </div>
                 </div>
@@ -67,13 +66,23 @@
                                 </td>
                             </tr>
                             <tr ng-if="vm.userObject.userName === vm.selectedUser.list[0].username">
-                                <td>  
+                                <td>
                                     <md-select ng-model="vm.newSkill.skill_id">
                                         <md-option ng-value="skill.skill_id" ng-repeat="skill in vm.skillslist.list">
                                             {{skill.skill_name}}
                                         </md-option>
                                     </md-select>
-                                        <!-- Skills AutoComplete -->
+
+                                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="skill in vm.getMatches(searchText)" 
+                                        md-item-text="skill">
+                                        <md-item-template>
+                                        <span md-highlight-text="searchText">{{skill}}</span>
+                                        </md-item-template> 
+                                        <md-not-found>
+                                            No matches found.
+                                        </md-not-found>
+                                    </md-autocomplete>
+                                    <!-- Skills AutoComplete -->
                                     <!-- <md-autocomplete
                                     ng-disabled="vm.isDisabled"
                                     md-no-cache="vm.noCache"
@@ -121,19 +130,12 @@
                                     <input ng-model="vm.selectedUser.list[0].user_city">
                                 </md-input-container>
                                 <md-input-container>
-                                    <md-autocomplete
-                                    ng-disabled="vm.isDisabled"
-                                    md-no-cache="vm.noCache"
-                                    md-selected-item="vm.selectedItem"
-                                    md-search-text-change="vm.searchTextChange(vm.selectedUser.list[0].user_state)"
-                                    md-search-text="vm.selectedUser.list[0].user_state"
-                                    md-selected-item-change="vm.selectedItemChange(item)"
-                                    md-items="item in vm.querySearch(vm.selectedUser.list[0].user_state)"
-                                    md-item-text="item.display"
-                                    md-min-length="0"
-                                    md-floating-label="State">
+                                    <md-autocomplete ng-disabled="vm.isDisabled" md-no-cache="vm.noCache" md-selected-item="vm.selectedItem" md-search-text-change="vm.searchTextChange(vm.selectedUser.list[0].user_state)"
+                                        md-search-text="vm.selectedUser.list[0].user_state" md-selected-item-change="vm.selectedItemChange(item)"
+                                        md-items="item in vm.querySearch(vm.selectedUser.list[0].user_state)" md-item-text="item.display"
+                                        md-min-length="0" md-floating-label="State">
                                         <md-item-template>
-                                        <span md-highlight-text="vm.selectedUser.list[0].user_state" md-highlight-flags="^i">{{item.display}}</span>
+                                            <span md-highlight-text="vm.selectedUser.list[0].user_state" md-highlight-flags="^i">{{item.display}}</span>
                                         </md-item-template>
                                     </md-autocomplete>
                                 </md-input-container>
@@ -181,25 +183,25 @@
 
                     </div>
                 </div>
-              <div layout="row" layout-sm="column" layout-xs="column" layout-padding md-whiteframe="5">
-                    <div >
+                <div layout="row" layout-sm="column" layout-xs="column" layout-padding md-whiteframe="5">
+                    <div>
                         <h1 class="md-display-1">Projects</h1>
-                            <md-button ng-click="vm.createProject()" class="md-raised md-primary">Create New Project</md-button>
-                        
+                        <md-button ng-click="vm.createProject()" class="md-raised md-primary">Create New Project</md-button>
+
                     </div>
                     <div layout-margin layout-padding layout="row" layout-wrap>
-                            <md-card href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.collaboratorProjects.list">
-                                <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
-                                <md-card-content>
-                                    <h2>{{project.project_name}}</h2>
-                                    <p>{{project.project_description}}</p>
-                                </md-card-content>
-                                <div class="md-actions" layout="row" layout-align="center center">
-                                    <a href="#/projectprofile/{{project.project_id}}">
-                                </div>
-                            </md-card>
-                        </div>
+                        <md-card href="#/projectprofile/{{project.project_id}}" style="max-width: 300px;" ng-repeat="project in vm.collaboratorProjects.list">
+                            <img src="{{project.project_picture}}" class="md-card-image" alt="user avatar">
+                            <md-card-content>
+                                <h2>{{project.project_name}}</h2>
+                                <p>{{project.project_description}}</p>
+                            </md-card-content>
+                            <div class="md-actions" layout="row" layout-align="center center">
+                                <a href="#/projectprofile/{{project.project_id}}">
+                            </div>
+                        </md-card>
+                    </div>
                 </div>
     </md-content>
-</div>
-<div ng-include="'views/partials/footer.html'">
+    </div>
+    <div ng-include="'views/partials/footer.html'">

@@ -77,9 +77,13 @@ myApp.service('AutoCompleteService', function ($http, $location, $routeParams, $
             method: 'GET',
             url: 'project/skillList',
           }).then( function (response){
+            // for (let i = 0; i < response.data.length; i++) {
+            //   self.skills.list.push(response.data[i].skill_name)
+              
+            // }
             self.skills.list = response.data  
             console.log(self.skills.list);
-             console.log(self.states);
+            console.log(self.states);
                 
           })
         

@@ -7,7 +7,7 @@ myApp.controller('UserController', function (UserService, CollaboratorService, P
   self.isEditing = {}
   self.skillslist = UserService.skillslist;
   self.collaboratorProjects = UserService.collaboratorProjects;
-
+  self.skills = AutoCompleteService.skills;
 
   self.getUser = UserService.getUser
   self.editUser = UserService.editUser
@@ -59,5 +59,9 @@ myApp.controller('UserController', function (UserService, CollaboratorService, P
   self.skills = AutoCompleteService.skills
 
 
-
+  self.getMatches = function(query) {
+    return self.skills.list.filter(function(el) {
+        return el.toLowerCase().indexOf(query.toLowerCase()) > -1;
+    })
+  }
 });
