@@ -299,7 +299,7 @@ router.put('/message', function (req, res) {
                         //send message via nodemailer
                         var mailOptions = {
                             from: `Hustle <startyourhustle@gmail.com>`,
-                            to: `${result.rows[0].email}`,
+                            to: `${result.rows[0].username}`,
                             subject: `HUSTLE: Collaborator message about ${req.body.project_name}`,
                             html: `
                             <div bgcolor="#ff634f">

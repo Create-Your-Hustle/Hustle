@@ -1,7 +1,7 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div class="homeContent">
     <md-content layout="row" layout-xs="column" layout-padding>
-       
+
         <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
             <md-toolbar>
                 <h1 class="md-toolbar-tools">Search Projects</h1>
@@ -33,9 +33,12 @@
                 <div layout="column">
                     <md-input-container layout-padding>
                         <input type="text" placeholder="City" ng-model="query.project_city">
-                        <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_remote">Remote Opportunity</md-checkbox></br>
-                            <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_pay">For Pay</md-checkbox></br>
-                            <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_trade">For Trade</md-checkbox></br>
+                        <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_remote">Remote Opportunity</md-checkbox>
+                        </br>
+                        <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_pay">For Pay</md-checkbox>
+                        </br>
+                        <md-checkbox ng-true-value="'true'" ng-false-value="''" class="md-primary" ng-model="query.project_for_trade">For Trade</md-checkbox>
+                        </br>
                     </md-input-container>
                     <div flex="5" layout="column"></div>
                 </div>
@@ -57,11 +60,10 @@
                                 View Project
                             </md-button>
                         </a>
-                        <md-button class="md-raised md-primary" ng-click="vm.contactProjectOwner($event)">Message</md-button>
                     </div>
                 </md-card>
             </div>
         </div>
-  
+
 </div>
 <div ng-include="'views/partials/footer.html'"></div>
