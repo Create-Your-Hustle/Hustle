@@ -46,8 +46,8 @@ router.post('/', function (req, res) {
         if (errorConnectingToDatabase) {
             res.sendStatus(500);
         } else {
-            client.query(`WITH new_project AS (INSERT INTO projects ("project_name")
-            VALUES ('New Project') RETURNING project_id)
+            client.query(`WITH new_project AS (INSERT INTO projects ("project_name", "project_picture")
+            VALUES ('New Project', '../assets/projectDefault.png') RETURNING project_id)
             INSERT INTO users_projects ("user_id", "project_id", "can_edit", "user_project_role")
             VALUES ($1, (Select project_id FROM new_project), true , 'Creator') RETURNING 	project_id;`, [req.user.id],
                 function (errorMakingQuery, result) {
@@ -277,20 +277,21 @@ router.get('/collaboration-requests/:id', function (req, res) {
 
 //Message project creator
 router.put('/message', function (req, res) {
-    console.log(req.body);
-    console.log(req.user);
+    if (req.isAuthenticated()) {
+        console.log(req.body);
+        console.log(req.user);
     
     
-    pool.connect(function (errorConnectingToDatabase, client, done) {
-        if (errorConnectingToDatabase) {
-            res.sendStatus(500);
-        } else {
-            client.query(`WITH insert_invite AS (
-                INSERT INTO users_projects (can_edit, user_id, project_id, user_project_role, collaboration_request)
-                VALUES (false, $1, $2, $3, true)) 
-                SELECT * FROM users_projects
-                        JOIN users ON users_projects.user_id = users.id
-                        WHERE project_id = $2 AND can_edit = true;`, [req.user.id, req.body.project_id, req.body.project_role], function (errorMakingDatabaseQuery, result) {
+        pool.connect(function (errorConnectingToDatabase, client, done) {
+            if (errorConnectingToDatabase) {
+                res.sendStatus(500);
+            } else {
+                client.query(`WITH insert_invite AS (
+                            INSERT INTO users_projects (can_edit, user_id, project_id, user_project_role, collaboration_request)
+                            VALUES (false, $1, $2, $3, true)) 
+                            SELECT * FROM users_projects
+                            JOIN users ON users_projects.user_id = users.id
+                            WHERE project_id = $2 AND can_edit = true;`, [req.user.id, req.body.project_id, req.body.project_role], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         res.sendStatus(500);
@@ -328,9 +329,12 @@ router.put('/message', function (req, res) {
                         });
                         res.sendStatus(201);
                     }
-                })
-        }
-    })
+                });
+            }
+        });
+    } else {
+        res.sendStatus(401);
+    }
 });
 
 

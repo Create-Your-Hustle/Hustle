@@ -1,4 +1,4 @@
-myApp.service('UserService', function($http, $location){
+myApp.service('UserService', function($http, $location, $mdDialog){
   let self = this;
   self.userObject = {};
   self.selectedUser = {list: []}
@@ -6,13 +6,31 @@ myApp.service('UserService', function($http, $location){
     username: '',
     password: ''
   };
+  self.userSkillArray = { list: [] };
   self.collaboratorProjects = {list: []};
+
+  //Cancel modal
+  self.cancel = function() {
+    $mdDialog.cancel();
+  };
 
   self.validateEmail= function(email) {
     var valEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return valEmail.test(email);
   }
    
+  //adjusts ratings to text
+self.findRating = function (rating) {
+  if (rating == 1) {
+    return "Beginner"
+  } else if (rating == 2) {
+    return "Intermediate"
+  } else if (rating == 3) {
+    return "Expert"
+  }
+
+}
+
   self.navbarPicture = {list: []};
 
   self.skillslist = {list:[]}
@@ -31,7 +49,7 @@ myApp.service('UserService', function($http, $location){
     $http({
       method: 'GET',
       url: 'project/skillList',
-    }).then( function (response){
+    }).then( function (response){      
       self.skillslist.list = response.data      
     })
   }
@@ -55,8 +73,17 @@ myApp.service('UserService', function($http, $location){
       url:'/collaborator/select',
       params: {name: username},
     }).then(function (response) {
+      console.log('user info',response.data);
+      for (let i = 0; i < response.data.length; i++) {
+        self.userSkillArray.list.push({
+          skill_name: response.data[i].skill_name,
+          required_rating: self.findRating(response.data[i].skill_rating)
+        }) 
+      }      
       self.selectedUser.list = response.data;
       self.getCollaboratorProjects();
+      console.log('skill array', self.userSkillArray);
+      
     })
   };
 
@@ -153,6 +180,14 @@ myApp.service('UserService', function($http, $location){
       url:'/collaborator/select/id',
       params: {id: id},
     }).then(function (response) {
+      console.log('user', response.data);
+      for (let i = 0; i < response.data.length; i++) {
+        self.userSkillArray.list.push({
+          skill_name: response.data[i].skill_name,
+          required_rating: self.findRating(response.data[i].skill_rating)
+        }) 
+      } 
+      
       self.selectedUser.list = response.data;
       self.getCollaboratorProjects();
     })
@@ -167,4 +202,34 @@ myApp.service('UserService', function($http, $location){
       self.navbarPicture.list = response.data;
     });
   };
+
+  //Modal for sending a message to collaborator
+  self.contactCollaborator = function (ev) {
+    $mdDialog.show({
+      controller: 'UserController as vm',
+      templateUrl: '../views/modals/contact-collaborator.dialog.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      fullscreen: self.customFullscreen
+    })
+  };
+
+  //send message to project owner
+  self.sendMessage = function (message, collaborator) {
+    info = {
+      message: message.message,
+      id: collaborator.user_id,
+    }
+
+    $http({
+      method: 'PUT',
+      url: '/collaborator/message',
+      data: info
+    }).catch()
+    
+    self.cancel();
+  }
 });
+
+

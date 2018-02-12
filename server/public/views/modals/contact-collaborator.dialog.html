@@ -1,0 +1,32 @@
+<!-- <script type="text/ng-template" id="tabDialog.tmpl.html"> -->
+    <md-dialog aria-label="Get Hustlin">
+        <!-- <form> -->
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 class="lead">Contact Collaborator</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <md-icon md-svg-src="../assets/closebutton.png" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="max-width:800px;max-height:810px; ">
+            <md-content class="md-padding">
+                <!-- <h1 class="md-display-2">Existing User Log-In</h1> -->
+                <div class="container">
+                    <h1 class="lead alert alert-danger" role="alert" ng-if="vm.message != ''"></h1>
+                    <form ng-submit="vm.sendMessage(vm.message, vm.selectedUser.list[0])" id="userMessage">
+                        <div>
+                            <label for="username">Message:</label>
+                            <textarea rows="5" cols="60" ng-model="vm.message.message" form="userMessage"></textarea>
+                        </div>
+                        <br>
+                        <div>
+                            <input class="md-raised md-primary md-button md-ink-ripple" type="submit" name="submit" value="Send Message" />
+                        </div>
+                    </form>
+                </div>
+            </md-content>
+        </md-dialog-content>
+    </md-dialog>
+    </div>

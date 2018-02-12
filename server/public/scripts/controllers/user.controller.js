@@ -7,6 +7,9 @@ myApp.controller('UserController', function (UserService, CollaboratorService, P
   self.isEditing = {}
   self.skillslist = UserService.skillslist;
   self.collaboratorProjects = UserService.collaboratorProjects;
+  self.contactCollaborator = UserService.contactCollaborator;
+  self.sendMessage = UserService.sendMessage;
+  self.cancel = UserService.cancel;
 
 
   self.getUser = UserService.getUser
@@ -26,7 +29,8 @@ myApp.controller('UserController', function (UserService, CollaboratorService, P
   self.loadAll = AutoCompleteService.loadAll;
   self.querySearchSkills = AutoCompleteService.querySearchSkills;
   self.loadAllSkills = AutoCompleteService.loadAllSkills;
-
+  self.userSkillArray = UserService.userSkillArray;
+  
   self.editUsername = function (value) {
     self.isEditing.username = false;
     self.editUser(value);
