@@ -1,4 +1,4 @@
-myApp.service('UserService', function($http, $location){
+myApp.service('UserService', function($http, $location, $mdDialog){
   let self = this;
   self.userObject = {};
   self.selectedUser = {list: []}
