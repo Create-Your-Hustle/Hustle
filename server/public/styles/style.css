@@ -130,7 +130,7 @@ md-card {
   margin-top: 100px;
   font-size: 72px;
   letter-spacing: 0.01389999em;
-  color: rgb(255, 112, 67)
+  color: #ff634f
   ;
 }
 
@@ -138,10 +138,56 @@ md-card {
   font-family: 'open sans';
 }
 
-.btn1{
-  text-transform: uppercase;
-  font-family: sans-serif;
+.dialog-demo-content .md-button{
+  font-family: 'shrikhand';
+  background-color: #ff634f;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 30px;
+  padding: 5px 10px;
+  text-align: center;
+  text-shadow: 2px 2px 4px #ff634f;
+  text-decoration: none;
 }
+@-webkit-keyframes glowing {
+  0% { background-color: #ff634f; -webkit-box-shadow: 0 0 3px #B20000; }
+  50% { background-color: white; -webkit-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #ff634f; -webkit-box-shadow: 0 0 3px #B20000; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #ff634f; -moz-box-shadow: 0 0 3px #B20000; }
+  50% { background-color: white; -moz-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #ff634f; -moz-box-shadow: 0 0 3px #B20000; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #ff634f; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: white; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #ff634f; box-shadow: 0 0 3px #B20000; }
+}
+
+@keyframes glowing {
+  0% { background-color: #ff634f; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: white; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #ff634f; box-shadow: 0 0 3px #B20000; }
+}
+
+.dialog-demo-content .md-button {
+  -webkit-animation: glowing 4000ms infinite;
+  -moz-animation: glowing 4000ms infinite;
+  -o-animation: glowing 4000ms infinite;
+  animation: glowing 4000ms infinite;
+}
+
+
+/* .dialog-demo-content .md-button:hover {
+  background-color:#ff634f;
+} */
 
 #mission{
   margin-top: 1em;
