@@ -74,6 +74,7 @@ self.findRating = function (rating) {
       params: {name: username},
     }).then(function (response) {
       console.log('user info',response.data);
+      self.userSkillArray.list.length = 0;
       for (let i = 0; i < response.data.length; i++) {
         self.userSkillArray.list.push({
           skill_name: response.data[i].skill_name,
