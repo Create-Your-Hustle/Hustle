@@ -54,38 +54,36 @@ Add additional notes about how to deploy this on a live system
 
 ## Screen Shot
 
-Include one or two screen shots of your project here (optional). Remove if unused.
-
 Collaborator profile  view
-![Image of Collaborator Profile View]
-(/documentation/collaborator-view.png)
+![Image of Collaborator Profile View](/documentation/collaborator-view.png)
 
 Project profile view with ratings open
-![Image of Collaborator Profile View]
-(/documentation/ratings-view.png)
+![Image of Collaborator Profile View](/documentation/ratings-view.png)
 
 Collaborator search view
-![Image of Collaborator Profile View]
-(/documentation/collaborator-search.png)
+![Image of Collaborator Profile View](/documentation/collaborator-search.png)
 
 Project search view
-![Image of Collaborator Profile View]
-(/documentation/project-search.png)
+![Image of Collaborator Profile View](/documentation/project-search.png)
 
 
 
 ## Documentation
 
-Link to a read-only version of your scope document or other relevant documentation here (optional). Remove if unused.  
+[Hustle Scope Document](/documentation/hustle-scope-document.pdf)  
 
 
 ## Authors
 
-Andrew Geiger
-Guillermo Olivos
-Danika Raghnild
-Paige Scheunemann
-Tyler Steffenhagen
+-Andrew Geiger
+
+-Guillermo Olivos
+
+-Danika Raghnild
+
+-Paige Scheunemann
+
+-Tyler Steffenhagen
 
 
 ## Acknowledgments
