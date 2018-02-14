@@ -1,4 +1,4 @@
-# Name of Project
+# Hustle
 
 Hustle is a full-stack web application that connects individuals managing projects with potential collaborators on a social media dashboard. It provides the users with opportunities to view:
 
@@ -7,71 +7,77 @@ b)	Outstanding projects requiring users with a given skill set and availability.
 
 The primary purpose of the platform is to facilitate initial touchpoints between project managers and potential collaborators. 
 
-
-## Built With
-
-●	Node.js
-●	Express.js
-●	JavaScript
-●	AngularJS
-●	AngularJS Material
-●	PostgreSQL
-●	Nodemailer
-●	Filestack
-●	Facebook SDK
-●	Google Oauth 2.0
-●	Google Places API
-●	Post GIS
-
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+## Prerequisites
 
-Link to software that is required to install the app (e.g. node).
+Link to software that is required to install the app.
 
 - [Node.js](https://nodejs.org/en/)
-- List other prerequisites here
+- [Postico](https://eggerapps.at/postico/)
 
+## Installing
 
-### Installing
+1. Download this project.
+2. Spin up a PostgreSQL database called "Hustle" and in it run code from the "database.sql" file.
+3. `npm install`
+4. `npm start`
 
-Steps to get the development environment running.
+## Deployment
 
-```sql
-CREATE TABLE "users" (
-  "id" serial primary key,
-  "username" varchar(80) not null UNIQUE,
-  "password" varchar(240) not null
-);
-```
+Add additional notes about how to deploy this on a live system
+
+## Built With
+
+●	Node.js
+
+●	Express.js
+
+●	JavaScript
+
+●	AngularJS
+
+●	AngularJS Material
+
+●	PostgreSQL
+
+●	Nodemailer
+
+●	Filestack
+
+●	Facebook SDK
+
+●	Google Oauth 2.0
+
 
 ## Screen Shot
 
 Include one or two screen shots of your project here (optional). Remove if unused.
 
+Collaborator profile  view
+![Image of Collaborator Profile View]
+(/documentation/collaborator-view.png)
+
+Project profile view with ratings open
+![Image of Collaborator Profile View]
+(/documentation/ratings-view.png)
+
+Collaborator search view
+![Image of Collaborator Profile View]
+(/documentation/collaborator-search.png)
+
+Project search view
+![Image of Collaborator Profile View]
+(/documentation/project-search.png)
+
+
+
 ## Documentation
 
-Link to a read-only version of your scope document or other relevant documentation here (optional). Remove if unused.
+Link to a read-only version of your scope document or other relevant documentation here (optional). Remove if unused.  
 
-### Completed Features
-
-High level list of items completed.
-
-- [x] Feature a
-- [x] Feature b
-
-### Next Steps
-
-Features that you would like to add at some point in the future.
-
-- [ ] Feature c
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Authors
 
