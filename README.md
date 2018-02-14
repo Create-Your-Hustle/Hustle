@@ -88,4 +88,10 @@ Project search view
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
+* Elnath Cohort
+
+* Luke Schlangen
+
+* Chris Black
+
+* Kris Szafranski
