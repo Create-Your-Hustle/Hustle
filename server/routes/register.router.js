@@ -21,7 +21,7 @@ router.post('/', function(req, res, next) {
     if(err) {
       res.sendStatus(500);
     }
-    client.query("INSERT INTO users (username, display_name, password) VALUES ($1, $2, $3) RETURNING id",
+    client.query("INSERT INTO users (username, display_name, password, user_picture) VALUES ($1, $2, $3, '../assets/default.png') RETURNING id",
       [saveUser.username, saveUser.username, saveUser.password],
         function (err, result) {
           client.end();
