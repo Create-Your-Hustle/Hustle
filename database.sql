@@ -87,3 +87,30 @@ CREATE TABLE ratings (
     accuracy INT,
     overall INT
 );
+
+-- The below INSERT adds skills to the database- these can be adjusted depending on administrator needs.
+
+INSERT INTO skills(
+    skill_name) VALUES ('Accounting'), ('Acting'), ('Advertising'), ('Animation'), ('Architecture'), ('Back End Developer'), ('Business Strategy'), ('Ceramics '), ('Cinematography'), ('Clothing design'), ('Communications'), ('Content Strategy'), ('Cooking'), ('Copywriting'), ('Crafts'), ('Culinary Arts'), ('Dance'), ('Dev Ops'), ('Digital Marketing'), ('Directing'), ('Drawing'), ('Entrepreneurship'), ('Fashion'), ('Film'), ('Finance'), ('Fine Art'), ('Front End Developer'), ('Full Stack Developer'), ('Furniture Design'), ('Game Design'), ('Graffiti'), ('Graphic Design'), ('Hardware'), ('Illustration'), ('Interior Design'), ('Jewlery Design'), ('Landscaping'), ('Makeup Arts'), ('Marketing'), ('Music'), ('Painting'), ('Performing Arts'), ('Photography'), ('Print Design '), ('Product Management'), ('Programming'), ('Project Management'), ('Sculpture'), ('Set Design'), ('Social Media'), ('Sound Design'), ('Textiles'), ('UX/UI'), ('Visual Effects'), ('Web Design'), ('Web Development'), ('Writing');
+
+CREATE OR REPLACE FUNCTION avg_rating()
+  RETURNS trigger AS
+$$
+BEGIN
+    WITH new_avg AS (
+        SELECT AVG(r.overall) as avg, r.reviewed_user_id
+        FROM ratings r 
+        GROUP BY r.reviewed_user_id)
+     UPDATE users
+     SET user_rating = avg
+     FROM new_avg na
+     WHERE id = na.reviewed_user_id;
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER update_avg
+    AFTER INSERT ON ratings
+    FOR EACH ROW
+    EXECUTE PROCEDURE avg_rating();
