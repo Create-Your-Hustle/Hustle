@@ -93,6 +93,8 @@ CREATE TABLE ratings (
 INSERT INTO skills(
     skill_name) VALUES ('Accounting'), ('Acting'), ('Advertising'), ('Animation'), ('Architecture'), ('Back End Developer'), ('Business Strategy'), ('Ceramics '), ('Cinematography'), ('Clothing design'), ('Communications'), ('Content Strategy'), ('Cooking'), ('Copywriting'), ('Crafts'), ('Culinary Arts'), ('Dance'), ('Dev Ops'), ('Digital Marketing'), ('Directing'), ('Drawing'), ('Entrepreneurship'), ('Fashion'), ('Film'), ('Finance'), ('Fine Art'), ('Front End Developer'), ('Full Stack Developer'), ('Furniture Design'), ('Game Design'), ('Graffiti'), ('Graphic Design'), ('Hardware'), ('Illustration'), ('Interior Design'), ('Jewlery Design'), ('Landscaping'), ('Makeup Arts'), ('Marketing'), ('Music'), ('Painting'), ('Performing Arts'), ('Photography'), ('Print Design '), ('Product Management'), ('Programming'), ('Project Management'), ('Sculpture'), ('Set Design'), ('Social Media'), ('Sound Design'), ('Textiles'), ('UX/UI'), ('Visual Effects'), ('Web Design'), ('Web Development'), ('Writing');
 
+--The below creates a SQL function that updates the average rating for a user
+
 CREATE OR REPLACE FUNCTION avg_rating()
   RETURNS trigger AS
 $$
