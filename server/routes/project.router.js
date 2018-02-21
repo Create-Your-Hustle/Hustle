@@ -417,8 +417,8 @@ router.get('/collaborator-projects', function (req, res) {
                 client.query(`SELECT p.project_name, p.project_description, p.project_picture, p.project_id FROM projects p
                             JOIN users_projects up ON up.project_id = p.project_id
                             JOIN users u ON u.id = up.user_id
-                            WHERE up.can_edit = true
-                            AND u.username = $1;`, [email], function (errorMakingDatabaseQuery, result) {
+                           
+                            WHERE u.username = $1;`, [email], function (errorMakingDatabaseQuery, result) {
                     done();
                     if (errorMakingDatabaseQuery) {
                         res.sendStatus(500);
